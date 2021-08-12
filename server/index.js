@@ -26,7 +26,7 @@ mongoose.connect(MONGODB_URI,{
 });
 
 mongoose.connection.once('open',()=>{
-    console.log('Database Connected Successfully:', process.env.MONGODB_URI);
+    console.log('Database Connected Successfully:');
 })
 
 app.route('/').get((req,res) => {
@@ -36,5 +36,6 @@ app.route('/').get((req,res) => {
 app.use('/room',roomRoute());
 
 app.listen(PORT,()=>{
+    console.log(`Server is up and running on port ${PORT}`);
     console.log(`Server is up and running on port ${PORT}`);
 })
