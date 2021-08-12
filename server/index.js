@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const roomRoute = require('./routes/room.route');
+const hallRoute = require('./routes/hall.route');
 
 dotenv.config();
 const app = express();
@@ -34,6 +35,7 @@ app.route('/').get((req,res) => {
 })
 
 app.use('/rooms',roomRoute());
+app.use('/halls',hallRoute());
 
 app.listen(PORT,()=>{
     console.log(`Server is up and running on port ${PORT}`);
