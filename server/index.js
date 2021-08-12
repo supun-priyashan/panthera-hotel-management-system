@@ -33,9 +33,8 @@ app.route('/').get((req,res) => {
     res.send('Test API call');
 })
 
-app.use('/room',roomRoute());
+app.use('/rooms',roomRoute());
 
 app.listen(PORT,()=>{
-    console.log(`Server is up and running on port ${PORT}`);
     console.log(`Server is up and running on port ${PORT}`);
 })
