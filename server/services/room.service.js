@@ -8,7 +8,7 @@ const addRoom = async (request, response) => {
 
     await room.save((error, room) => {
         if(error){
-            response.status(500).json({ error: error });
+            response.status(500).json({ error: error.message });
         }
         else{
             response.status(200).
@@ -22,14 +22,14 @@ const addRoom = async (request, response) => {
 
 const getRooms = async (request, response) => {
     try{
-        const rooms = Room.find();
+        const rooms = await Room.find();
         response.status(200).
             json({
             success: true,
             rooms: rooms
         })
     } catch (error) {
-        response.status(404).json({ error: error });
+        response.status(404).json({ error: error.message });
     }
 }
 
