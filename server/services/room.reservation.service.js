@@ -1,7 +1,10 @@
 const RoomReservation = require('../models/room.reservation.model');
 
-const addReservation = async (request, response) => {
+/*const addReservation = async (request, response) => {
+
     const roomReservation = new RoomReservation(request.body);
+
+    console.log(roomReservation);
 
     await roomReservation.save().
     then((data) => {
@@ -13,10 +16,42 @@ const addReservation = async (request, response) => {
             response.status(500).send({error: eer.message});
         });
     })
+}*/
+
+const addReservation = async (request, response) => {
+
+    const roomReservation = new RoomReservation(request.body);
+
+    await roomReservation.save((error, data) => {
+        if(error){
+            response.status(500).json({ error: error.message });
+        }
+        else{
+            response.status(200).
+            json({
+                success: true,
+                RoomReservation: data
+            })
+        }
+    });
 }
 
+const getRoomReservation = async (request, response) => {
 
+    try{
+        const roomReservation = await RoomReservation.find();
+        response.status(200).
+            json({
+            success: true,
+            RoomReservation: roomReservation
+        })
+    }
+    catch(error) {
+        response.status(404).json({ error: error.message });
+    }
+}
 
 module.exports = {
     addReservation,
+    getRoomReservation,
 }

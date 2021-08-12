@@ -10,8 +10,7 @@ const roomReservationSchema = new mongoose.Schema({
     noOfBeds: { type: Number, required: true },
     noOfGuests: { type: Number, required: true },
     arrivalDate: { type: Date, required: true },
-    departureDate: { type: Date, required: true },
-    image: {  }
+    departureDate: { type: Date, required: true }
 });
 
 const RoomReservation = mongoose.model('RoomReservation', roomReservationSchema );

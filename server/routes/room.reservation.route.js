@@ -5,6 +5,7 @@ const roomReservationService = require('../services/room.reservation.service');
 
 module.exports = function () {
     router.post('/', roomReservationService.addReservation);
+    router.get('/', roomReservationService.getRoomReservation);
 
     return router;
 }
