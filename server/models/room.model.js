@@ -11,3 +11,7 @@ const roomSchema = new mongoose.Schema({
     facilities: {type: Array, required: true},
     images: {type: Array, default: []}
 });
+
+const Room = mongoose.model('Room', roomSchema);
+
+module.exports = Room;
