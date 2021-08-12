@@ -6,3 +6,7 @@ const restaurantSchema = new mongoose.Schema({
     description: {type: String, required: true, trim: true},
     images: {type: Array, default: []}
 });
+
+const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+
+module.exports = Restaurant;
