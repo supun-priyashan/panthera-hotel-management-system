@@ -29,7 +29,10 @@ const getRooms = async (request, response) => {
             rooms: rooms
         })
     } catch (error) {
-        response.status(404).json({ error: error.message });
+        response.status(404).json({
+            success: false,
+            error: error.message
+        });
     }
 }
 
