@@ -18,7 +18,7 @@ const RoomReservation = require('../models/room.reservation.model');
     })
 }*/
 
-const addReservation = async (request, response) => {
+const addRoomReservation = async (request, response) => {
 
     const roomReservation = new RoomReservation(request.body);
 
@@ -52,6 +52,6 @@ const getRoomReservation = async (request, response) => {
 }
 
 module.exports = {
-    addReservation,
+    addRoomReservation,
     getRoomReservation,
 }

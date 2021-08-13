@@ -4,7 +4,7 @@ const router = express.Router();
 const roomReservationService = require('../services/room.reservation.service');
 
 module.exports = function () {
-    router.post('/', roomReservationService.addReservation);
+    router.post('/', roomReservationService.addRoomReservation);
     router.get('/', roomReservationService.getRoomReservation);
 
     return router;
