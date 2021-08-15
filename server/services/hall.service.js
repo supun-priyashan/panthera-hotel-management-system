@@ -1,12 +1,10 @@
-const Room = require('../models/room.model');
+const Hall = require('../models/hall.model');
 
-const addRoom = async (request, response) => {
+const addHall = async (request, response) => {
 
-    const room = new Room(request.body);
+    const hall = new Hall(request.body);
 
-    console.log(room);
-
-    await room.save((error, room) => {
+    await hall.save((error, hall) => {
         if(error){
             response.status(500).json({ error: error.message });
         }
@@ -14,19 +12,19 @@ const addRoom = async (request, response) => {
             response.status(200).
             json({
                 success: true,
-                room: room
+                hall: hall
             })
         }
     });
 }
 
-const getRooms = async (request, response) => {
+const getHalls = async (request, response) => {
     try{
-        const rooms = await Room.find();
+        const halls = await Hall.find();
         response.status(200).
-            json({
+        json({
             success: true,
-            rooms: rooms
+            halls: halls
         })
     } catch (error) {
         response.status(404).json({
@@ -37,6 +35,6 @@ const getRooms = async (request, response) => {
 }
 
 module.exports = {
-    getRooms,
-    addRoom
+    addHall,
+    getHalls
 }
