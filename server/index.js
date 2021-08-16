@@ -27,7 +27,7 @@ mongoose.connect(MONGODB_URI,{
 });
 
 mongoose.connection.once('open',()=>{
-    console.log('Database Connected Successfully:');
+    console.log('Database Connected Successfully');
 })
 
 app.route('/').get((req,res) => {
