@@ -11,7 +11,9 @@ const NavLogo = styled.button`
   width: 140px;
   height: 45px;
   font-family: 'Unica One';
-  font-size: 20px;
+  margin-top: 6vh;
+  margin-bottom: 6vh;
+  font-size: 22px;
   text-transform: lowercase;
   letter-spacing: 2.5px;
   color: #5A2360;
@@ -24,10 +26,10 @@ const NavLogo = styled.button`
   outline: none;
 
   &:hover {
-    background-color: #2EE59D;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    background-color: #5a2360;
+    box-shadow: 0px 15px 20px rgba(72, 28, 76, 0.4);
     color: #fff;
-    transform: translateY(-7px);
+    transform: translateY(-3px);
   }
 `;
 

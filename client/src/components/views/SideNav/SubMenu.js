@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const SidebarLink = styled.button`
   width: 140px;
-  height: 40px;
+  height: 35px;
   font-family: 'Josefin Sans', sans-serif;
   font-size: 15px;
   letter-spacing: 2.5px;
@@ -17,12 +17,13 @@ const SidebarLink = styled.button`
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
+  text-align: left;
 
   &:hover {
-    background-color: #2EE59D;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    background-color: #5a2360;
+    box-shadow: 0px 5px 15px rgba(72, 28, 76, 0.4);
     color: #fff;
-    transform: translateY(-7px);
+    transform: translateY(-3px);
   }
 `;
 
@@ -32,10 +33,10 @@ const SidebarLabel = styled.span`
 
 const DropdownLink = styled.button`
   width: 120px;
-  height: 35px;
+  height: 30px;
   margin-left: 1rem;;
   font-family: 'Josefin Sans', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 2.5px;
   font-weight: 500;
   color: #000;
@@ -46,12 +47,13 @@ const DropdownLink = styled.button`
   transition: all 0.3s ease 0s;
   cursor: pointer;
   outline: none;
+  text-align: left;
 
   &:hover {
-    background-color: #2EE59D;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    background-color: #5a2360;
+    box-shadow: 0px 4px 12px rgba(72, 28, 76, 0.4);
     color: #fff;
-    transform: translateY(-7px);
+    transform: translateY(-2px);
   }
 `;
 
