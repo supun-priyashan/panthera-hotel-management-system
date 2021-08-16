@@ -7,7 +7,7 @@ const SidebarLink = styled.button`
   height: 35px;
   font-family: 'Josefin Sans', sans-serif;
   font-size: 15px;
-  letter-spacing: 2.5px;
+  letter-spacing: 2px;
   font-weight: 500;
   color: #000;
   background-color: #fff;
@@ -37,7 +37,7 @@ const DropdownLink = styled.button`
   margin-left: 1rem;;
   font-family: 'Josefin Sans', sans-serif;
   font-size: 14px;
-  letter-spacing: 2.5px;
+  letter-spacing: 1.5px;
   font-weight: 500;
   color: #000;
   background-color: #fff;
@@ -69,13 +69,6 @@ const SubMenu = ({ item }) => {
                     <SidebarLink onClick={item.subNav && showSubnav}>
                         <div>
                             <SidebarLabel>{item.title}</SidebarLabel>
-                        </div>
-                        <div>
-                            {item.subNav && subnav
-                                ? item.iconOpened
-                                : item.subNav
-                                    ? item.iconClosed
-                                    : null}
                         </div>
                     </SidebarLink>
                 </Link>
