@@ -7,32 +7,39 @@ import { SidebarData } from './SideBarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
 
-const Nav = styled.div`
-  background: #15171c;
-  height: 80px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
+const NavLogo = styled.button`
+  width: 140px;
+  height: 45px;
+  font-family: 'Unica One';
+  font-size: 20px;
+  text-transform: lowercase;
+  letter-spacing: 2.5px;
+  color: #5A2360;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
 
-const NavIcon = styled(Link)`
-  margin-left: 2rem;
-  font-size: 2rem;
-  height: 80px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  &:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+  }
 `;
 
 const SidebarNav = styled.nav`
-  background: #15171c;
-  width: 250px;
+  background: #ffffff;
+  width: 200px;
   height: 100vh;
   display: flex;
   justify-content: center;
   position: fixed;
   top: 0;
-  left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
+  left: 0;
   transition: 350ms;
   z-index: 10;
 `;
@@ -42,23 +49,17 @@ const SidebarWrap = styled.div`
 `;
 
 const Sidebar = () => {
-    const [sidebar, setSidebar] = useState(false);
-
-    const showSidebar = () => setSidebar(!sidebar);
 
     return (
         <>
-            <IconContext.Provider value={{ color: '#fff' }}>
-                <Nav>
-                    <NavIcon to='#'>
-                        <FaIcons.FaBars onClick={showSidebar} />
-                    </NavIcon>
-                </Nav>
-                <SidebarNav sidebar={sidebar}>
+            <IconContext.Provider value={{ color: '#00000' }}>
+                <SidebarNav>
                     <SidebarWrap>
-                        <NavIcon to='#'>
-                            <AiIcons.AiOutlineClose onClick={showSidebar} />
-                        </NavIcon>
+                        <div className={'wrap'}>
+                            <NavLogo to='#'>
+                                panthera
+                            </NavLogo>
+                        </div>
                         {SidebarData.map((item, index) => {
                             return <SubMenu item={item} key={index} />;
                         })}

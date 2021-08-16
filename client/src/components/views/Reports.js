@@ -11,7 +11,7 @@ export const Reports = () => {
 export const ReportsOne = () => {
   return (
     <div className='reports'>
-      <h1>Reports/reports1</h1>
+      <h1>Reports/reports11111111</h1>
     </div>
   );
 };
