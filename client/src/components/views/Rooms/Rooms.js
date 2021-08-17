@@ -1,9 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import MaterialTable from 'material-table'
 import {Button,  Icon, Paper} from "@material-ui/core";
+import axios from "axios";
 
 export const Rooms = () => {
 
+    const [rooms,setRooms] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/rooms').
+        then((response) => {
+            if(response.data.success) {
+                console.log(response.data.rooms);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
 
     return (
         <div className={'content'}>
@@ -15,25 +30,20 @@ export const Rooms = () => {
                     <MaterialTable
                         title="Rooms and Suites"
                         columns={[
-                            { title: 'Name', field: 'name' },
-                            { title: 'Surname', field: 'surname' },
-                            { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-                            {
-                                title: 'Birth Place',
-                                field: 'birthCity',
-                                lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-                            },
+                            { title: 'id', field: 'id', hidden: true },
+                            { title: 'Name', field: 'roomName' },
+                            { title: 'Type', field: 'type' },
+                            { title: 'Guests', field: 'guests', type: 'numeric' },
+                            { title: 'Beds', field: 'beds', type: 'numeric' },
+                            { title: 'Space(m²)', field: 'space', type: 'numeric' },
+                            { title: 'Facilities', field: 'facilities', hidden:true },
+                            { title: 'Images', field: 'imageCount', type: 'numeric' },
+                            { title: 'Price', field: 'price', type: 'numeric' },
+                            { title: 'Description', field: 'description', hidden:true },
                         ]}
-                        data={[
-                            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-                            { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
-                            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-                            { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
-                            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-                            { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
-                            { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-                            { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
-                        ]}
+                        data={
+
+                        }
                         actions={[
                             {
                                 icon: 'edit',
