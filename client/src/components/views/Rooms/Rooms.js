@@ -1,9 +1,9 @@
-import React, {forwardRef} from 'react';
-import MaterialTable from "material-table";
-import {Fab} from "@material-ui/core";
+import React from 'react';
+import MaterialTable from 'material-table'
+import {Button,  Icon, Paper} from "@material-ui/core";
 
 export const Rooms = () => {
-    const myTextIcon = React.useRef(null);
+
 
     return (
         <div className={'content'}>
@@ -44,7 +44,7 @@ export const Rooms = () => {
                             {
                                 icon: 'delete',
                                 tooltip: 'Delete User',
-                                onClick: (event, rowData) => alert("You want to delete " + rowData.name),
+
                             },
                             {
                                 icon: "add_box",
@@ -56,6 +56,73 @@ export const Rooms = () => {
                                 }
                             }
                         ]}
+                        components={{
+                            Container: props => <Paper {...props} elevation={0}/>,
+                            Action:
+                                props => {
+                                    if(props.action.icon === 'edit'){
+                                        return(
+                                            <button
+                                                class="MuiButtonBase-root
+                                                MuiIconButton-root MuiIconButton-colorInherit"
+                                                tabindex="0"
+                                                type="button"
+                                                title="Edit User"
+                                                onClick={(event, rowData) => alert("You edited " + props.data.name)}
+                                            >
+                                                <span class="MuiIconButton-label">
+                                                    <span class="material-icons MuiIcon-root"
+                                                          aria-hidden="true">
+                                                        edit
+                                                    </span>
+                                            </span>
+                                                <span class="MuiTouchRipple-root"></span>
+                                            </button>
+                                        )
+                                    }
+                                    if(props.action.icon === 'delete'){
+                                        return(
+                                            <button
+                                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
+                                                tabindex="0"
+                                                type="button"
+                                                title="Delete User"
+                                                onClick={(event, rowData) => alert("You deleted " + props.data.name)}
+                                            >
+                                                <span
+                                                    class="MuiIconButton-label">
+                                                    <span class="material-icons MuiIcon-root"
+                                                          aria-hidden="true">
+                                                        delete
+                                                    </span>
+                                                </span>
+                                                <span class="MuiTouchRipple-root"></span>
+                                            </button>
+                                        )
+                                    }
+                                    if(props.action.icon === 'add_box'){
+                                        return(
+                                            <Button
+                                                onClick={(event) => props.action.onClick(event, props.data)}
+                                                variant="contained"
+                                                startIcon={<Icon>add</Icon>}
+                                                style={{
+                                                    textTransform: 'none',
+                                                    borderRadius: 35,
+                                                    backgroundColor: '#5a2360',
+                                                    fontFamily: 'Roboto',
+                                                    color:'white',
+                                                }}
+                                                size="medium"
+                                            >
+                                                Add a room
+                                            </Button>
+                                        )
+                                    }
+                                }
+
+                        }}
+
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
@@ -64,6 +131,7 @@ export const Rooms = () => {
                             pageSize: 6,
                             pageSizeOptions: [6],
                             showTitle: false,
+                            toolbarButtonAlignment: 'left',
                         }}
                     />
                 </div>
