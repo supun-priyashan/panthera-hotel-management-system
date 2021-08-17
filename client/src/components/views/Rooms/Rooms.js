@@ -12,7 +12,20 @@ export const Rooms = () => {
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.rooms);
-
+                setRooms(response.data.rooms.map((item) => ({
+                    id: item._id,
+                    roomName: item.roomName,
+                    type: item.type,
+                    beds: item.beds,
+                    guests: item.guests,
+                    space: item.space,
+                    facilities: item.facilities,
+                    images: item.images,
+                    imageCount: item.images.length,
+                    price: item.price,
+                    description: item.description,
+                })));
+                setTimeout(console.log(rooms),3000)
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -42,7 +55,7 @@ export const Rooms = () => {
                             { title: 'Description', field: 'description', hidden:true },
                         ]}
                         data={
-
+                            rooms
                         }
                         actions={[
                             {
