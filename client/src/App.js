@@ -14,7 +14,7 @@ function App() {
     return (
         <Router>
             <Sidebar />
-            <div className={'content'}>
+            <div>
                 <Switch>
                     <Route path='/halls' exact component={Halls} />
                     <Route path='/rooms' exact component={Rooms} />

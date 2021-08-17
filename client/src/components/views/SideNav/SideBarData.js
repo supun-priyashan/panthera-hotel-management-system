@@ -1,9 +1,10 @@
 import React from 'react';
+import {useLocation} from "react-router-dom";
 
 export const SidebarData = [
     {
         title: 'Reservations',
-        path: '/#',
+        path: '',
 
         subNav: [
             {

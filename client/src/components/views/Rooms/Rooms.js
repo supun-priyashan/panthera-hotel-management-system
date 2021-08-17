@@ -2,8 +2,12 @@ import React from 'react';
 
 export const Rooms = () => {
     return (
-        <div>
-            <h1>Rooms</h1>
+        <div className={'content'}>
+            <div className={'dashboard-header'}>
+                Rooms & Suite Management
+            </div>
+            <div className={'main-container'}>
+            </div>
         </div>
     );
 };

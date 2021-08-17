@@ -2,22 +2,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Unica+One');
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
+
 }
 
 .content {
-  display: flex;
+  display: block;
+  width: calc(100vw - 250px);
   height: 100vh;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  margin-left: 200px;
+  font-size: 1.5rem;
+  margin-left: 250px;
   background-color: #f2f2f2;
+  padding-left: 5vw;
+}
+
+.dashboard-header{
+  font-size: 40px;
+  font-family: 'Josefin Sans',sans-serif;
+  font-weight: 200;
+  margin-top: 9vh;
+  margin-bottom: 9vh;
+  float: left;
+  width: 100%;
+}
+
+.main-container{
+  width: 95%;
+  height: 70%;
+  display: flex;
+  background-color: #ffffff;
+  float: left;
 }
 
 .wrap {

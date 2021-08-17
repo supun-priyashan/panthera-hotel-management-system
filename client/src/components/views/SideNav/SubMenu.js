@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SidebarLink = styled.button`
-  width: 140px;
-  height: 35px;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 15px;
+  width: 190px;
+  height: 55px;
+  font-family: 'Unica One';
+  font-size: 20px;
   letter-spacing: 2px;
   font-weight: 500;
   color: #000;
@@ -32,11 +32,11 @@ const SidebarLabel = styled.span`
 `;
 
 const DropdownLink = styled.button`
-  width: 120px;
-  height: 30px;
+  width: 150px;
+  height: 40px;
   margin-left: 1rem;;
   font-family: 'Josefin Sans', sans-serif;
-  font-size: 14px;
+  font-size: 17px;
   letter-spacing: 1.5px;
   font-weight: 500;
   color: #000;
