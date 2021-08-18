@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table'
-import {Button,  Icon, Paper} from "@material-ui/core";
+import {Button, Icon, Link, Paper} from "@material-ui/core";
 import axios from "axios";
 
 export const Rooms = () => {
+
+    const history = useHistory();
 
     const [rooms,setRooms] = useState([]);
 
@@ -126,9 +129,11 @@ export const Rooms = () => {
                                     if(props.action.icon === 'add_box'){
                                         return(
                                             <Button
-                                                onClick={(event) => props.action.onClick(event, props.data)}
+                                                onClick={(event) => history.push('/rooms/add-room/')}
                                                 variant="contained"
                                                 startIcon={<Icon>add</Icon>}
+                                                /*component={Link}
+                                                to='/rooms/add-room/'*/
                                                 style={{
                                                     textTransform: 'none',
                                                     borderRadius: 35,
