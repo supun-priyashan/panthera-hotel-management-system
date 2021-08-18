@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const roomRoute = require('./routes/room.route');
 const hallRoute = require('./routes/hall.route');
+const employeeRoute = require('./routes/employee.route');
 
 dotenv.config();
 const app = express();
@@ -36,6 +37,7 @@ app.route('/').get((req,res) => {
 
 app.use('/rooms',roomRoute());
 app.use('/halls',hallRoute());
+app.use('/employees',employeeRoute());
 
 app.listen(PORT,()=>{
     console.log(`Server is up and running on port ${PORT}`);
