@@ -103,6 +103,7 @@ export const AddRoom = () => {
                                     backgroundColor: '#5a2360',
                                     fontFamily: 'Josefin Sans'
                                 }}
+                                type = "submit"
                         >
                             Add Room
                         </SubmitButton>
