@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Icon from '@material-ui/core/Icon';
 import axios from "axios";
-import {Button, Chip, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
+import {Button, Chip, Input, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import * as yup from "yup";
@@ -38,7 +38,7 @@ const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
 
 export const AddRoom = () => {
 
-    const [room,setRoom] = useState([]);
+    const [imageFile,setImageFile] = useState();
 
     const validationSchema = yup.object({
         name: yup
@@ -74,10 +74,49 @@ export const AddRoom = () => {
             price: '',
             description: '',
             facilities: [],
+            image: null,
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+
+            const formData = new FormData();
+            formData.append('file',imageFile);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            };
+
+            const room = {
+                roomName: values.roomName,
+                type: values.type,
+                space: values.space,
+                guests: values.guests,
+                beds: values.beds,
+                price: values.price,
+                description: values.description,
+                facilities: values.facilities,
+                image: imageFile.name,
+            }
+
+            console.log(imageFile,room);
+
+            axios.post('http://localhost:8080/rooms', room)
+                .then(response => {
+                    axios.post("http://localhost:8080/paper/uploadFile",formData,config)
+                        .then(() => {
+                            if (response.data.success) {
+                                alert('Paper Successfully Uploaded')
+                                props.history.push('/')
+                            } else {
+                                alert('Failed to upload Paper')
+                            }
+
+                        }).catch((error) => {
+                        alert(error.message);
+                    });
+
+                })
         },
     });
 
@@ -109,9 +148,11 @@ export const AddRoom = () => {
                             helperText={formik.touched.name && formik.errors.name}
                         />
                         <InputLabel id="type">Type</InputLabel>
-                        <Select
+                        <TextField
                             labelId="type"
+                            select
                             id="type"
+                            name="type"
                             autoWidth
                             variant = 'outlined'
                             value={formik.values.type}
@@ -122,7 +163,7 @@ export const AddRoom = () => {
                         >
                             <MenuItem value={1}>Room</MenuItem>
                             <MenuItem value={2}>Suite</MenuItem>
-                        </Select>
+                        </TextField>
                         <TextField
                             fullWidth
                             id="guests"
@@ -198,11 +239,22 @@ export const AddRoom = () => {
                                     "facilities",
                                     value !== null ? value : formik.initialValues.facilities
                                 );
-                                console.log(formik.values.facilities);
                             }}
                             error={formik.touched.facilities && Boolean(formik.errors.facilities)}
                             helperText={formik.touched.facilities && formik.errors.facilities}
                         />
+                        <InputLabel id="image" style={{
+                            marginTop: '10px',
+                        }}>Image</InputLabel>
+                        <Input
+                            id="image"
+                            name="image"
+                            type="file"
+                            value={formik.values.image}
+                            onChange={(e) => {setImageFile((e.target.files[0]))}}
+                            error={formik.touched.image && Boolean(formik.errors.image)}
+                            helperText={formik.touched.image && formik.errors.image}
+                            />
                         <SubmitButton
                                 style={{
                                     float: 'right',

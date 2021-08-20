@@ -37,6 +37,8 @@ app.route('/').get((req,res) => {
 app.use('/rooms',roomRoute());
 app.use('/halls',hallRoute());
 
+app.use('/uploads', express.static('uploads'));
+
 app.listen(PORT,()=>{
     console.log(`Server is up and running on port ${PORT}`);
 })
