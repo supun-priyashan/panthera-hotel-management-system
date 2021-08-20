@@ -37,7 +37,7 @@ app.route('/').get((req,res) => {
 
 app.use('/rooms',roomRoute());
 app.use('/halls',hallRoute());
-app.use('files', fileRoute());
+app.use('/files', fileRoute());
 
 app.use('/uploads', express.static('uploads'));
 

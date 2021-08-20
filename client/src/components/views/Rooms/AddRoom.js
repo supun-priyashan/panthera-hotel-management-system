@@ -88,7 +88,7 @@ export const AddRoom = () => {
             };
 
             const room = {
-                roomName: values.roomName,
+                roomName: values.name,
                 type: values.type,
                 space: values.space,
                 guests: values.guests,
@@ -103,15 +103,14 @@ export const AddRoom = () => {
 
             axios.post('http://localhost:8080/rooms', room)
                 .then(response => {
-                    axios.post("http://localhost:8080/paper/uploadFile",formData,config)
+                    axios.post("http://localhost:8080/files",formData,config)
                         .then(() => {
                             if (response.data.success) {
-                                alert('Paper Successfully Uploaded')
-                                props.history.push('/')
-                            } else {
-                                alert('Failed to upload Paper')
-                            }
+                                alert('Room Successfully Added')
 
+                            } else {
+                                alert('Failed to add room')
+                            }
                         }).catch((error) => {
                         alert(error.message);
                     });
