@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Icon from '@material-ui/core/Icon';
 import axios from "axios";
-import {Button, TextField} from "@material-ui/core";
+import {Button, Chip, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import * as yup from "yup";
-import {useFormik} from "formik";
+import {useFormik,Field} from "formik";
 import styled from "styled-components";
 
 const SubmitButton = styled.button`
@@ -33,25 +34,46 @@ const SubmitButton = styled.button`
   }
 `;
 
+const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
+
 export const AddRoom = () => {
 
-    const [rooms,setRooms] = useState([]);
+    const [room,setRoom] = useState([]);
 
     const validationSchema = yup.object({
-        email: yup
-            .string('Enter your email')
-            .email('Enter a valid email')
-            .required('Email is required'),
-        password: yup
-            .string('Enter your password')
-            .min(8, 'Password should be of minimum 8 characters length')
-            .required('Password is required'),
+        name: yup
+            .string('Enter room name')
+            .required('Name is required'),
+        type: yup
+            .string('Select room type')
+            .required('Type is required'),
+        space: yup
+            .string('Enter space of the room')
+            .required('Space is required'),
+        guests: yup
+            .string('Enter maximum guest count the room')
+            .required('Guest count is required'),
+        beds: yup
+            .string('Enter bed count the room')
+            .required('Bed count is required'),
+        price: yup
+            .string('Enter the price of the room')
+            .required('Price is required'),
+        description: yup
+            .string('Enter the description')
+            .required('Description is required'),
     });
 
     const formik = useFormik({
         initialValues: {
-            email: 'foobar@example.com',
-            password: 'foobar',
+            name: '',
+            type: '',
+            space: '',
+            guests: '',
+            beds: '',
+            price: '',
+            description: '',
+            facilities: [],
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -78,24 +100,108 @@ export const AddRoom = () => {
                     <form onSubmit={formik.handleSubmit}>
                         <TextField
                             fullWidth
-                            id="email"
-                            name="email"
-                            label="Email"
-                            value={formik.values.email}
+                            id="name"
+                            name="name"
+                            label="Name"
+                            value={formik.values.name}
                             onChange={formik.handleChange}
-                            error={formik.touched.email && Boolean(formik.errors.email)}
-                            helperText={formik.touched.email && formik.errors.email}
+                            error={formik.touched.name && Boolean(formik.errors.name)}
+                            helperText={formik.touched.name && formik.errors.name}
+                        />
+                        <InputLabel id="type">Type</InputLabel>
+                        <Select
+                            labelId="type"
+                            id="type"
+                            autoWidth
+                            variant = 'outlined'
+                            value={formik.values.type}
+                            onChange={formik.handleChange}
+                            error={formik.touched.type && Boolean(formik.errors.type)}
+                            helperText={formik.touched.type && formik.errors.type}
+                            style={{'marginTop': '10px'}}
+                        >
+                            <MenuItem value={1}>Room</MenuItem>
+                            <MenuItem value={2}>Suite</MenuItem>
+                        </Select>
+                        <TextField
+                            fullWidth
+                            id="guests"
+                            name="guests"
+                            label="Guests"
+                            type="number"
+                            value={formik.values.guests}
+                            onChange={formik.handleChange}
+                            error={formik.touched.guests && Boolean(formik.errors.guests)}
+                            helperText={formik.touched.guests && formik.errors.guests}
                         />
                         <TextField
                             fullWidth
-                            id="password"
-                            name="password"
-                            label="Password"
-                            type="password"
-                            value={formik.values.password}
+                            id="beds"
+                            name="beds"
+                            label="Beds"
+                            type="number"
+                            value={formik.values.beds}
                             onChange={formik.handleChange}
-                            error={formik.touched.password && Boolean(formik.errors.password)}
-                            helperText={formik.touched.password && formik.errors.password}
+                            error={formik.touched.beds && Boolean(formik.errors.beds)}
+                            helperText={formik.touched.beds && formik.errors.beds}
+                        />
+                        <TextField
+                            fullWidth
+                            id="space"
+                            name="space"
+                            label="Space"
+                            type="number"
+                            value={formik.values.space}
+                            onChange={formik.handleChange}
+                            error={formik.touched.space && Boolean(formik.errors.space)}
+                            helperText={formik.touched.space && formik.errors.space}
+                        />
+                        <TextField
+                            fullWidth
+                            id="price"
+                            name="price"
+                            label="Price per night/person"
+                            type="number"
+                            value={formik.values.price}
+                            onChange={formik.handleChange}
+                            error={formik.touched.price && Boolean(formik.errors.price)}
+                            helperText={formik.touched.price && formik.errors.price}
+                        />
+                        <TextField
+                            fullWidth
+                            id="description"
+                            name="description"
+                            label="Description"
+                            multiline
+                            value={formik.values.description}
+                            onChange={formik.handleChange}
+                            error={formik.touched.description && Boolean(formik.errors.description)}
+                            helperText={formik.touched.description && formik.errors.description}
+                        />
+                        <Autocomplete
+                            multiple
+                            id="facilities"
+                            options={facilitiesSet}
+                            defaultValue={[facilitiesSet[0]]}
+                            freeSolo
+                            renderTags={(value, getTagProps) =>
+                                value.map((option, index) => (
+                                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                                ))
+                            }
+                            renderInput={(params) => (
+                                <TextField {...params} variant="standard" label="Facilities"  />
+                            )}
+                            value={formik.values.facilities}
+                            onChange={(e, value) => {
+                                formik.setFieldValue(
+                                    "facilities",
+                                    value !== null ? value : formik.initialValues.facilities
+                                );
+                                console.log(formik.values.facilities);
+                            }}
+                            error={formik.touched.facilities && Boolean(formik.errors.facilities)}
+                            helperText={formik.touched.facilities && formik.errors.facilities}
                         />
                         <SubmitButton
                                 style={{
