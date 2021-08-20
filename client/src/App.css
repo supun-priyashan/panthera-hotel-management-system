@@ -13,9 +13,9 @@
 }
 
 .content {
-  display: block;
-  width: calc(100vw - 250px);
-  height: 100vh;
+  display: inline-block;
+  min-width: calc(98vw - 250px);
+  min-height: 99vh;
   font-size: 1.5rem;
   margin-left: 250px;
   background-color: #f2f2f2;
@@ -51,8 +51,20 @@
   border-radius: 5px;
   font-size: 14px;
   padding: 10px;
-  display: flex;
+  display: inline-block;
 }
+.main-container-tables{
+  width: 95%;
+  height: 70%;
+  background-color: #ffffff;
+  float: left;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 10px;
+  display: flex;
+  margin-top: 9vh;
+}
+
 
 .form-container{
   padding: 10px;
