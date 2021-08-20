@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table'
-import {Button,  Icon, Paper} from "@material-ui/core";
+import {Button, Icon, Link, Paper} from "@material-ui/core";
 import axios from "axios";
 
 export const Rooms = () => {
+
+    const history = useHistory();
 
     const [rooms,setRooms] = useState([]);
 
@@ -21,7 +24,6 @@ export const Rooms = () => {
                     space: item.space,
                     facilities: item.facilities,
                     images: item.images,
-                    imageCount: item.images.length,
                     price: item.price,
                     description: item.description,
                 })));
@@ -38,7 +40,7 @@ export const Rooms = () => {
             <div className={'dashboard-header'}>
                 Rooms & Suite Management
             </div>
-            <div className={'main-container'}>
+            <div className={'main-container-tables'}>
                 <div className={'table-container'}>
                     <MaterialTable
                         title="Rooms and Suites"
@@ -50,7 +52,7 @@ export const Rooms = () => {
                             { title: 'Beds', field: 'beds', type: 'numeric' },
                             { title: 'Space(m²)', field: 'space', type: 'numeric' },
                             { title: 'Facilities', field: 'facilities', hidden:true },
-                            { title: 'Images', field: 'imageCount', type: 'numeric' },
+                            { title: 'Images', field: 'imageCount', type: 'numeric', hidden:true },
                             { title: 'Price', field: 'price', type: 'numeric' },
                             { title: 'Description', field: 'description', hidden:true },
                         ]}
@@ -72,7 +74,6 @@ export const Rooms = () => {
                             {
                                 icon: "add_box",
                                 tooltip: "Add new room",
-                                //position: "center",
                                 isFreeAction:true,
                                 onClick: () => {
                                     console.log("clicked");
@@ -126,9 +127,11 @@ export const Rooms = () => {
                                     if(props.action.icon === 'add_box'){
                                         return(
                                             <Button
-                                                onClick={(event) => props.action.onClick(event, props.data)}
+                                                onClick={(event) => history.push('/rooms/add-room/')}
                                                 variant="contained"
                                                 startIcon={<Icon>add</Icon>}
+                                                /*component={Link}
+                                                to='/rooms/add-room/'*/
                                                 style={{
                                                     textTransform: 'none',
                                                     borderRadius: 35,
@@ -149,7 +152,7 @@ export const Rooms = () => {
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
-                            exportButton: true,
+                            //exportButton: true,
                             sorting: true,
                             pageSize: 6,
                             pageSizeOptions: [6],
