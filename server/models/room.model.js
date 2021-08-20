@@ -9,7 +9,7 @@ const roomSchema = new mongoose.Schema({
     price: {type: Number, required: true},
     description: {type: String, required: true, trim: true},
     facilities: {type: Array, required: true},
-    images: {type: Array, default: []}
+    image: {type: String, default: null}
 });
 
 const Room = mongoose.model('Room', roomSchema);
