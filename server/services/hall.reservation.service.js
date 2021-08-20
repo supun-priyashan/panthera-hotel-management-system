@@ -12,7 +12,7 @@ const addHallReservation = async (request, response) => {
             response.status(200).
             json({
                 success: true,
-                HallReservation: data
+                hallReservation: data
             })
         }
     });
@@ -21,11 +21,11 @@ const addHallReservation = async (request, response) => {
 const getHallReservation = async (request, response) => {
 
     try{
-        const hallReservation = await HallReservation.find();
+        const hallReservations = await HallReservation.find();
         response.status(200).
         json({
             success: true,
-            HallReservation: hallReservation
+            hallReservations: hallReservations
         })
     }
     catch(error) {

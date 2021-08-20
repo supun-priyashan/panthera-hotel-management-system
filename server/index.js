@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 
 const roomRoute = require('./routes/room.route');
 const hallRoute = require('./routes/hall.route');
+const roomReservationRoute = require('./routes/room.reservation.route');
+const hallReservationRoute = require('./routes/hall.reservation.route');
 
 dotenv.config();
 const app = express();
@@ -36,6 +38,8 @@ app.route('/').get((req,res) => {
 
 app.use('/rooms',roomRoute());
 app.use('/halls',hallRoute());
+app.use('/roomReservations', roomReservationRoute());
+app.use('/hallReservations', hallReservationRoute());
 
 app.listen(PORT,()=>{
     console.log(`Server is up and running on port ${PORT}`);

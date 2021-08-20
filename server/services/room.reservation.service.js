@@ -30,7 +30,7 @@ const addRoomReservation = async (request, response) => {
             response.status(200).
             json({
                 success: true,
-                RoomReservation: data
+                roomReservation: data
             })
         }
     });
@@ -39,11 +39,11 @@ const addRoomReservation = async (request, response) => {
 const getRoomReservation = async (request, response) => {
 
     try{
-        const roomReservation = await RoomReservation.find();
+        const roomReservations = await RoomReservation.find();
         response.status(200).
             json({
             success: true,
-            RoomReservation: roomReservation
+            roomReservations: roomReservations
         })
     }
     catch(error) {
