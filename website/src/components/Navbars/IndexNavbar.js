@@ -22,7 +22,7 @@ function IndexNavbar() {
         document.documentElement.scrollTop > 399 ||
         document.body.scrollTop > 399
       ) {
-        setNavbarColor("");
+        setNavbarColor("#5A2360");
       } else if (
         document.documentElement.scrollTop < 400 ||
         document.body.scrollTop < 400
@@ -90,7 +90,7 @@ function IndexNavbar() {
               </NavItem>
               <NavItem>
                 <NavLink
-                    to="/" tag={Link}
+                    to='/rooms' tag={Link}
                 >
                   <p>Accommodation</p>
                 </NavLink>

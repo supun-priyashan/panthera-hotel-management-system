@@ -17,7 +17,7 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import {BrowserRouter, Route, Switch, Redirect, BrowserRouter as Router} from "react-router-dom";
 
 // styles for this kit
 import './index.css';
@@ -28,15 +28,21 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 
 import LandingPage from "views/pages/LandingPage.js";
 import ProfilePage from "views/pages/ProfilePage.js";
+import RoomsPage from "views/pages/RoomsPage";
+
 
 ReactDOM.render(
-  <BrowserRouter>
+  /*<BrowserRouter>
     <Switch>
       <Switch>
         <Route
           path="/"
           render={(props) => <LandingPage {...props} />}
         />
+          <Route
+              path='/rooms'
+              render={(props) => <RoomsPage {...props} />}
+          />
         <Route
           path="/profile-page"
           render={(props) => <ProfilePage {...props} />}
@@ -44,6 +50,16 @@ ReactDOM.render(
 
       </Switch>
     </Switch>
-  </BrowserRouter>,
+  </BrowserRouter>*/
+    <Router>
+      <div>
+        <Switch>
+          <Route path='/rooms' exact component={RoomsPage} />
+          <Route path='/' exact component={LandingPage} />
+          <Route path='/profile' exact component={ProfilePage} />
+
+        </Switch>
+      </div>
+    </Router>,
   document.getElementById("root")
 );
