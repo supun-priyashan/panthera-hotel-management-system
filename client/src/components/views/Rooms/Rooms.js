@@ -23,7 +23,7 @@ export const Rooms = () => {
                     guests: item.guests,
                     space: item.space,
                     facilities: item.facilities,
-                    images: item.images,
+                    image: item.image,
                     price: item.price,
                     description: item.description,
                 })));
@@ -52,7 +52,7 @@ export const Rooms = () => {
                             { title: 'Beds', field: 'beds', type: 'numeric' },
                             { title: 'Space(m²)', field: 'space', type: 'numeric' },
                             { title: 'Facilities', field: 'facilities', hidden:true },
-                            { title: 'Images', field: 'imageCount', type: 'numeric', hidden:true },
+                            { title: 'Image', field: 'image', type: 'numeric', hidden:true },
                             { title: 'Price', field: 'price', type: 'numeric' },
                             { title: 'Description', field: 'description', hidden:true },
                         ]}
