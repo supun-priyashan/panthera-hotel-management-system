@@ -22,7 +22,7 @@ export const Halls = () => {
                     height: item.height,
                     guests: item.guests,
                     space: item.space,
-                    facilities: item.facilities,
+                    facilities: item.facilities.join(),
                     image: item.image,
                     events: item.events.join(),
                     price: item.price,
