@@ -43,18 +43,18 @@ function RoomsPage() {
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.rooms);
-                /*setRooms(response.data.rooms.map((item) => ({
+                setRooms(response.data.rooms.map((item) => ({
                     id: item._id,
                     roomName: item.roomName,
                     type: item.type,
                     beds: item.beds,
                     guests: item.guests,
                     space: item.space,
-                    facilities: item.facilities,
+                    facilities: item.facilities.join(),
                     image: item.image,
                     price: item.price,
                     description: item.description,
-                })));*/
+                })));
                 setRooms(response.data.rooms);
                 setTimeout(() => console.log(rooms.length),5000)
             } else{
