@@ -168,8 +168,8 @@ export const AddRoom = () => {
                             helperText={formik.touched.type && formik.errors.type}
                             style={{'marginTop': '10px'}}
                         >
-                            <MenuItem value={1}>Room</MenuItem>
-                            <MenuItem value={2}>Suite</MenuItem>
+                            <MenuItem value={'Room'}>Room</MenuItem>
+                            <MenuItem value={'Suite'}>Suite</MenuItem>
                         </TextField>
                         <TextField
                             fullWidth

@@ -95,7 +95,7 @@ export const AddHall = () => {
             };
 
             const hall = {
-                roomName: values.name,
+                hallName: values.name,
                 type: values.type,
                 space: values.space,
                 guests: values.guests,
@@ -115,7 +115,6 @@ export const AddHall = () => {
                         .then(() => {
                             if (response.data.success) {
                                 alert('Hall Successfully Added')
-
                             } else {
                                 alert('Failed to add hall')
                             }
@@ -123,7 +122,7 @@ export const AddHall = () => {
                         alert(error.message);
                     });
 
-                })
+                }).catch((error) => console.error(error))
         },
     });
 
@@ -168,8 +167,8 @@ export const AddHall = () => {
                             helperText={formik.touched.type && formik.errors.type}
                             style={{'marginTop': '10px'}}
                         >
-                            <MenuItem value={1}>Indoor</MenuItem>
-                            <MenuItem value={2}>Outdoor</MenuItem>
+                            <MenuItem value={'Indoor'}>Indoor</MenuItem>
+                            <MenuItem value={'Outdoor'}>Outdoor</MenuItem>
                         </TextField>
                         <TextField
                             fullWidth
@@ -186,7 +185,7 @@ export const AddHall = () => {
                             fullWidth
                             id="height"
                             name="height"
-                            label="Beds"
+                            label="Height (ft)"
                             type="number"
                             value={formik.values.height}
                             onChange={formik.handleChange}
@@ -208,7 +207,7 @@ export const AddHall = () => {
                             fullWidth
                             id="price"
                             name="price"
-                            label="Price per night/person"
+                            label="Price per day"
                             type="number"
                             value={formik.values.price}
                             onChange={formik.handleChange}

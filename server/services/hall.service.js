@@ -4,13 +4,12 @@ const addHall = async (request, response) => {
 
     const hall = new Hall(request.body);
 
-    console.log(hall);
-
     await hall.save((error, hall) => {
         if(error){
             response.status(500).json({ error: error.message });
         }
         else{
+            console.log('New hall added successfully ',hall)
             response.status(200).
             json({
                 success: true,
