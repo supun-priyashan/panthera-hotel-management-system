@@ -14,19 +14,20 @@ export const Halls = () => {
         axios.get('http://localhost:8080/halls').
         then((response) => {
             if(response.data.success) {
-                console.log(response.data.rooms);
-                /*setHalls(response.data.rooms.map((item) => ({
+                console.log(response.data.halls);
+                setHalls(response.data.halls.map((item) => ({
                     id: item._id,
-                    roomName: item.roomName,
+                    hallName: item.hallName,
                     type: item.type,
-                    beds: item.beds,
+                    height: item.height,
                     guests: item.guests,
                     space: item.space,
                     facilities: item.facilities,
-                    images: item.images,
+                    image: item.image,
+                    events: item.events.join(),
                     price: item.price,
                     description: item.description,
-                })));*/
+                })));
                 setTimeout(console.log(halls),3000)
             } else{
                 alert('An error occurred while retrieving data');
@@ -38,15 +39,15 @@ export const Halls = () => {
     return (
         <div className={'content'}>
             <div className={'dashboard-header'}>
-                Rooms & Suite Management
+                Reception Hall Management
             </div>
             <div className={'main-container-tables'}>
                 <div className={'table-container'}>
                     <MaterialTable
-                        title="Rooms and Suites"
+                        title="Reception Halls"
                         columns={[
                             { title: 'id', field: 'id', hidden: true },
-                            { title: 'Name', field: 'roomName' },
+                            { title: 'Name', field: 'hallName' },
                             { title: 'Type', field: 'type' },
                             { title: 'Guests', field: 'guests', type: 'numeric' },
                             { title: 'Beds', field: 'beds', type: 'numeric' },
