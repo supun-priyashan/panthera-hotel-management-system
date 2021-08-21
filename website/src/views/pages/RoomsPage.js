@@ -72,7 +72,7 @@ function RoomsPage() {
                 <div className="section section-about-us">
                     <Container>
                         <Row>
-                            <Col className="ml-auto mr-auto text-center" md="32">
+                            <Col className="ml-auto mr-auto text-center" md="60">
                                 <h2 className="title">Rooms</h2>
                                 <div className={'container'}>
                                     {rooms.length > 0 && rooms.map((item,index)=>{
@@ -80,7 +80,7 @@ function RoomsPage() {
                                             <Fragment key={index}>
                                                 <div className="card" style={{
                                                     width: "20rem",
-                                                    margin: "10px",
+                                                    margin: "25px 25px 25px 25px",
                                                 }} >
                                                     <img className="card-img-top" src={'http://localhost:8080/uploads/'+item.image}  alt="Room image"/>
                                                     <div className="card-body">
