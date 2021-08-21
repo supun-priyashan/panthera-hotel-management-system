@@ -8,7 +8,7 @@ export const HallReservation = () => {
     const [hallReservations,setHallReservations] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/reservations/halls').
+        axios.get('http://localhost:8080/hallReservations').
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.hallReservations);
@@ -66,15 +66,6 @@ export const HallReservation = () => {
                                 icon: 'delete',
                                 tooltip: 'Delete User',
 
-                            },
-                            {
-                                icon: "add_box",
-                                tooltip: "Add new room",
-                                //position: "center",
-                                isFreeAction:true,
-                                onClick: () => {
-                                    console.log("clicked");
-                                }
                             }
                         ]}
                         components={{
@@ -121,25 +112,7 @@ export const HallReservation = () => {
                                             </button>
                                         )
                                     }
-                                    if(props.action.icon === 'add_box'){
-                                        return(
-                                            <Button
-                                                onClick={(event) => props.action.onClick(event, props.data)}
-                                                variant="contained"
-                                                startIcon={<Icon>add</Icon>}
-                                                style={{
-                                                    textTransform: 'none',
-                                                    borderRadius: 35,
-                                                    backgroundColor: '#5a2360',
-                                                    fontFamily: 'Roboto',
-                                                    color:'white',
-                                                }}
-                                                size="medium"
-                                            >
-                                                Add a room
-                                            </Button>
-                                        )
-                                    }
+
                                 }
 
                         }}

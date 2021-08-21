@@ -8,7 +8,7 @@ export const RoomReservation = () => {
     const [roomReservations,setRoomReservations] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/reservations/rooms').
+        axios.get('http://localhost:8080/roomReservations').
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.roomReservations);
@@ -19,7 +19,7 @@ export const RoomReservation = () => {
                     contactNumber: item.contactNumber,
                     roomName: item.roomName,
                     roomType: item.roomType,
-                    noOfBeds: item.roomType,
+                    noOfBeds: item.noOfBeds,
                     noOfGuests: item.noOfGuests,
                     arrivalDate: item.arrivalDate,
                     departureDate: item.departureDate,
@@ -66,15 +66,6 @@ export const RoomReservation = () => {
                                 icon: 'delete',
                                 tooltip: 'Delete User',
 
-                            },
-                            {
-                                icon: "add_box",
-                                tooltip: "Add new room",
-                                //position: "center",
-                                isFreeAction:true,
-                                onClick: () => {
-                                    console.log("clicked");
-                                }
                             }
                         ]}
                         components={{
@@ -121,25 +112,7 @@ export const RoomReservation = () => {
                                             </button>
                                         )
                                     }
-                                    if(props.action.icon === 'add_box'){
-                                        return(
-                                            <Button
-                                                onClick={(event) => props.action.onClick(event, props.data)}
-                                                variant="contained"
-                                                startIcon={<Icon>add</Icon>}
-                                                style={{
-                                                    textTransform: 'none',
-                                                    borderRadius: 35,
-                                                    backgroundColor: '#5a2360',
-                                                    fontFamily: 'Roboto',
-                                                    color:'white',
-                                                }}
-                                                size="medium"
-                                            >
-                                                Add a room
-                                            </Button>
-                                        )
-                                    }
+
                                 }
 
                         }}
