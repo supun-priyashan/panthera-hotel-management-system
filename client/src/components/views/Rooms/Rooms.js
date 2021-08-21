@@ -62,13 +62,13 @@ export const Rooms = () => {
                         actions={[
                             {
                                 icon: 'edit',
-                                tooltip: 'Edit User',
+                                tooltip: 'Edit Room',
                                 onClick: (event, rowData) => alert("You saved " + rowData.name)
                             },
 
                             {
                                 icon: 'delete',
-                                tooltip: 'Delete User',
+                                tooltip: 'Delete Room',
 
                             },
                             {
@@ -91,8 +91,8 @@ export const Rooms = () => {
                                                 MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
-                                                title="Edit User"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.name)}
+                                                title="Edit Room"
+                                                onClick={(event, rowData) => alert("You edited " + props.data.id)}
                                             >
                                                 <span class="MuiIconButton-label">
                                                     <span class="material-icons MuiIcon-root"
@@ -110,8 +110,8 @@ export const Rooms = () => {
                                                 class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
-                                                title="Delete User"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.name)}
+                                                title="Delete Room"
+                                                onClick={(event, rowData) => alert("You deleted " + props.data.id)}
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
