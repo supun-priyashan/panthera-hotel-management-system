@@ -6,32 +6,16 @@ import { Container } from "reactstrap";
 
 function TransparentFooter() {
   return (
-    <footer className="footer">
+    <footer className="footer footer-default">
       <Container>
         <nav>
           <ul>
             <li>
               <a
-                href="https://www.creative-tim.com?ref=nukr-transparent-footer"
-                target="_blank"
-              >
-                Creative Tim
-              </a>
-            </li>
-            <li>
-              <a
-                href="http://presentation.creative-tim.com?ref=nukr-transparent-footer"
+                href=""
                 target="_blank"
               >
                 About Us
-              </a>
-            </li>
-            <li>
-              <a
-                href="http://blog.creative-tim.com?ref=nukr-transparent-footer"
-                target="_blank"
-              >
-                Blog
               </a>
             </li>
           </ul>
@@ -39,17 +23,10 @@ function TransparentFooter() {
         <div className="copyright" id="copyright">
           © {new Date().getFullYear()}, Designed by{" "}
           <a
-            href="https://www.invisionapp.com?ref=nukr-transparent-footer"
+            href="https://github.com/supun-priyashan/panthera-hotel-management-system/tree/master"
             target="_blank"
           >
-            Invision
-          </a>
-          . Coded by{" "}
-          <a
-            href="https://www.creative-tim.com?ref=nukr-transparent-footer"
-            target="_blank"
-          >
-            Creative Tim
+            REG_WE_64
           </a>
           .
         </div>

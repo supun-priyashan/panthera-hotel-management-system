@@ -34,9 +34,9 @@ function LandingPageHeader() {
         ></div>
         <div className="content-center">
           <Container>
-            <h1 className="title">This is our great company.</h1>
+            <h1 className="title">LUXURY AWAITS YOU</h1>
             <div className="text-center">
-              //////
+              Explore from our world class rooms & suites
             </div>
           </Container>
         </div>

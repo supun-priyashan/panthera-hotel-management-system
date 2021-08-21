@@ -10,7 +10,7 @@ const receptionSchema = new mongoose.Schema({
     description: {type: String, required: true, trim: true},
     facilities: {type: Array, required: true},
     events: {type: Array, required: true},
-    images: {type: Array, default: []}
+    image: {type: String, default: ''}
 });
 
 const Reception = mongoose.model('Reception', receptionSchema);
