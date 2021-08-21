@@ -22,13 +22,12 @@ export const Halls = () => {
                     height: item.height,
                     guests: item.guests,
                     space: item.space,
-                    facilities: item.facilities,
+                    facilities: item.facilities.join(),
                     image: item.image,
                     events: item.events.join(),
                     price: item.price,
                     description: item.description,
                 })));
-                setTimeout(console.log(halls),3000)
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -50,10 +49,11 @@ export const Halls = () => {
                             { title: 'Name', field: 'hallName' },
                             { title: 'Type', field: 'type' },
                             { title: 'Guests', field: 'guests', type: 'numeric' },
-                            { title: 'Beds', field: 'beds', type: 'numeric' },
+                            { title: 'Height', field: 'height', type: 'numeric' },
                             { title: 'Space(m²)', field: 'space', type: 'numeric' },
                             { title: 'Facilities', field: 'facilities', hidden:true },
-                            { title: 'Images', field: 'imageCount', type: 'numeric', hidden:true },
+                            { title: 'Events', field: 'events'},
+                            { title: 'Image', field: 'image', type: 'numeric', hidden:true },
                             { title: 'Price', field: 'price', type: 'numeric' },
                             { title: 'Description', field: 'description', hidden:true },
                         ]}
@@ -63,18 +63,18 @@ export const Halls = () => {
                         actions={[
                             {
                                 icon: 'edit',
-                                tooltip: 'Edit User',
+                                tooltip: 'Edit hall data',
                                 onClick: (event, rowData) => alert("You saved " + rowData.name)
                             },
 
                             {
                                 icon: 'delete',
-                                tooltip: 'Delete User',
+                                tooltip: 'Delete hall',
 
                             },
                             {
                                 icon: "add_box",
-                                tooltip: "Add new room",
+                                tooltip: "Add new hall",
                                 isFreeAction:true,
                                 onClick: () => {
                                     console.log("clicked");
@@ -92,8 +92,8 @@ export const Halls = () => {
                                                 MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
-                                                title="Edit User"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.name)}
+                                                title="Edit Hall"
+                                                onClick={(event, rowData) => alert("You edited " + props.data.id)}
                                             >
                                                 <span class="MuiIconButton-label">
                                                     <span class="material-icons MuiIcon-root"
@@ -111,8 +111,8 @@ export const Halls = () => {
                                                 class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
-                                                title="Delete User"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.name)}
+                                                title="Delete Hall"
+                                                onClick={(event, rowData) => alert("You deleted " + props.data.id)}
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
@@ -128,7 +128,7 @@ export const Halls = () => {
                                     if(props.action.icon === 'add_box'){
                                         return(
                                             <Button
-                                                onClick={(event) => history.push('/rooms/add-room/')}
+                                                onClick={(event) => history.push('/rooms/add-hall/')}
                                                 variant="contained"
                                                 startIcon={<Icon>add</Icon>}
                                                 /*component={Link}
@@ -142,7 +142,7 @@ export const Halls = () => {
                                                 }}
                                                 size="medium"
                                             >
-                                                Add a room
+                                                Add a hall
                                             </Button>
                                         )
                                     }
