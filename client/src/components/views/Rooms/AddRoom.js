@@ -48,16 +48,24 @@ export const AddRoom = () => {
             .string('Select room type')
             .required('Type is required'),
         space: yup
-            .string('Enter space of the room')
+            .number()
+            .label('space')
+            .positive()
             .required('Space is required'),
         guests: yup
-            .string('Enter maximum guest count the room')
+            .number()
+            .label('guests')
+            .positive()
             .required('Guest count is required'),
         beds: yup
-            .string('Enter bed count the room')
+            .number()
+            .label('beds')
+            .positive()
             .required('Bed count is required'),
         price: yup
-            .string('Enter the price of the room')
+            .number()
+            .label('price')
+            .positive()
             .required('Price is required'),
         description: yup
             .string('Enter the description')
@@ -189,7 +197,7 @@ export const AddRoom = () => {
                             fullWidth
                             id="space"
                             name="space"
-                            label="Space"
+                            label="Space (m²)"
                             type="number"
                             value={formik.values.space}
                             onChange={formik.handleChange}
