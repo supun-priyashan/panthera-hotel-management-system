@@ -29,6 +29,8 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 import LandingPage from "views/pages/LandingPage.js";
 import ProfilePage from "views/pages/ProfilePage.js";
 import RoomsPage from "views/pages/RoomsPage";
+import RoomReservationPage from "./views/pages/RoomReservationPage";
+import HallReservationsPage from "./views/pages/HallReservationsPage";
 
 
 ReactDOM.render(
@@ -54,9 +56,12 @@ ReactDOM.render(
     <Router>
       <div>
         <Switch>
-          <Route path='/rooms' exact component={RoomsPage} />
-          <Route path='/' exact component={LandingPage} />
-          <Route path='/profile' exact component={ProfilePage} />
+
+            <Route path='/rooms' exact component={RoomsPage} />
+            <Route path='/' exact component={LandingPage} />
+            <Route path='/profile' exact component={ProfilePage} />
+            <Route path='/reservations/rooms' exact component={RoomReservationPage} />
+            <Route path='/reservations/halls' exact component={HallReservationsPage} />
 
         </Switch>
       </div>
