@@ -51,7 +51,7 @@ export const Halls = () => {
                             { title: 'Guests', field: 'guests', type: 'numeric' },
                             { title: 'Height', field: 'height', type: 'numeric' },
                             { title: 'Space(m²)', field: 'space', type: 'numeric' },
-                            { title: 'Facilities', field: 'facilities', hidden:true },
+                            { title: 'Facilities', field: 'facilities' },
                             { title: 'Events', field: 'events'},
                             { title: 'Image', field: 'image', type: 'numeric', hidden:true },
                             { title: 'Price', field: 'price', type: 'numeric' },
@@ -128,7 +128,7 @@ export const Halls = () => {
                                     if(props.action.icon === 'add_box'){
                                         return(
                                             <Button
-                                                onClick={(event) => history.push('/rooms/add-hall/')}
+                                                onClick={(event) => history.push('/halls/add-hall/')}
                                                 variant="contained"
                                                 startIcon={<Icon>add</Icon>}
                                                 /*component={Link}

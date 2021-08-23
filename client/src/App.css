@@ -40,7 +40,8 @@
   margin-bottom: 3vh;
   float: left;
   width: 100%;
-  display: block;
+  display: inline-block;
+  align-items: center;
 }
 
 .main-container{
@@ -63,6 +64,7 @@
   padding: 10px;
   display: flex;
   margin-top: 9vh;
+  display: inline-block;
 }
 
 

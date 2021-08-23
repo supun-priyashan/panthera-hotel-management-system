@@ -3,6 +3,7 @@ import Sidebar from './components/views/SideNav/SideBar'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import {Halls} from "./components/views/Halls/Halls";
+import {AddHall} from "./components/views/Halls/AddHall";
 import {Rooms} from "./components/views/Rooms/Rooms";
 import {AddRoom} from "./components/views/Rooms/AddRoom";
 import {Employees} from "./components/views/Employees/Employees";
@@ -18,6 +19,7 @@ function App() {
             <div>
                 <Switch>
                     <Route path='/halls' exact component={Halls} />
+                    <Route path='/halls/add-hall' exact component={AddHall} />
                     <Route path='/rooms' exact component={Rooms} />
                     <Route path='/rooms/add-room' exact component={AddRoom} />
                     <Route path='/reservations/rooms' exact component={RoomReservation} />
