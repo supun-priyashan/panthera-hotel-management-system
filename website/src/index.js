@@ -31,6 +31,7 @@ import ProfilePage from "views/pages/ProfilePage.js";
 import RoomsPage from "views/pages/RoomsPage";
 import RoomReservationPage from "./views/pages/RoomReservationPage";
 import HallReservationsPage from "./views/pages/HallReservationsPage";
+import ConfirmRoomReservationPage from "./views/pages/ConfirmRoomReservationPage";
 
 
 ReactDOM.render(
@@ -62,6 +63,7 @@ ReactDOM.render(
             <Route path='/profile' exact component={ProfilePage} />
             <Route path='/reservations/rooms' exact component={RoomReservationPage} />
             <Route path='/reservations/halls' exact component={HallReservationsPage} />
+            <Route path='/confirm/rooms' exact component={ConfirmRoomReservationPage} />
 
         </Switch>
       </div>

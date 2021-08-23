@@ -20,6 +20,7 @@ import IndexHeader from "../../components/Headers/IndexHeader";
 import RoomsHeader from "../../components/Headers/HallReservationsHeader";
 import axios from "axios";
 import Datetime from "react-datetime";
+import HallReservationsHeader from "../../components/Headers/HallReservationsHeader";
 
 function HallReservationPage() {
     const [firstFocus, setFirstFocus] = useState(false);
@@ -69,7 +70,7 @@ function HallReservationPage() {
         <>
             <IndexNavbar />
             <div className="wrapper">
-                <RoomsHeader />
+                <HallReservationsHeader />
                 <div className="section section-about-us">
                     <Container>
 
@@ -78,9 +79,11 @@ function HallReservationPage() {
                                 <Col className="ml-auto mr-auto text-left" md="6">
                                     <div className="team-player">
 
-                                        <p className="category text-info">Venue</p>
+                                        <p className="category" style={{
+                                            color: "black",
+                                        }}>Venue</p>
                                         <h2 className="title">Wedding Hall</h2>
-                                        <p className="category text-info">Colombo, Sri Lanka</p>
+                                        <p className="category">Colombo, Sri Lanka</p>
 
                                         <p className="description">
                                             You can write here details about one of your team members.
@@ -182,6 +185,7 @@ function HallReservationPage() {
                                                 width: "35rem",
                                                 height: "35rem",
                                                 margin: "10px",
+                                                backgroundColor: "#F8FCFA",
                                             }} >
                                                 <div className="card-body">
                                                     <h5 className="title">BOOK NOW FOR LKR 1,200,000.00</h5>
@@ -243,7 +247,9 @@ function HallReservationPage() {
                                                         Send Message
                                                     </Button>
                                                     <hr></hr>
-                                                    <p className="category text-info">Cancellation Terms</p>
+                                                    <p className="category" style={{
+                                                        color: "black",
+                                                    }}>Cancellation Terms</p>
 
                                                     <p className="description">
                                                         Zero-refund: no refund after booking

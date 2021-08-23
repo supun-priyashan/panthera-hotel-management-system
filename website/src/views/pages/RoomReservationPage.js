@@ -17,8 +17,9 @@ import LandingPageHeader from "components/Headers/LandingPageHeader.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import IndexHeader from "../../components/Headers/IndexHeader";
-import RoomsHeader from "../../components/Headers/RoomReservationsHeader";
 import axios from "axios";
+import RoomReservationsHeader from "../../components/Headers/RoomReservationsHeader";
+
 
 function RoomReservationPage() {
     const [firstFocus, setFirstFocus] = useState(false);
@@ -68,7 +69,7 @@ function RoomReservationPage() {
         <>
             <IndexNavbar />
             <div className="wrapper">
-                <RoomsHeader />
+                <RoomReservationsHeader />
 
                 <div className="section section-team text-center">
                     <Container>
@@ -138,6 +139,7 @@ function RoomReservationPage() {
                                                         width: "38rem",
                                                         height: "28rem",
                                                         margin: "10px",
+                                                        backgroundColor: "#F8FCFA",
                                                   }} >
                                                         <div className="card-body">
                                                                 <h5 className="title">ROOM FACILITIES</h5>

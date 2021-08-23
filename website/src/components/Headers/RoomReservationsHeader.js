@@ -5,7 +5,7 @@ import { Button, Container } from "reactstrap";
 
 // core components
 
-function RoomReservationPageHeader() {
+function RoomReservationsHeader() {
     let pageHeader = React.createRef();
 
     React.useEffect(() => {
@@ -64,4 +64,4 @@ function RoomReservationPageHeader() {
     );
 }
 
-export default RoomReservationPageHeader;
+export default RoomReservationsHeader;
