@@ -5,7 +5,7 @@ import { Button, Container } from "reactstrap";
 
 // core components
 
-function LandingPageHeader() {
+function HallReservationsHeader() {
     let pageHeader = React.createRef();
 
     React.useEffect(() => {
@@ -42,4 +42,4 @@ function LandingPageHeader() {
     );
 }
 
-export default LandingPageHeader;
+export default HallReservationsHeader;

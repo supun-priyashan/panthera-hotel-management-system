@@ -5,7 +5,7 @@ import { Button, Container } from "reactstrap";
 
 // core components
 
-function LandingPageHeader() {
+function RoomReservationPageHeader() {
     let pageHeader = React.createRef();
 
     React.useEffect(() => {
@@ -32,6 +32,7 @@ function LandingPageHeader() {
                     }}
                     ref={pageHeader}
                 ></div>
+
                 <div className="content-center">
                     <Container>
                         <h1 className="title">DELUXE DOUBLE ROOM</h1>
@@ -41,21 +42,26 @@ function LandingPageHeader() {
                     <div className="content">
                         <div className="social-description">
                             <h2>26</h2>
-                            <p>Comments</p>
+                            <p>29m2</p>
                         </div>
                         <div className="social-description">
                             <h2>26</h2>
-                            <p>Comments</p>
+                            <p>2 Beds</p>
                         </div>
                         <div className="social-description">
                             <h2>48</h2>
-                            <p>Bookmarks</p>
+                            <p>2 Guests</p>
+                        </div>
+                        <div className="social-description">
+                            <h2>48</h2>
+                            <p>1 Bathroom</p>
                         </div>
                     </div>
                 </Container>
+
             </div>
         </>
     );
 }
 
-export default LandingPageHeader;
+export default RoomReservationPageHeader;

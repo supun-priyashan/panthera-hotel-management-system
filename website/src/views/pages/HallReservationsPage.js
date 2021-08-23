@@ -88,7 +88,7 @@ function HallReservationPage() {
                                             add some links for people to be able to follow them outside the site.
                                         </p>
                                         <hr></hr>
-                                        <h4 className="title">Supported Events</h4>
+                                        <h5 className="title">Supported Events</h5>
                                         <Row>
                                             <Col className="ml-auto mr-auto text-left" md="4">
                                                 <div className="team-player">
@@ -102,7 +102,7 @@ function HallReservationPage() {
                                             </Col>
                                         </Row>
                                         <hr></hr>
-                                        <h4 className="title">Features</h4>
+                                        <h5 className="title">Features</h5>
 
                                         <Row>
                                             <Col className="ml-auto mr-auto text-left" md="4">
@@ -249,7 +249,7 @@ function HallReservationPage() {
                                                         Zero-refund: no refund after booking
                                                     </p>
                                                     <p className="description">
-                                                        This policy means that you will be reimbursed any payment that you have made if you cancel the reservation made.
+                                                        This policy means that you will be reimbursed any payment that you have made if you cancel the reservation made
                                                     </p>
                                                     <p className="card-text"></p>
                                                 </div>
