@@ -4,8 +4,6 @@ const addRoom = async (request, response) => {
 
     const room = new Room(request.body);
 
-    console.log(room);
-
     await room.save((error, room) => {
         if(error){
             response.status(500).json({ error: error.message });

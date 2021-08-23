@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const receptionSchema = new mongoose.Schema({
+const hallSchema = new mongoose.Schema({
     hallName: {type: String, required: true, trim: true},
     type: {type: String, required: true, trim: true},
     space: {type: Number, required: true},
@@ -10,9 +10,9 @@ const receptionSchema = new mongoose.Schema({
     description: {type: String, required: true, trim: true},
     facilities: {type: Array, required: true},
     events: {type: Array, required: true},
-    images: {type: Array, default: []}
+    image: {type: String, default: ''}
 });
 
-const Reception = mongoose.model('Reception', receptionSchema);
+const Hall = mongoose.model('Hall', hallSchema);
 
-module.exports = Reception;
+module.exports = Hall;

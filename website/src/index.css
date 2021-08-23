@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Unica+One');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+.nav-logo{
+    //color: #5A2360;
+    fontFamily: 'Unica One';
+    min-height: 100%;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: lowercase;
+}
