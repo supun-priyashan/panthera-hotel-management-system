@@ -28,7 +28,7 @@ function LandingPageHeader() {
           className="page-header-image"
           style={{
             backgroundImage:
-              "url(" + require("assets/img/bg6.jpg").default + ")",
+              "url(" + require("assets/img/bg5.webp").default + ")",
           }}
           ref={pageHeader}
         ></div>

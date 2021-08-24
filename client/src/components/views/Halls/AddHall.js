@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import Icon from '@material-ui/core/Icon';
-import axios from "axios";
-import {Button, Chip, Input, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import * as yup from "yup";
-import {useFormik,Field} from "formik";
+import {useFormik} from "formik";
+import axios from "axios";
+import Icon from "@material-ui/core/Icon";
+import {Chip, IconButton, Input, InputLabel, MenuItem, TextField} from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import styled from "styled-components";
 
 const SubmitButton = styled.button`
@@ -34,10 +33,10 @@ const SubmitButton = styled.button`
   }
 `;
 
-const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
+const facilitiesSet = ['Smoking area','Parking','Open Bar','Air Conditioned','Dance Floor'];
+const eventsSet = ['Weddings','Conferences'];
 
-export const AddRoom = () => {
-
+export const AddHall = () => {
     const [imageFile,setImageFile] = useState();
 
     const validationSchema = yup.object({
@@ -57,11 +56,10 @@ export const AddRoom = () => {
             .label('guests')
             .positive()
             .required('Guest count is required'),
-        beds: yup
+        height: yup
             .number()
-            .label('beds')
-            .positive()
-            .required('Bed count is required'),
+            .label('height')
+            .positive(),
         price: yup
             .number()
             .label('price')
@@ -78,10 +76,11 @@ export const AddRoom = () => {
             type: '',
             space: '',
             guests: '',
-            beds: '',
+            height: '',
             price: '',
             description: '',
             facilities: [],
+            events: [],
             image: null,
         },
         validationSchema: validationSchema,
@@ -95,50 +94,50 @@ export const AddRoom = () => {
                 }
             };
 
-            const room = {
-                roomName: values.name,
+            const hall = {
+                hallName: values.name,
                 type: values.type,
                 space: values.space,
                 guests: values.guests,
-                beds: values.beds,
+                height: values.height,
                 price: values.price,
                 description: values.description,
                 facilities: values.facilities,
+                events: values.events,
                 image: imageFile.name,
             }
 
-            console.log(imageFile,room);
+            console.log(imageFile,hall);
 
-            axios.post('http://localhost:8080/rooms', room)
+            axios.post('http://localhost:8080/halls', hall)
                 .then(response => {
                     axios.post("http://localhost:8080/files",formData,config)
                         .then(() => {
                             if (response.data.success) {
-                                alert('Room Successfully Added')
-
+                                alert('Hall Successfully Added')
                             } else {
-                                alert('Failed to add room')
+                                alert('Failed to add hall')
                             }
                         }).catch((error) => {
                         alert(error.message);
                     });
 
-                })
+                }).catch((error) => console.error(error))
         },
     });
-
-    useEffect(() => {},[])
 
     return (
         <div className={'content'}>
             <div className={'dashboard-header'}>
-                Rooms & Suite Management
+                Reception Hall Management
                 <div className={'dashboard-subheader'}>
                     {/*TODO Align icon an route to go back*/}
-                    <Icon style={{
-                        color: '#5a2360',
-                    }}>arrow_back_ios</Icon>
-                    Add a Room
+                    <IconButton aria-label="delete">
+                        <Icon style={{
+                            color: '#5a2360',
+                        }}>arrow_back_ios</Icon>
+                    </IconButton>
+                        Add a Reception Hall
                 </div>
             </div>
             <div className={'main-container'}>
@@ -168,8 +167,8 @@ export const AddRoom = () => {
                             helperText={formik.touched.type && formik.errors.type}
                             style={{'marginTop': '10px'}}
                         >
-                            <MenuItem value={'Room'}>Room</MenuItem>
-                            <MenuItem value={'Suite'}>Suite</MenuItem>
+                            <MenuItem value={'Indoor'}>Indoor</MenuItem>
+                            <MenuItem value={'Outdoor'}>Outdoor</MenuItem>
                         </TextField>
                         <TextField
                             fullWidth
@@ -184,14 +183,14 @@ export const AddRoom = () => {
                         />
                         <TextField
                             fullWidth
-                            id="beds"
-                            name="beds"
-                            label="Beds"
+                            id="height"
+                            name="height"
+                            label="Height (ft)"
                             type="number"
-                            value={formik.values.beds}
+                            value={formik.values.height}
                             onChange={formik.handleChange}
-                            error={formik.touched.beds && Boolean(formik.errors.beds)}
-                            helperText={formik.touched.beds && formik.errors.beds}
+                            error={formik.touched.height && Boolean(formik.errors.height)}
+                            helperText={formik.touched.height && formik.errors.height}
                         />
                         <TextField
                             fullWidth
@@ -208,7 +207,7 @@ export const AddRoom = () => {
                             fullWidth
                             id="price"
                             name="price"
-                            label="Price per night/person"
+                            label="Price per day"
                             type="number"
                             value={formik.values.price}
                             onChange={formik.handleChange}
@@ -230,7 +229,6 @@ export const AddRoom = () => {
                             multiple
                             id="facilities"
                             options={facilitiesSet}
-                            defaultValue={[facilitiesSet[0]]}
                             freeSolo
                             renderTags={(value, getTagProps) =>
                                 value.map((option, index) => (
@@ -250,6 +248,29 @@ export const AddRoom = () => {
                             error={formik.touched.facilities && Boolean(formik.errors.facilities)}
                             helperText={formik.touched.facilities && formik.errors.facilities}
                         />
+                        <Autocomplete
+                            multiple
+                            id="events"
+                            options={eventsSet}
+                            freeSolo
+                            renderTags={(value, getTagProps) =>
+                                value.map((option, index) => (
+                                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                                ))
+                            }
+                            renderInput={(params) => (
+                                <TextField {...params} variant="standard" label="Events" />
+                            )}
+                            value={formik.values.events}
+                            onChange={(e, value) => {
+                                formik.setFieldValue(
+                                    "events",
+                                    value !== null ? value : formik.initialValues.events
+                                );
+                            }}
+                            error={formik.touched.events && Boolean(formik.errors.events)}
+                            helperText={formik.touched.events && formik.errors.events}
+                        />
                         <InputLabel id="image" style={{
                             marginTop: '10px',
                         }}>Image</InputLabel>
@@ -261,21 +282,21 @@ export const AddRoom = () => {
                             onChange={(e) => {setImageFile((e.target.files[0]))}}
                             error={formik.touched.image && Boolean(formik.errors.image)}
                             helperText={formik.touched.image && formik.errors.image}
-                            />
+                        />
                         <SubmitButton
-                                style={{
-                                    float: 'right',
-                                    marginTop: '10px',
-                                    backgroundColor: '#5a2360',
-                                    fontFamily: 'Josefin Sans'
-                                }}
-                                type = "submit"
+                            style={{
+                                float: 'right',
+                                marginTop: '10px',
+                                backgroundColor: '#5a2360',
+                                fontFamily: 'Josefin Sans'
+                            }}
+                            type = "submit"
                         >
-                            Add Room
+                            Add Hall
                         </SubmitButton>
                     </form>
                 </div>
             </div>
         </div>
     );
-};
+}
