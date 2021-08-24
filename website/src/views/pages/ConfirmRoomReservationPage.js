@@ -21,7 +21,8 @@ import axios from "axios";
 import ConfirmRoomReservationHeader from "../../components/Headers/ConfirmRoomReservationHeader";
 import {Link} from "react-router-dom";
 
-function RoomReservationPage() {
+
+function ConfirmRoomReservationPage() {
     const [firstFocus, setFirstFocus] = useState(false);
     const [lastFocus, setLastFocus] = useState(false);
 
@@ -69,8 +70,6 @@ function RoomReservationPage() {
         <>
             <IndexNavbar />
             <div className="wrapper">
-                <ConfirmRoomReservationHeader />
-
                 <div className="section section-team">
                     <Container>
                         <div className="team">
@@ -78,10 +77,49 @@ function RoomReservationPage() {
                                 <Fragment>
                                     <div className="card" style={{
                                         width: "72rem",
-                                        height: "10rem",
+                                        height: "18.5rem",
                                         margin: "10px",
                                         backgroundColor: "#F0F1F0",
                                     }} >
+
+                                        <div className="card-body">
+                                            <h6 className="category" style={{
+                                                color: "black",
+                                                fontWeight: 'bold',
+                                                fontSize: 15,
+                                            }} >Stay Summary:</h6>
+                                            <Row>
+                                                <Col className="ml-auto mr-auto text-left" md="4">
+                                                    <img
+                                                        alt="..."
+                                                        className="img-raised"
+                                                        src={require("assets/img/roomReserve.jpg").default}
+                                                    ></img>
+                                                </Col>
+                                                <Col className="ml-auto mr-auto text-left" md="8">
+                                                    <br></br>
+                                                    <br></br>
+                                                    <br></br>
+                                                    <div className="team-player">
+                                                        <p className="category" style={{
+                                                            color: "#404A45",
+                                                        }}>Thur, 16 Sep 2021 / Sat 18 Sep 2021</p>
+                                                    </div>
+                                                    <div className="team-player">
+                                                        <p className="category" style={{
+                                                            color: "#404A45",
+                                                        }}>Rooms & Guests: 1 Room, 2 Adults, 0 Children</p>
+                                                    </div>
+                                                    <div className="team-player">
+                                                        <p className="category" style={{
+                                                            color: "#404A45",
+                                                        }}>Room Type: DELUXE DOUBLE ROOM</p>
+                                                    </div>
+                                                </Col>
+                                            </Row>
+
+
+                                        </div>
 
                                     </div>
                                 </Fragment>
@@ -91,10 +129,12 @@ function RoomReservationPage() {
                                 <Col className="ml-auto mr-auto text-left" md="5">
                                     <div className="team-player">
 
+
                                         <h3 className="title">Guest Information</h3>
 
                                         <Container>
 
+                                            <br></br>
                                             <Row>
                                                 <Col lg="6" sm="6">
                                                     <p className="category">First Name</p>
@@ -117,7 +157,7 @@ function RoomReservationPage() {
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
-
+                                            <br></br>
                                             <Row>
                                                 <Col lg="12" sm="6">
                                                     <p className="category">Email</p>
@@ -130,7 +170,7 @@ function RoomReservationPage() {
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
-
+                                            <br></br>
                                             <Row>
                                                 <Col lg="12" sm="6">
                                                     <p className="category">Mobile</p>
@@ -155,20 +195,21 @@ function RoomReservationPage() {
                                         <Fragment>
                                             <div className="card" style={{
                                                 width: "38rem",
-                                                height: "28rem",
+                                                height: "27rem",
                                                 margin: "10px",
 
                                             }} >
 
                                                 <div className="card-body">
-                                                    <h5 className="title" >ROOM FACILITIES</h5>
+                                                    <h5 className="title text-center" >ROOM FACILITIES</h5>
 
+                                                    <br></br>
                                                     <Row>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "black",
-                                                                }}>Form Controls</p>
+                                                                }}>Room Charges</p>
                                                             </div>
                                                         </Col>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
@@ -179,12 +220,13 @@ function RoomReservationPage() {
                                                             </div>
                                                         </Col>
                                                     </Row>
+                                                    <br></br>
                                                     <Row>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "black",
-                                                                }}>Form Controls</p>
+                                                                }}>Service Charge and Tax</p>
                                                             </div>
                                                         </Col>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
@@ -195,6 +237,38 @@ function RoomReservationPage() {
                                                             </div>
                                                         </Col>
                                                     </Row>
+                                                    <hr></hr>
+                                                    <br></br>
+                                                    <Row>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p className="category" style={{
+                                                                    color: "black",
+                                                                }}>Total Charge</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p className="category" style={{
+                                                                    color: "#404A45",
+                                                                }}>LKR 6350.75</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+
+                                                    <br></br>
+
+                                                    <Button
+                                                        block
+                                                        className="btn-round"
+                                                        color="info"
+                                                        href="#pablo"
+                                                        onClick={(e) => e.preventDefault()}
+                                                        size="lg"
+                                                    >
+                                                        BOOK NOW
+                                                    </Button>
+
 
                                                 </div>
 
@@ -214,4 +288,4 @@ function RoomReservationPage() {
     );
 }
 
-export default RoomReservationPage;
+export default ConfirmRoomReservationPage;

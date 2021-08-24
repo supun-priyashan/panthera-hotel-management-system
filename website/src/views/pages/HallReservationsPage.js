@@ -28,6 +28,8 @@ function HallReservationPage() {
 
     const [hallReservations,setHallReservations] = useState([]);
 
+    const [option,setOption] = useState()
+
     useEffect(() => {
         document.body.classList.add("landing-page");
         document.body.classList.add("sidebar-collapse");
@@ -65,6 +67,10 @@ function HallReservationPage() {
             }
         })
     },[])
+
+    function handleChange(event){
+        setOption(event.target.value)
+    }
 
     return (
         <>
@@ -191,21 +197,29 @@ function HallReservationPage() {
                                                     <h5 className="title">BOOK NOW FOR LKR 1,200,000.00</h5>
                                                     <Row>
                                                         <Col lg="6" sm="6">
-                                                            <p className="category">Form Controls</p>
+                                                            <p className="category">Guest Count</p>
                                                             <FormGroup>
                                                                 <Input
                                                                     defaultValue=""
-                                                                    placeholder="Regular"
+                                                                    placeholder="Guest Count"
                                                                     type="text"
                                                                 ></Input>
                                                             </FormGroup>
                                                         </Col>
                                                         <Col lg="6" sm="6">
-                                                            <p className="category">Form Controls</p>
+                                                            <p className="category">Event Type</p>
+
+                                                            <select name='option' type="text" onChange={handleChange}>
+                                                                <option value="1">asdfghj</option>
+                                                                <option value="2">dfghj</option>
+                                                                <option value="3">ertyui</option>
+                                                                <option value="4">cvghbjnk</option>
+                                                            </select>
+
                                                             <FormGroup>
                                                                 <Input
                                                                     defaultValue=""
-                                                                    placeholder="Regular"
+                                                                    placeholder="Event Type"
                                                                     type="text"
                                                                 ></Input>
                                                             </FormGroup>
@@ -244,7 +258,7 @@ function HallReservationPage() {
                                                         onClick={(e) => e.preventDefault()}
                                                         size="lg"
                                                     >
-                                                        Send Message
+                                                        BOOK NOW
                                                     </Button>
                                                     <hr></hr>
                                                     <p className="category" style={{
