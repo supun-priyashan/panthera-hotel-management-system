@@ -201,7 +201,7 @@ function ConfirmRoomReservationPage() {
                                             }} >
 
                                                 <div className="card-body">
-                                                    <h5 className="title text-center" >ROOM FACILITIES</h5>
+                                                    <h5 className="title text-center" >Charges</h5>
 
                                                     <br></br>
                                                     <Row>

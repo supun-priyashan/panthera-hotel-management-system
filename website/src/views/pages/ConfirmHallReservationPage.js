@@ -103,17 +103,17 @@ function ConfirmHallReservationPage() {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Thur, 16 Sep 2021 / Sat 18 Sep 2021</p>
+                                                        }}>Thur, 16 Sep 2021 / Thur 16 Sep 2021</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Rooms & Guests: 1 Room, 2 Adults, 0 Children</p>
+                                                        }}>Hall & Guests: Ballroom 5, 150 guests</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Room Type: DELUXE DOUBLE ROOM</p>
+                                                        }}>Event Type: Wedding</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -201,7 +201,7 @@ function ConfirmHallReservationPage() {
                                             }} >
 
                                                 <div className="card-body">
-                                                    <h5 className="title text-center" >ROOM FACILITIES</h5>
+                                                    <h5 className="title text-center" >Charges</h5>
 
                                                     <br></br>
                                                     <Row>
@@ -209,7 +209,7 @@ function ConfirmHallReservationPage() {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "black",
-                                                                }}>Room Charges</p>
+                                                                }}>Hall Charges</p>
                                                             </div>
                                                         </Col>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
