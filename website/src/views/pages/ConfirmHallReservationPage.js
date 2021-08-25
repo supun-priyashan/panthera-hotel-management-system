@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useEffect, useLayoutEffect, useState} from "react";
 import Datetime from "react-datetime";
 // reactstrap components
 import {
@@ -20,11 +20,23 @@ import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
 import ConfirmRoomReservationHeader from "../../components/Headers/ConfirmRoomReservationHeader";
 import {Link} from "react-router-dom";
+import {useHistory} from "react-router";
 
 
 function ConfirmHallReservationPage() {
-    const [firstFocus, setFirstFocus] = useState(false);
-    const [lastFocus, setLastFocus] = useState(false);
+    const history = useHistory();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [mobile, setMobile] = useState('');
+
+
+    let data;
+
+    useLayoutEffect(() => {
+        data = history.location.state;
+        console.log("History", data);
+    })
 
     const [roomReservations,setRoomReservations] = useState([]);
 
@@ -41,30 +53,12 @@ function ConfirmHallReservationPage() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/roomReservations').
-        then((response) => {
-            if(response.data.success) {
-                console.log(response.data.roomReservations);
-                /*setRooms(response.data.rooms.map((item) => ({
-                    id: item._id,
-                    roomName: item.roomName,
-                    type: item.type,
-                    beds: item.beds,
-                    guests: item.guests,
-                    space: item.space,
-                    facilities: item.facilities,
-                    image: item.image,
-                    price: item.price,
-                    description: item.description,
-                })));*/
-                setRoomReservations(response.data.roomReservations);
-                setTimeout(() => console.log(roomReservations.length),5000)
-            } else{
-                alert('An error occurred while retrieving data');
-                console.log(response.data.error);
-            }
-        })
+
     },[])
+
+    const onSubmit = () => {
+
+    }
 
     return (
         <>
@@ -100,21 +94,23 @@ function ConfirmHallReservationPage() {
                                                     <br></br>
                                                     <br></br>
                                                     <br></br>
+                                                    {/*<div className="team-player">
+                                                        <p className="category" style={{
+                                                            color: "#404A45",
+                                                        }}>{data.arrival.toString()}/{data.departure.toString()}</p>
+                                                    </div>*/}
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Thur, 16 Sep 2021 / Thur 16 Sep 2021</p>
+                                                        }}>Hall & Guests: {data && data.count?
+                                                           data.count: null
+                                                        }</p>
                                                     </div>
-                                                    <div className="team-player">
+                                                    {/*<div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Hall & Guests: Ballroom 5, 150 guests</p>
-                                                    </div>
-                                                    <div className="team-player">
-                                                        <p className="category" style={{
-                                                            color: "#404A45",
-                                                        }}>Event Type: Wedding</p>
-                                                    </div>
+                                                        }}>Event Type:{data.type} </p>
+                                                    </div>*/}
                                                 </Col>
                                             </Row>
 
@@ -140,9 +136,14 @@ function ConfirmHallReservationPage() {
                                                     <p className="category">First Name</p>
                                                     <FormGroup>
                                                         <Input
+                                                            id="firstName"
+                                                            name="firstName"
+                                                            label="First Name"
                                                             defaultValue=""
-                                                            placeholder="first name"
                                                             type="text"
+                                                            value={firstName}
+                                                            onChange={(e) => {setFirstName(e.target.value)}}
+                                                            inputProps={{ placeholder: "First Name" }}
                                                         ></Input>
                                                     </FormGroup>
                                                 </Col>
@@ -150,9 +151,14 @@ function ConfirmHallReservationPage() {
                                                     <p className="category">Last Name</p>
                                                     <FormGroup>
                                                         <Input
+                                                            id="lastName"
+                                                            name="lastName"
+                                                            label="Last Name"
                                                             defaultValue=""
-                                                            placeholder="last name"
                                                             type="text"
+                                                            value={lastName}
+                                                            onChange={(e) => {setLastName(e.target.value)}}
+                                                            inputProps={{ placeholder: "Last Name" }}
                                                         ></Input>
                                                     </FormGroup>
                                                 </Col>
@@ -163,9 +169,14 @@ function ConfirmHallReservationPage() {
                                                     <p className="category">Email</p>
                                                     <FormGroup>
                                                         <Input
+                                                            id="email"
+                                                            name="email"
+                                                            label="e-mail"
                                                             defaultValue=""
-                                                            placeholder="e-mail"
                                                             type="text"
+                                                            value={email}
+                                                            onChange={(e) => {setEmail(e.target.value)}}
+                                                            inputProps={{ placeholder: "E-mail" }}
                                                         ></Input>
                                                     </FormGroup>
                                                 </Col>
@@ -176,9 +187,14 @@ function ConfirmHallReservationPage() {
                                                     <p className="category">Mobile</p>
                                                     <FormGroup>
                                                         <Input
+                                                            id="mobile"
+                                                            name="mobile"
+                                                            label="Mobile"
                                                             defaultValue=""
-                                                            placeholder="mobile"
                                                             type="text"
+                                                            value={mobile}
+                                                            onChange={(e) => {setMobile(e.target.value)}}
+                                                            inputProps={{ placeholder: "Mobile" }}
                                                         ></Input>
                                                     </FormGroup>
                                                 </Col>
@@ -263,7 +279,7 @@ function ConfirmHallReservationPage() {
                                                         className="btn-round"
                                                         color="info"
                                                         href="#pablo"
-                                                        onClick={(e) => e.preventDefault()}
+                                                        onClick={(e) => onSubmit(e)}
                                                         size="lg"
                                                     >
                                                         BOOK NOW

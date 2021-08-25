@@ -19,13 +19,16 @@ import TransparentFooter from "components/Footers/TransparentFooter";
 import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
 import RoomReservationsHeader from "../../components/Headers/RoomReservationsHeader";
+import {useHistory} from "react-router";
 
 
-function RoomReservationPage() {
-    const [firstFocus, setFirstFocus] = useState(false);
-    const [lastFocus, setLastFocus] = useState(false);
+function RoomReservationPage(props) {
+    const [arrivalDate, setArrivalDate] = useState('');
+    const [departureDate, setDepartureDate] = useState('');
 
     const [roomReservations,setRoomReservations] = useState([]);
+
+    const history = useHistory();
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -65,6 +68,17 @@ function RoomReservationPage() {
         })
     },[])
 
+    const onSubmit = () => {
+        console.log(arrivalDate,"-",departureDate);
+        history.push({
+            pathname: '/confirm/rooms',
+            state: {
+                arrival:arrivalDate,
+                departure:departureDate,
+            } // your data array of objects
+        })
+    }
+
     return (
         <>
             <IndexNavbar />
@@ -91,14 +105,27 @@ function RoomReservationPage() {
 
                                         <Row>
                                             <Col md="5">
-                                        <div className="datepicker-container">
-                                            <FormGroup>
-                                                <Datetime
-                                                    timeFormat={false}
-                                                    inputProps={{ placeholder: "ArrivalDate Picker" }}
-                                                />
-                                            </FormGroup>
-                                        </div>
+                                                <div className="datepicker-container">
+                                                    <FormGroup>
+                                                        <Datetime
+                                                            id="arrivalDate"
+                                                            name="arrivalDate"
+                                                            label="ArrivalDate"
+                                                            value={arrivalDate}
+                                                            onChange={(e)=>setArrivalDate(e._d)}
+                                                            timeFormat={false}
+                                                            inputProps={{ placeholder: "ArrivalDate Picker" }}
+                                                        />
+                                                        {/*<Input
+                                                            id="arrivalDate"
+                                                            name="arrivalDate"
+                                                            label="ArrivalDate"
+                                                            value={arrivalDate}
+                                                            onChange={setArrivalDate}
+                                                            type={'date'}
+                                                        />*/}
+                                                    </FormGroup>
+                                                </div>
                                             </Col>
 
                                             <Col md="2">
@@ -111,7 +138,12 @@ function RoomReservationPage() {
                                                 <div className="datepicker-container">
                                                     <FormGroup>
                                                         <Datetime
+                                                            id="departureDate"
+                                                            name="departureDate"
+                                                            label="DepartureDate"
                                                             timeFormat={false}
+                                                            value={departureDate}
+                                                            onChange={(e)=>setDepartureDate(e._d)}
                                                             inputProps={{ placeholder: "DepatureDate Picker" }}
                                                         />
                                                     </FormGroup>
@@ -124,7 +156,7 @@ function RoomReservationPage() {
                                             className="btn-round"
                                             color="info"
                                             href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
+                                            onClick={onSubmit}
                                             size="lg"
                                         >
                                             BOOK NOW
@@ -134,92 +166,92 @@ function RoomReservationPage() {
                                 </Col>
                                 <Col className="ml-auto mr-auto text-left" md="6">
                                     <div className={'container'}>
-                                                <Fragment>
-                                                    <div className="card" style={{
-                                                        width: "38rem",
-                                                        height: "28rem",
-                                                        margin: "10px",
-                                                        backgroundColor: "#F8FCFA",
-                                                  }} >
-                                                        <div className="card-body">
-                                                                <h5 className="title">ROOM FACILITIES</h5>
-                                                            <Row>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Kettle,tea & coffee</p>
-                                                                    </div>
-                                                                </Col>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Flat screen TV</p>
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
-                                                            <Row>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Breakfast included</p>
-                                                                    </div>
-                                                                </Col>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Hairdryer</p>
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
-                                                            <Row>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Soundproofing</p>
-                                                                    </div>
-                                                                </Col>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Air conditioning</p>
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
-                                                            <Row>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Balcony</p>
-                                                                    </div>
-                                                                </Col>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Bathroom & slippers</p>
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
-                                                            <Row>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Free Wifi</p>
-                                                                    </div>
-                                                                </Col>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>No Prepayment</p>
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
-                                                            <Row>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Flexible Rate</p>
-                                                                    </div>
-                                                                </Col>
-                                                                <Col className="ml-auto mr-auto text-left" md="4">
-                                                                    <div className="team-player">
-                                                                        <p>Shower-bathtub combination</p>
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
+                                        <Fragment>
+                                            <div className="card" style={{
+                                                width: "38rem",
+                                                height: "28rem",
+                                                margin: "10px",
+                                                backgroundColor: "#F8FCFA",
+                                            }} >
+                                                <div className="card-body">
+                                                    <h5 className="title">ROOM FACILITIES</h5>
+                                                    <Row>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Kettle,tea & coffee</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Flat screen TV</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Breakfast included</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Hairdryer</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Soundproofing</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Air conditioning</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Balcony</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Bathroom & slippers</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Free Wifi</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>No Prepayment</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Flexible Rate</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p>Shower-bathtub combination</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
 
-                                                        </div>
+                                                </div>
 
-                                                    </div>
-                                                </Fragment>
+                                            </div>
+                                        </Fragment>
                                     </div>
                                 </Col>
                             </Row>

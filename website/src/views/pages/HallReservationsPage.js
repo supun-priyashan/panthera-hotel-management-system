@@ -21,14 +21,19 @@ import RoomsHeader from "../../components/Headers/HallReservationsHeader";
 import axios from "axios";
 import Datetime from "react-datetime";
 import HallReservationsHeader from "../../components/Headers/HallReservationsHeader";
+import {useHistory} from "react-router";
 
 function HallReservationPage() {
-    const [firstFocus, setFirstFocus] = useState(false);
-    const [lastFocus, setLastFocus] = useState(false);
+    const [guests, setGuests] = useState('');
+    const [eventType, setEventType] = useState('Party');
+    const [arrivalDate, setArrivalDate] = useState('');
+    const [departureDate, setDepartureDate] = useState('');
 
     const [hallReservations,setHallReservations] = useState([]);
 
     const [option,setOption] = useState()
+
+    const history = useHistory();
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -68,8 +73,18 @@ function HallReservationPage() {
         })
     },[])
 
-    function handleChange(event){
-        setOption(event.target.value)
+
+    function onSubmit(e) {
+
+        history.push({
+            pathname: '/confirm/halls',
+            state: {
+                arrival:arrivalDate,
+                departure:departureDate,
+                count:guests,
+                type: eventType,
+            } // your data array of objects
+        })
     }
 
     return (
@@ -110,7 +125,7 @@ function HallReservationPage() {
                                                 </div>
                                             </Col>
                                         </Row>
-                                        <hr></hr>
+                                        <hr/>
                                         <h5 className="title">Features</h5>
 
                                         <Row>
@@ -200,28 +215,33 @@ function HallReservationPage() {
                                                             <p className="category">Guest Count</p>
                                                             <FormGroup>
                                                                 <Input
-                                                                    defaultValue=""
-                                                                    placeholder="Guest Count"
-                                                                    type="text"
+                                                                    id="guests"
+                                                                    name="guests"
+                                                                    label="Guest Count"
+                                                                    type="number"
+                                                                    value={guests}
+                                                                    onChange={(e) => {setGuests(e.target.value)}}
+                                                                    inputProps={{ placeholder: "Guest Count" }}
                                                                 ></Input>
                                                             </FormGroup>
                                                         </Col>
                                                         <Col lg="6" sm="6">
                                                             <p className="category">Event Type</p>
 
-                                                            <select name='option' type="text" onChange={handleChange}>
-                                                                <option value="1">asdfghj</option>
-                                                                <option value="2">dfghj</option>
-                                                                <option value="3">ertyui</option>
-                                                                <option value="4">cvghbjnk</option>
-                                                            </select>
-
                                                             <FormGroup>
                                                                 <Input
+                                                                    id="eventType"
+                                                                    name="eventType"
+                                                                    label="Event Type"
                                                                     defaultValue=""
-                                                                    placeholder="Event Type"
-                                                                    type="text"
-                                                                ></Input>
+                                                                    type="select"
+                                                                    value={eventType}
+                                                                    onChange={(e) => {setEventType(e.target.value)}}
+                                                                    inputProps={{ placeholder: "Event Type" }}
+                                                                >
+                                                                    <option value={"Wedding"}>Wedding</option>
+                                                                    <option value={"Party"}>Party</option>
+                                                                </Input>
                                                             </FormGroup>
                                                         </Col>
                                                     </Row>
@@ -231,6 +251,11 @@ function HallReservationPage() {
                                                                     <div className="datepicker-container">
                                                                         <FormGroup>
                                                                             <Datetime
+                                                                                id="arrivalDate"
+                                                                                name="arrivalDate"
+                                                                                label="ArrivalDate"
+                                                                                value={arrivalDate}
+                                                                                onChange={(e)=>setArrivalDate(e._d)}
                                                                                 timeFormat={false}
                                                                                 inputProps={{ placeholder: "ArrivalDate Picker" }}
                                                                             />
@@ -243,7 +268,12 @@ function HallReservationPage() {
                                                                     <div className="datepicker-container">
                                                                         <FormGroup>
                                                                             <Datetime
+                                                                                id="departureDate"
+                                                                                name="departureDate"
+                                                                                label="DepartureDate"
                                                                                 timeFormat={false}
+                                                                                value={departureDate}
+                                                                                onChange={(e)=>setDepartureDate(e._d)}
                                                                                 inputProps={{ placeholder: "DepatureDate Picker" }}
                                                                             />
                                                                         </FormGroup>
@@ -255,7 +285,7 @@ function HallReservationPage() {
                                                         className="btn-round"
                                                         color="info"
                                                         href="#pablo"
-                                                        onClick={(e) => e.preventDefault()}
+                                                        onClick={(e) => onSubmit(e)}
                                                         size="lg"
                                                     >
                                                         BOOK NOW

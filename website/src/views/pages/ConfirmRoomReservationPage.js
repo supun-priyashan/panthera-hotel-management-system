@@ -20,11 +20,13 @@ import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
 import ConfirmRoomReservationHeader from "../../components/Headers/ConfirmRoomReservationHeader";
 import {Link} from "react-router-dom";
+import {useHistory} from "react-router";
 
 
-function ConfirmRoomReservationPage() {
-    const [firstFocus, setFirstFocus] = useState(false);
-    const [lastFocus, setLastFocus] = useState(false);
+function ConfirmRoomReservationPage(props) {
+    const history = useHistory();
+
+    const dates = history.location.state;
 
     const [roomReservations,setRoomReservations] = useState([]);
 
@@ -103,7 +105,7 @@ function ConfirmRoomReservationPage() {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Thur, 16 Sep 2021 / Sat 18 Sep 2021</p>
+                                                        }}>{dates.arrival.toString()} / {dates.departure.toString()}</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
