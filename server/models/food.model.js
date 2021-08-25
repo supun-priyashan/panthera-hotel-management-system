@@ -5,7 +5,7 @@ const foodSchema = new mongoose.Schema({
     price: {type: Number, required: true},
     restaurantType: {type: String, required: true, trim: true},
     description: {type: String, required: true, trim: true},
-    image: {type: String, required: true}
+    image: {type: String, default: ''}
 });
 
 const Food = mongoose.model('Food', foodSchema);

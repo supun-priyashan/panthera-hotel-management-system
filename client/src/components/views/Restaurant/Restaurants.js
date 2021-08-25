@@ -29,7 +29,7 @@ export const Restaurants = () => {
                 console.log(response.data.restaurants);
                 setRestaurants(response.data.restaurants.map((item) => ({
                     id: item._id,
-                    restaurantName: item.roomName,
+                    restaurantName: item.restaurantName,
                     caption: item.caption,
                     images: item.images,
                     imageCount: item.images.length,

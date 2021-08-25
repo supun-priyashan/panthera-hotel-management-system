@@ -19,10 +19,9 @@ const addFoods = async (request, response) => {
         }
     });
 }
-
 const getFoods = async (request, response) => {
     try{
-        const foods = await Food.find();
+        const foods = await Foods.find();
         response.status(200).
         json({
             success: true,
@@ -35,6 +34,7 @@ const getFoods = async (request, response) => {
         });
     }
 }
+
 
 module.exports = {
     addFoods,

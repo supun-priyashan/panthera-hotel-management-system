@@ -50,8 +50,9 @@ export const AddRestaurant = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: 'foobar@example.com',
-            password: 'foobar',
+            restaurantName: '',
+            caption: '',
+            description:'',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -81,31 +82,24 @@ export const AddRestaurant = () => {
                             id="restaurantName"
                             name="restaurantName"
                             label="Restaurant Name"
-                            /*value={formik.values.email}
+                            value={formik.values.restaurantName}
                             onChange={formik.handleChange}
-                            error={formik.touched.email && Boolean(formik.errors.email)}
-                            helperText={formik.touched.email && formik.errors.email}*/
                         />
                         <TextField
                             fullWidth
-                            id="restaurantCaption"
-                            name="restaurantCaption"
+                            id="caption"
+                            name="caption"
                             label="Caption"
-                            /*value={formik.values.email}
+                            value={formik.values.caption}
                             onChange={formik.handleChange}
-                            error={formik.touched.email && Boolean(formik.errors.email)}
-                            helperText={formik.touched.email && formik.errors.email}*/
                         />
                         <TextField
                             fullWidth
                             id="description"
                             name="description"
                             label="Description"
-                            /*type="password"
-                            value={formik.values.password}
+                            value={formik.values.description}
                             onChange={formik.handleChange}
-                            error={formik.touched.password && Boolean(formik.errors.password)}
-                            helperText={formik.touched.password && formik.errors.password}*/
                         />
                         <SubmitButton
                             style={{
@@ -124,3 +118,5 @@ export const AddRestaurant = () => {
         </div>
     );
 };
+
+export default AddRestaurant;

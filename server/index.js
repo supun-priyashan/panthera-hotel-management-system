@@ -39,10 +39,9 @@ app.route('/').get((req,res) => {
 
 app.use('/rooms',roomRoute());
 app.use('/halls',hallRoute());
-app.use('/rooms',foodRoute());
-app.use('/halls',restaurantRoute());
+app.use('/foods',foodRoute());
+app.use('/restaurants',restaurantRoute());
 app.use('/files', fileRoute());
-
 app.use('/uploads', express.static('uploads'));
 
 app.listen(PORT,()=>{
