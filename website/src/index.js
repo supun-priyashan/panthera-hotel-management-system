@@ -29,32 +29,15 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 import LandingPage from "views/pages/LandingPage.js";
 import ProfilePage from "views/pages/ProfilePage.js";
 import RoomsPage from "views/pages/RoomsPage";
+import HallsPage from "views/pages/HallsPage";
 
 
 ReactDOM.render(
-  /*<BrowserRouter>
-    <Switch>
-      <Switch>
-        <Route
-          path="/"
-          render={(props) => <LandingPage {...props} />}
-        />
-          <Route
-              path='/rooms'
-              render={(props) => <RoomsPage {...props} />}
-          />
-        <Route
-          path="/profile-page"
-          render={(props) => <ProfilePage {...props} />}
-        />
-
-      </Switch>
-    </Switch>
-  </BrowserRouter>*/
     <Router>
       <div>
         <Switch>
           <Route path='/rooms' exact component={RoomsPage} />
+          <Route path='/halls' exact component={HallsPage} />
           <Route path='/' exact component={LandingPage} />
           <Route path='/profile' exact component={ProfilePage} />
 
