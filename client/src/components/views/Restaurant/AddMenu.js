@@ -47,7 +47,7 @@ export const AddMenu = () => {
         restaurantType: yup
             .string('Enter Restaurant')
             .required('Restaurant is required'),
-        guests: yup
+        description: yup
             .string('Enter Description')
             .required('Description is required'),
     });
@@ -70,10 +70,10 @@ export const AddMenu = () => {
                 }
             };
             const food = {
-                foodName: values.name,
-                price: values.type,
-                restaurantType: values.space,
-                description: values.guests,
+                foodName: values.foodName,
+                price: values.price,
+                restaurantType: values.restaurantType,
+                description: values.description,
                 image: imageFile.name,
             }
 

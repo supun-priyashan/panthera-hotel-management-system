@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Icon from '@material-ui/core/Icon';
 import axios from "axios";
-import {Button, TextField} from "@material-ui/core";
+import {Button, Input, InputLabel, TextField} from "@material-ui/core";
 import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import * as yup from "yup";
 import {useFormik} from "formik";
@@ -35,17 +35,18 @@ const SubmitButton = styled.button`
 
 export const AddRestaurant = () => {
 
-    const [restaurants,setRestaurants] = useState([]);
+    const [imageFile,setImageFile] = useState([]);
 
     const validationSchema = yup.object({
-        email: yup
-            .string('Enter your email')
-            .email('Enter a valid email')
-            .required('Email is required'),
-        password: yup
-            .string('Enter your password')
-            .min(8, 'Password should be of minimum 8 characters length')
-            .required('Password is required'),
+        restaurantName: yup
+            .string('Enter restaurant name')
+            .required('Restaurant Name is required'),
+        caption: yup
+            .string('Enter restaurant caption')
+            .required('Restaurant caption is required'),
+        description: yup
+            .string('Enter Description')
+            .required('Description is required'),
     });
 
     const formik = useFormik({
@@ -53,10 +54,41 @@ export const AddRestaurant = () => {
             restaurantName: '',
             caption: '',
             description:'',
+            image: null,
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+            const formData = new FormData();
+            formData.append('file',imageFile);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            };
+            const restaurants = {
+                restaurantName: values.restaurantName,
+                caption: values.caption,
+                description: values.description,
+                image: imageFile.name,
+            }
+
+            console.log(imageFile,restaurants);
+
+            axios.post('http://localhost:8080/restaurants', restaurants)
+                .then(response => {
+                    axios.post("http://localhost:8080/files",formData,config)
+                        .then(() => {
+                            if (response.data.success) {
+                                alert('Restaurant Successfully Added')
+                            } else {
+                                alert('Failed to add food')
+                            }
+                        }).catch((error) => {
+                        alert(error.message);
+                    });
+
+                }).catch((error) => console.error(error))
+
         },
     });
 
@@ -84,6 +116,8 @@ export const AddRestaurant = () => {
                             label="Restaurant Name"
                             value={formik.values.restaurantName}
                             onChange={formik.handleChange}
+                            error={formik.touched.restaurantName && Boolean(formik.errors.restaurantName)}
+                            helperText={formik.touched.restaurantName && formik.errors.restaurantName}
                         />
                         <TextField
                             fullWidth
@@ -92,6 +126,8 @@ export const AddRestaurant = () => {
                             label="Caption"
                             value={formik.values.caption}
                             onChange={formik.handleChange}
+                            error={formik.touched.caption && Boolean(formik.errors.caption)}
+                            helperText={formik.touched.caption && formik.errors.caption}
                         />
                         <TextField
                             fullWidth
@@ -100,6 +136,20 @@ export const AddRestaurant = () => {
                             label="Description"
                             value={formik.values.description}
                             onChange={formik.handleChange}
+                            error={formik.touched.description && Boolean(formik.errors.description)}
+                            helperText={formik.touched.description && formik.errors.description}
+                        />
+                        <InputLabel id="image" style={{
+                            marginTop: '10px',
+                        }}>Image</InputLabel>
+                        <Input
+                            id="image"
+                            name="image"
+                            type="file"
+                            value={formik.values.image}
+                            onChange={(e) => {setImageFile((e.target.files[0]))}}
+                            error={formik.touched.image && Boolean(formik.errors.image)}
+                            helperText={formik.touched.image && formik.errors.image}
                         />
                         <SubmitButton
                             style={{
