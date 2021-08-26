@@ -5,7 +5,7 @@ import { Button, Container } from "reactstrap";
 
 // core components
 
-function RoomsHeader() {
+function HallsHeader() {
   let pageHeader = React.createRef();
 
   React.useEffect(() => {
@@ -34,9 +34,9 @@ function RoomsHeader() {
         ></div>
         <div className="content-center">
           <Container>
-            <h1 className="title">LUXURY AWAITS YOU</h1>
+            <h1 className="title">MEET & CELEBRATE</h1>
             <div className="text-center">
-              Explore from our world class rooms & suites
+              Choose from our elegant & majestic venues
             </div>
           </Container>
         </div>
@@ -45,4 +45,4 @@ function RoomsHeader() {
   );
 }
 
-export default RoomsHeader;
+export default HallsHeader;

@@ -18,9 +18,9 @@ import TransparentFooter from "components/Footers/TransparentFooter";
 import RoomsHeader from "../../components/Headers/RoomsHeader";
 import axios from "axios";
 
-function RoomsPage() {
+function HallsPage() {
 
-    const [rooms,setRooms] = useState([]);
+    const [halls,setHalls] = useState([]);
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -35,11 +35,11 @@ function RoomsPage() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/rooms').
+        axios.get('http://localhost:8080/halls').
         then((response) => {
             if(response.data.success) {
-                console.log(response.data.rooms);
-                setRooms(response.data.rooms.map((item) => ({
+                console.log(response.data.halls);
+                setHalls(response.data.halls.map((item) => ({
                     id: item._id,
                     roomName: item.roomName,
                     type: item.type,
@@ -51,8 +51,8 @@ function RoomsPage() {
                     price: item.price,
                     description: item.description,
                 })));
-                setRooms(response.data.rooms);
-                setTimeout(() => console.log(rooms.length),5000)
+                setHalls(response.data.rooms);
+                setTimeout(() => console.log(halls.length),5000)
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -71,7 +71,7 @@ function RoomsPage() {
                             <Col className="ml-auto mr-auto text-center" md="60">
                                 <h2 className="title">Rooms</h2>
                                 <div className={'container'}>
-                                    {rooms.length > 0 && rooms.map((item,index)=>{
+                                    {halls.length > 0 && halls.map((item,index)=>{
                                         return(
                                             <Fragment key={index}>
                                                 <div className="card" style={{
@@ -87,9 +87,9 @@ function RoomsPage() {
                                         )
                                     })}
                                     {/*<div className="card" style={{width: "20rem"}}>
-                                        <img className="card-img-top" src={'http://localhost:8080/uploads/'+rooms[0].image}  alt="Room image"/>
+                                        <img className="card-img-top" src={'http://localhost:8080/uploads/'+halls[0].image}  alt="Room image"/>
                                         <div className="card-body">
-                                            <p className="card-text">{rooms[0].roomName}</p>
+                                            <p className="card-text">{halls[0].roomName}</p>
                                         </div>
                                     </div>*/}
                                 </div>
@@ -103,4 +103,4 @@ function RoomsPage() {
     );
 }
 
-export default RoomsPage;
+export default HallsPage;
