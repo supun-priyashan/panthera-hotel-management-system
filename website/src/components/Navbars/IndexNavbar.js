@@ -97,14 +97,14 @@ function IndexNavbar() {
               </NavItem>
               <NavItem>
                 <NavLink
-                    to="/" tag={Link}
+                    to="/halls" tag={Link}
                 >
                   <p>Halls</p>
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
-                    to="/" tag={Link}
+                    to="/restaurants" tag={Link}
                 >
                   <p>Dining</p>
                 </NavLink>

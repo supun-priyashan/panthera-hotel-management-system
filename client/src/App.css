@@ -40,7 +40,14 @@
   margin-bottom: 3vh;
   float: left;
   width: 100%;
-  display: block;
+  display: inline-block;
+  align-items: center;
+}
+
+.dashboard-subheader div{
+  height: 100%;
+  font-family: 'Josefin Sans',sans-serif;
+  display: inline-block;
 }
 
 .main-container{
@@ -63,6 +70,7 @@
   padding: 10px;
   display: flex;
   margin-top: 9vh;
+  display: inline-block;
 }
 
 

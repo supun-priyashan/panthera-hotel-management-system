@@ -128,7 +128,7 @@ export const Halls = () => {
                                     if(props.action.icon === 'add_box'){
                                         return(
                                             <Button
-                                                onClick={(event) => history.push('/rooms/add-hall/')}
+                                                onClick={(event) => history.push('/halls/add-hall/')}
                                                 variant="contained"
                                                 startIcon={<Icon>add</Icon>}
                                                 /*component={Link}

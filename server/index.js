@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 
 const roomRoute = require('./routes/room.route');
 const hallRoute = require('./routes/hall.route');
+const foodRoute = require('./routes/food.route');
+const restaurantRoute = require('./routes/restaurant.route');
 const fileRoute = require('./routes/fileUpload.route');
 
 dotenv.config();
@@ -37,8 +39,9 @@ app.route('/').get((req,res) => {
 
 app.use('/rooms',roomRoute());
 app.use('/halls',hallRoute());
+app.use('/foods',foodRoute());
+app.use('/restaurants',restaurantRoute());
 app.use('/files', fileRoute());
-
 app.use('/uploads', express.static('uploads'));
 
 app.listen(PORT,()=>{
