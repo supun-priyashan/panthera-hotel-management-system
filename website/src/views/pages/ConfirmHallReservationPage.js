@@ -56,8 +56,19 @@ function ConfirmHallReservationPage() {
 
     },[])
 
-    const onSubmit = () => {
-
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if(!firstName ){
+            alert("Firstname is required");
+        }else if(!lastName){
+            alert("LastName is required");
+        }else if(!email){
+            alert("Email is required");
+        }else if(!mobile){
+            alert("Mobile is required");
+        } else{
+            alert("Reservation success");
+        }
     }
 
     return (
@@ -94,27 +105,23 @@ function ConfirmHallReservationPage() {
                                                     <br></br>
                                                     <br></br>
                                                     <br></br>
-                                                    {/*<div className="team-player">
-                                                        <p className="category" style={{
-                                                            color: "#404A45",
-                                                        }}>{data.arrival.toString()}/{data.departure.toString()}</p>
-                                                    </div>*/}
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Hall & Guests: {data && data.count?
-                                                           data.count: null
-                                                        }</p>
+                                                        }}>16-08-2021 / 16-08-2021</p>
                                                     </div>
-                                                    {/*<div className="team-player">
+                                                    <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Event Type:{data.type} </p>
-                                                    </div>*/}
+                                                        }}>Hall & Guests: Ballroom, 150 guests</p>
+                                                    </div>
+                                                    <div className="team-player">
+                                                        <p className="category" style={{
+                                                            color: "#404A45",
+                                                        }}>Event Type: Wedding </p>
+                                                    </div>
                                                 </Col>
                                             </Row>
-
-
                                         </div>
 
                                     </div>
@@ -191,7 +198,7 @@ function ConfirmHallReservationPage() {
                                                             name="mobile"
                                                             label="Mobile"
                                                             defaultValue=""
-                                                            type="text"
+                                                            type="number"
                                                             value={mobile}
                                                             onChange={(e) => {setMobile(e.target.value)}}
                                                             inputProps={{ placeholder: "Mobile" }}
@@ -232,7 +239,7 @@ function ConfirmHallReservationPage() {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 123,846.40</p>
+                                                                }}>LKR 1200,000.00</p>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -249,7 +256,7 @@ function ConfirmHallReservationPage() {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 6350.75</p>
+                                                                }}>LKR 9350.75</p>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -267,7 +274,7 @@ function ConfirmHallReservationPage() {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 6350.75</p>
+                                                                }}>LKR 1,209,350.75</p>
                                                             </div>
                                                         </Col>
                                                     </Row>

@@ -150,7 +150,6 @@ function RoomReservationPage(props) {
                                                 </div>
                                             </Col>
                                         </Row>
-
                                         <Button
                                             block
                                             className="btn-round"
@@ -161,7 +160,6 @@ function RoomReservationPage(props) {
                                         >
                                             BOOK NOW
                                         </Button>
-
                                     </div>
                                 </Col>
                                 <Col className="ml-auto mr-auto text-left" md="6">
@@ -244,6 +242,22 @@ function RoomReservationPage(props) {
                                                         <Col className="ml-auto mr-auto text-left" md="4">
                                                             <div className="team-player">
                                                                 <p>Shower-bathtub combination</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p style={{
+                                                                fontWeight: "bold",
+                                                                }}>Average Per Night</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col className="ml-auto mr-auto text-left" md="4">
+                                                            <div className="team-player">
+                                                                <p style={{
+                                                                    fontWeight: "bold",
+                                                                }}>LKR 61,923.20</p>
                                                             </div>
                                                         </Col>
                                                     </Row>

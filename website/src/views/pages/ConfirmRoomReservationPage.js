@@ -25,6 +25,10 @@ import {useHistory} from "react-router";
 
 function ConfirmRoomReservationPage(props) {
     const history = useHistory();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [mobile, setMobile] = useState('');
 
     const dates = history.location.state;
 
@@ -68,6 +72,21 @@ function ConfirmRoomReservationPage(props) {
         })
     },[])
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if(!firstName ){
+            alert("Firstname is required");
+        }else if(!lastName){
+            alert("LastName is required");
+        }else if(!email){
+            alert("Email is required");
+        }else if(!mobile){
+            alert("Mobile is required");
+        } else{
+            alert("Reservation success");
+        }
+    }
+
     return (
         <>
             <IndexNavbar />
@@ -105,7 +124,7 @@ function ConfirmRoomReservationPage(props) {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>{dates.arrival.toString()} / {dates.departure.toString()}</p>
+                                                        }}>16-08-2021 / 18-08-2021</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
@@ -142,9 +161,14 @@ function ConfirmRoomReservationPage(props) {
                                                     <p className="category">First Name</p>
                                                     <FormGroup>
                                                         <Input
+                                                            id="firstName"
+                                                            name="firstName"
+                                                            label="First Name"
                                                             defaultValue=""
-                                                            placeholder="first name"
                                                             type="text"
+                                                            value={firstName}
+                                                            onChange={(e) => {setFirstName(e.target.value)}}
+                                                            inputProps={{ placeholder: "First Name" }}
                                                         ></Input>
                                                     </FormGroup>
                                                 </Col>
@@ -152,9 +176,14 @@ function ConfirmRoomReservationPage(props) {
                                                     <p className="category">Last Name</p>
                                                     <FormGroup>
                                                         <Input
+                                                            id="lastName"
+                                                            name="lastName"
+                                                            label="Last Name"
                                                             defaultValue=""
-                                                            placeholder="last name"
                                                             type="text"
+                                                            value={lastName}
+                                                            onChange={(e) => {setLastName(e.target.value)}}
+                                                            inputProps={{ placeholder: "Last Name" }}
                                                         ></Input>
                                                     </FormGroup>
                                                 </Col>
@@ -165,9 +194,14 @@ function ConfirmRoomReservationPage(props) {
                                                     <p className="category">Email</p>
                                                     <FormGroup>
                                                         <Input
+                                                            id="email"
+                                                            name="email"
+                                                            label="e-mail"
                                                             defaultValue=""
-                                                            placeholder="e-mail"
                                                             type="text"
+                                                            value={email}
+                                                            onChange={(e) => {setEmail(e.target.value)}}
+                                                            inputProps={{ placeholder: "E-mail" }}
                                                         ></Input>
                                                     </FormGroup>
                                                 </Col>
@@ -178,9 +212,14 @@ function ConfirmRoomReservationPage(props) {
                                                     <p className="category">Mobile</p>
                                                     <FormGroup>
                                                         <Input
+                                                            id="mobile"
+                                                            name="mobile"
+                                                            label="Mobile"
                                                             defaultValue=""
-                                                            placeholder="mobile"
-                                                            type="text"
+                                                            type="number"
+                                                            value={mobile}
+                                                            onChange={(e) => {setMobile(e.target.value)}}
+                                                            inputProps={{ placeholder: "Mobile" }}
                                                         ></Input>
                                                     </FormGroup>
                                                 </Col>
@@ -218,7 +257,7 @@ function ConfirmRoomReservationPage(props) {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 123,846.40</p>
+                                                                }}>LKR 61,923.20</p>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -253,7 +292,7 @@ function ConfirmRoomReservationPage(props) {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 6350.75</p>
+                                                                }}>LKR 68,273.95</p>
                                                             </div>
                                                         </Col>
                                                     </Row>
@@ -265,7 +304,7 @@ function ConfirmRoomReservationPage(props) {
                                                         className="btn-round"
                                                         color="info"
                                                         href="#pablo"
-                                                        onClick={(e) => e.preventDefault()}
+                                                        onClick={(e) => onSubmit(e)}
                                                         size="lg"
                                                     >
                                                         BOOK NOW

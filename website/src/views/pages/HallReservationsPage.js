@@ -204,12 +204,13 @@ function HallReservationPage() {
                                         <Fragment>
                                             <div className="card" style={{
                                                 width: "35rem",
-                                                height: "35rem",
+                                                height: "40rem",
                                                 margin: "10px",
                                                 backgroundColor: "#F8FCFA",
                                             }} >
                                                 <div className="card-body">
                                                     <h5 className="title">BOOK NOW FOR LKR 1,200,000.00</h5>
+                                                    <br></br>
                                                     <Row>
                                                         <Col lg="6" sm="6">
                                                             <p className="category">Guest Count</p>
@@ -280,6 +281,7 @@ function HallReservationPage() {
                                                                     </div>
                                                         </Col>
                                                     </Row>
+                                                    <br></br>
                                                     <Button
                                                         block
                                                         className="btn-round"
@@ -290,7 +292,9 @@ function HallReservationPage() {
                                                     >
                                                         BOOK NOW
                                                     </Button>
+                                                    <br></br>
                                                     <hr></hr>
+                                                    <br></br>
                                                     <p className="category" style={{
                                                         color: "black",
                                                     }}>Cancellation Terms</p>

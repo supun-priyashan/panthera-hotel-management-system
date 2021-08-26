@@ -38,7 +38,7 @@ function RoomReservationsHeader() {
                         <h1 className="title">DELUXE DOUBLE ROOM</h1>
                     </Container>
                 </div>
-                <Container>
+                {/*<Container>
                     <div className="content">
                         <div className="social-description">
                             <h2>26</h2>
@@ -57,7 +57,7 @@ function RoomReservationsHeader() {
                             <p>1 Bathroom</p>
                         </div>
                     </div>
-                </Container>
+                </Container>*/}
 
             </div>
         </>
