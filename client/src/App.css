@@ -44,6 +44,12 @@
   align-items: center;
 }
 
+.dashboard-subheader div{
+  height: 100%;
+  font-family: 'Josefin Sans',sans-serif;
+  display: inline-block;
+}
+
 .main-container{
   width: 95%;
   height: 70%;

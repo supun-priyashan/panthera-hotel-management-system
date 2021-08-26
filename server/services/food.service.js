@@ -1,10 +1,12 @@
-const Hall = require('../models/hall.model');
+const Foods = require('../models/food.model');
 
-const addHall = async (request, response) => {
+const addFoods = async (request, response) => {
 
-    const hall = new Hall(request.body);
+    const food = new Foods(request.body);
 
-    await hall.save((error, hall) => {
+    console.log(food);
+
+    await food.save((error, food) => {
         if(error){
             response.status(500).json({ error: error.message });
         }
@@ -12,19 +14,18 @@ const addHall = async (request, response) => {
             response.status(200).
             json({
                 success: true,
-                hall: hall
+                food: food
             })
         }
     });
 }
-
-const getHalls = async (request, response) => {
+const getFoods = async (request, response) => {
     try{
-        const halls = await Hall.find();
+        const foods = await Foods.find();
         response.status(200).
         json({
             success: true,
-            halls: halls
+            foods: foods
         })
     } catch (error) {
         response.status(404).json({
@@ -34,7 +35,8 @@ const getHalls = async (request, response) => {
     }
 }
 
+
 module.exports = {
-    addHall,
-    getHalls
+    addFoods,
+    getFoods
 }
