@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import {useFormik} from "formik";
 import axios from "axios";
@@ -38,6 +39,8 @@ const eventsSet = ['Weddings','Conferences'];
 
 export const AddHall = () => {
     const [imageFile,setImageFile] = useState();
+
+    const history = useHistory();
 
     const validationSchema = yup.object({
         name: yup
@@ -132,12 +135,18 @@ export const AddHall = () => {
                 Reception Hall Management
                 <div className={'dashboard-subheader'}>
                     {/*TODO Align icon an route to go back*/}
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="back"
+                                onClick={() =>{
+                                    history.goBack();
+                                }}>
                         <Icon style={{
                             color: '#5a2360',
                         }}>arrow_back_ios</Icon>
                     </IconButton>
+                    <div>
                         Add a Reception Hall
+                    </div>
+
                 </div>
             </div>
             <div className={'main-container'}>

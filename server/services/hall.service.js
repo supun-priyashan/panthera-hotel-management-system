@@ -9,7 +9,6 @@ const addHall = async (request, response) => {
             response.status(500).json({ error: error.message });
         }
         else{
-            console.log('New hall added successfully ',hall)
             response.status(200).
             json({
                 success: true,

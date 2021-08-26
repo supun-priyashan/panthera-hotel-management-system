@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Icon from '@material-ui/core/Icon';
 import axios from "axios";
-import {Button, Chip, Input, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
+import {Button, Chip, IconButton, Input, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import * as yup from "yup";
 import {useFormik,Field} from "formik";
 import styled from "styled-components";
+import {useHistory} from "react-router-dom";
 
 const SubmitButton = styled.button`
   width: 120px;
@@ -39,6 +40,8 @@ const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
 export const AddRoom = () => {
 
     const [imageFile,setImageFile] = useState();
+
+    const history = useHistory();
 
     const validationSchema = yup.object({
         name: yup
@@ -135,9 +138,14 @@ export const AddRoom = () => {
                 Rooms & Suite Management
                 <div className={'dashboard-subheader'}>
                     {/*TODO Align icon an route to go back*/}
-                    <Icon style={{
-                        color: '#5a2360',
-                    }}>arrow_back_ios</Icon>
+                    <IconButton aria-label="back"
+                                onClick={() =>{
+                                    history.goBack();
+                                }}>
+                        <Icon style={{
+                            color: '#5a2360',
+                        }}>arrow_back_ios</Icon>
+                    </IconButton>
                     Add a Room
                 </div>
             </div>

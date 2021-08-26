@@ -158,6 +158,7 @@ export const Rooms = () => {
                             pageSizeOptions: [6],
                             showTitle: false,
                             toolbarButtonAlignment: 'left',
+                            columnResizable: true
                         }}
                     />
                 </div>
