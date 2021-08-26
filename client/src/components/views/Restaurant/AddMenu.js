@@ -149,8 +149,10 @@ export const AddMenu = () => {
                             helperText={formik.touched.restaurantType && formik.errors.restaurantType}
                             style={{'marginTop': '10px'}}
                         >
-                            <MenuItem value={'Indoor'}>Italian</MenuItem>
-                            <MenuItem value={'Outdoor'}>Chinese</MenuItem>
+                            <MenuItem value={'Echo'}>Echo</MenuItem>
+                            <MenuItem value={'Tea Lounge'}>Tea Lounge</MenuItem>
+                            <MenuItem value={'Tao'}>Tao</MenuItem>
+                            <MenuItem value={'Aswedduma'}>Aswedduma</MenuItem>
                         </TextField>
                         <TextField
                             fullWidth
