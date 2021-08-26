@@ -11,6 +11,7 @@ import {
     Row,
     Col,
 } from "reactstrap";
+import { Link } from 'react-router-dom';
 
 // core components
 import RestaurantPageHeader from "components/Headers/RestaurantPageHeader.js";
@@ -67,29 +68,65 @@ function RestaurantsPage() {
                 <div className="section section-about-us">
                     <Container>
                         <Row>
-                            <Col className="ml-auto mr-auto text-center" md="60">
+                            <Col className="ml-auto mr-auto text-center" md="100">
                                 <h2 className="title">Restaurants</h2>
+                            </Col>
+                        </Row>
+                    </Container>
                                 <div className={'container'}>
                                     {restaurants.length > 0 && restaurants.map((item,index)=>{
                                         return(
                                             <Fragment key={index}>
 
-                                                <div className="card" style={{
-                                                    width: "20rem",
-                                                    margin: "25px 25px 25px 25px",
-                                                }} >
-                                                    <img className="card-img-top" src={'http://localhost:8080/uploads/'+item.image}  alt="Restaurant image"/>
-                                                    <div className="card-body">
-                                                        <p className="card-text">{item.restaurantName}</p>
-                                                    </div>
-                                                </div>
+                                                    <Container>
+                                                        <div className="section-story-overview">
+                                                            <Row>
+                                                                <Col md="6">
+                                                                    <div
+                                                                        className="image-container"
+                                                                        style={{
+                                                                            backgroundImage:
+                                                                                "url("+'http://localhost:8080/uploads/'+item.image+")",
+                                                                        }}
+                                                                    ></div>
+                                                                </Col>
+                                                                <Col md="5">
+                                                                    <h3>
+                                                                        {item.restaurantName}
+                                                                    </h3>
+                                                                    <h5>
+                                                                        {item.caption}
+                                                                    </h5>
+                                                                    <p>
+                                                                        {item.description}
+                                                                    </p>
+                                                                    <Link to={{
+                                                                        pathname: '/foods',
+                                                                        state: {
+                                                                            restaurant: item.restaurantName,
+                                                                        },
+                                                                    }} >
+                                                                    <Button
+                                                                        style={{
+                                                                            float: 'center',
+                                                                            marginTop: '10px',
+                                                                            backgroundColor: '#5a2360',
+                                                                            fontFamily: 'Josefin Sans'
+                                                                        }}
+                                                                        type = "submit">
+                                                                        View Menus
+                                                                    </Button>
+                                                                    </Link>
+                                                                </Col>
+                                                            </Row>
+                                                        </div>
+                                                    </Container>
+
                                             </Fragment>
                                         )
                                     })}
                                 </div>
-                            </Col>
-                        </Row>
-                    </Container>
+
                 </div>
                 <TransparentFooter/>
             </div>

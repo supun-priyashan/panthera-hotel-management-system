@@ -5,7 +5,7 @@ import { Button, Container } from "reactstrap";
 
 // core components
 
-function RestaurantPageHeader() {
+function FoodPageHeader({restaurantName}) {
     let pageHeader = React.createRef();
 
     React.useEffect(() => {
@@ -25,16 +25,16 @@ function RestaurantPageHeader() {
         <>
             <div className="page-header page-header-small">
                 <div
-          className="page-header-image"
-          style={{
-            backgroundImage:
-              "url(" + require("assets/img/restaurantHeader.jpg").default + ")",
-          }}
-          ref={pageHeader}
-        > </div>
+                    className="page-header-image"
+                    style={{
+                        backgroundImage:
+                            "url(" + require("assets/img/restaurantHeader.jpg").default + ")",
+                    }}
+                    ref={pageHeader}
+                ></div>
                 <div className="content-center">
                     <Container>
-                        <h1 className="title">LUXURY AWAITS YOU</h1>
+                        <h1 className="title">{restaurantName} Restaurant</h1>
                         <div className="text-center">
                             Explore from our world class rooms & suites
                         </div>
@@ -45,4 +45,4 @@ function RestaurantPageHeader() {
     );
 }
 
-export default RestaurantPageHeader;
+export default FoodPageHeader;

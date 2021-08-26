@@ -11,6 +11,7 @@ import {
     Row,
     Col,
 } from "reactstrap";
+import Popup from 'reactjs-popup';
 
 // core components
 import RestaurantPageHeader from "components/Headers/RestaurantPageHeader.js";
@@ -19,10 +20,15 @@ import TransparentFooter from "components/Footers/TransparentFooter";
 import IndexHeader from "../../components/Headers/IndexHeader";
 import RoomsHeader from "../../components/Headers/RoomsHeader";
 import axios from "axios";
+import {useLocation} from "react-router-dom";
+import FoodPageHeader from "../../components/Headers/FoodPageHeader";
 
 function FoodsPage() {
     const [firstFocus, setFirstFocus] = useState(false);
     const [lastFocus, setLastFocus] = useState(false);
+
+    const location = useLocation();
+    const data = location.state;
 
     const [foods,setFoods] = useState([]);
 
@@ -58,13 +64,15 @@ function FoodsPage() {
                 console.log(response.data.error);
             }
         })
+
+        console.log("datas",data);
     },[])
 
     return (
         <>
             <IndexNavbar />
             <div className="wrapper">
-                <RestaurantPageHeader />
+                <FoodPageHeader restaurantName={data.restaurant} />
                 <div className="section section-about-us">
                     <Container>
                         <Row>
@@ -72,6 +80,7 @@ function FoodsPage() {
                                 <h2 className="title">Food Menus</h2>
                                 <div className={'container'}>
                                     {foods.length > 0 && foods.map((item,index)=>{
+                                        if(item.restaurantType === data.restaurant){
                                         return(
                                             <Fragment key={index}>
                                                 <div className="card" style={{
@@ -100,7 +109,7 @@ function FoodsPage() {
                                                     </div>
                                                 </div>
                                             </Fragment>
-                                        )
+                                        )}
                                     })}
                                 </div>
                             </Col>
