@@ -51,7 +51,7 @@ function RoomsPage() {
                     price: item.price,
                     description: item.description,
                 })));
-                setRooms(response.data.rooms);
+                //setRooms(response.data.rooms);
                 setTimeout(() => console.log(rooms.length),5000)
             } else{
                 alert('An error occurred while retrieving data');

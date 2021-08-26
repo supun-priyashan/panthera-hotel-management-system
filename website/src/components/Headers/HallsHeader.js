@@ -28,7 +28,7 @@ function HallsHeader() {
           className="page-header-image"
           style={{
             backgroundImage:
-              "url(" + require("assets/img/bg5.webp").default + ")",
+              "url(" + require("assets/img/bg2.jpg").default + ")",
           }}
           ref={pageHeader}
         ></div>

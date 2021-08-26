@@ -2,11 +2,6 @@ import React, {Fragment, useEffect, useState} from "react";
 
 // reactstrap components
 import {
-    Button,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     Container,
     Row,
     Col,
@@ -15,8 +10,8 @@ import {
 // core components
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import RoomsHeader from "../../components/Headers/RoomsHeader";
 import axios from "axios";
+import HallsHeader from "../../components/Headers/HallsHeader";
 
 function HallsPage() {
 
@@ -41,9 +36,9 @@ function HallsPage() {
                 console.log(response.data.halls);
                 setHalls(response.data.halls.map((item) => ({
                     id: item._id,
-                    roomName: item.roomName,
+                    hallName: item.hallName,
                     type: item.type,
-                    beds: item.beds,
+                    height: item.height,
                     guests: item.guests,
                     space: item.space,
                     facilities: item.facilities.join(),
@@ -51,8 +46,7 @@ function HallsPage() {
                     price: item.price,
                     description: item.description,
                 })));
-                setHalls(response.data.rooms);
-                setTimeout(() => console.log(halls.length),5000)
+                setTimeout(() => console.log(halls),5000)
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -64,12 +58,12 @@ function HallsPage() {
         <>
             <IndexNavbar />
             <div className="wrapper">
-                <RoomsHeader />
+                <HallsHeader />
                 <div className="section section-about-us">
                     <Container>
                         <Row>
                             <Col className="ml-auto mr-auto text-center" md="60">
-                                <h2 className="title">Rooms</h2>
+                                <h2 className="title">Reception Halls</h2>
                                 <div className={'container'}>
                                     {halls.length > 0 && halls.map((item,index)=>{
                                         return(
@@ -80,18 +74,12 @@ function HallsPage() {
                                                 }} >
                                                     <img className="card-img-top" src={'http://localhost:8080/uploads/'+item.image}  alt="Room image"/>
                                                     <div className="card-body">
-                                                        <p className="card-text">{item.roomName}</p>
+                                                        <p className="card-text">{item.hallName}</p>
                                                     </div>
                                                 </div>
                                             </Fragment>
                                         )
                                     })}
-                                    {/*<div className="card" style={{width: "20rem"}}>
-                                        <img className="card-img-top" src={'http://localhost:8080/uploads/'+halls[0].image}  alt="Room image"/>
-                                        <div className="card-body">
-                                            <p className="card-text">{halls[0].roomName}</p>
-                                        </div>
-                                    </div>*/}
                                 </div>
                             </Col>
                         </Row>
