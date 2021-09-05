@@ -29,6 +29,8 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.5.0";
 import LandingPage from "views/pages/LandingPage.js";
 import ProfilePage from "views/pages/ProfilePage.js";
 import RoomsPage from "views/pages/RoomsPage";
+import RestaurantsPage from "views/pages/RestaurantsPage";
+import FoodsPage from "views/pages/FoodsPage";
 import HallsPage from "views/pages/HallsPage";
 
 
@@ -40,6 +42,8 @@ ReactDOM.render(
           <Route path='/halls' exact component={HallsPage} />
           <Route path='/' exact component={LandingPage} />
           <Route path='/profile' exact component={ProfilePage} />
+          <Route path='/restaurants' exact component={RestaurantsPage} />
+          <Route path='/foods' exact component={FoodsPage} />
 
         </Switch>
       </div>

@@ -24,14 +24,14 @@ function RoomsHeader() {
   return (
     <>
       <div className="page-header page-header-small">
-        <div
+        {/*<div
           className="page-header-image"
           style={{
             backgroundImage:
               "url(" + require("assets/img/bg5.webp").default + ")",
           }}
           ref={pageHeader}
-        ></div>
+        ></div>*/}
         <div className="content-center">
           <Container>
             <h1 className="title">LUXURY AWAITS YOU</h1>
