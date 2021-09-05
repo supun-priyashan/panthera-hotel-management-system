@@ -32,9 +32,9 @@ const SubmitButton = styled.button`
     transform: translateY(-2px);
   }
 `;
-export const AddRoom = () => {
+export const AddEmployee = () => {
     const validationSchema = yup.object({
-        name: yup
+        /*name: yup
             .string('Enter employee name')
             .required('Name is required'),
         type: yup
@@ -57,10 +57,8 @@ export const AddRoom = () => {
             .required('Phone number is required'),
         email: yup
             .string('Enter the email')
-            .required('email is required'),
-        actions: yup
-            .string('Enter the action')
-            .required('Action is required'),
+            .required('email is required'),*/
+
     });
 
     const formik = useFormik({
@@ -73,7 +71,7 @@ export const AddRoom = () => {
             nationalId: '',
             phoneNumber: '',
             email: '',
-            actions: '',
+
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
@@ -84,32 +82,30 @@ export const AddRoom = () => {
                     'content-type': 'multipart/form-data'
                 }
             };
-            const room = {
+            const employees = {
                 employeeName: values.name,
                 type: values.type,
                 gender: values.gender,
                 dateOfBirth: values.dateOfBirth,
                 permanentAddress: values.permanentAddress,
-                nationalId: values.nationalId,
+                nationalID: values.nationalId,
                 phoneNumber: values.phoneNumber,
                 email: values.email,
-                actions: values.actions
             }
-            axios.post('http://localhost:8080/employees', employee)
+            console.log("mageFile",employees);
+            axios.post('http://localhost:8080/employees', employees)
                 .then(response => {
-                    axios.post("http://localhost:8080/files", formData, config)
-                        .then(() => {
-                            if (response.data.success) {
-                                alert('Employee  Successfully Added')
+                    if (response.data.success) {
+                        alert('Employee  Successfully Added')
 
-                            } else {
-                                alert('Failed to add employee')
-                            }
-                        }).catch((error) => {
-                        alert(error.message);
-                    });
+                    } else {
+                        alert('Failed to add employee')
+                    }
 
-                })
+                }).catch(error => {
+                    alert(error);
+            })
+            console.log("employees",values)
         },
     });
     useEffect(() => {
@@ -141,6 +137,7 @@ export const AddRoom = () => {
                         />
                         <InputLabel id="type">Type</InputLabel>
                         <TextField
+                            fullWidth
                             labelId="type"
                             select
                             id="type"
@@ -158,7 +155,10 @@ export const AddRoom = () => {
                             <MenuItem value={3}>Hotel General Manager</MenuItem>
                             <MenuItem value={4}>Waiter/Waitress</MenuItem>
                         </TextField>
+                        <br/>
+                        <InputLabel id="type">Gender</InputLabel>
                         <TextField
+                            fullWidth
                             labelId="gender"
                             select
                             id="gender"
@@ -177,19 +177,21 @@ export const AddRoom = () => {
                         </TextField>
                         <TextField
                             fullWidth
-                            id="dateofbirth"
-                            name="dateofbirth"
-                            label="dateofbirth"
+                            id="dateOfBirth"
+                            name="dateOfBirth"
+                            label="DateOfBirth"
+                            multiline
                             value={formik.values.dateOfBirth}
                             onChange={formik.handleChange}
-                            error={formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth)}
-                            helperText={formik.touched.dateOfBirth && formik.errors.dateOfBirth}
+                            /*error={formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth)}
+                            helperText={formik.touched.dateOfBirth && formik.errors.dateOfBirth}*/
                         />
                         <TextField
                             fullWidth
-                            id="permanentaddress"
-                            name="permanentaddress"
-                            label="permanentaddress"
+                            id="permanentAddress"
+                            name="permanentAddress"
+                            label="Permanentaddress"
+                            multiline
                             value={formik.values.permanentAddress}
                             onChange={formik.handleChange}
                             error={formik.touched.permanentAddress && Boolean(formik.errors.permanentAddress)}
@@ -197,9 +199,9 @@ export const AddRoom = () => {
                         />
                         <TextField
                             fullWidth
-                            id="nationalid"
-                            name="nationalid"
-                            label="nationalid"
+                            id="nationalId"
+                            name="nationalId"
+                            label="NationalID"
                             value={formik.values.nationalId}
                             onChange={formik.handleChange}
                             error={formik.touched.nationalId && Boolean(formik.errors.nationalId)}
@@ -207,9 +209,9 @@ export const AddRoom = () => {
                         />
                         <TextField
                             fullWidth
-                            id="phonenumber"
-                            name="phonenumber"
-                            label="phonenumber"
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            label="PhoneNumber"
                             value={formik.values.phoneNumber}
                             onChange={formik.handleChange}
                             error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
@@ -219,22 +221,13 @@ export const AddRoom = () => {
                             fullWidth
                             id="email"
                             name="email"
-                            label="email"
+                            label="Email"
                             value={formik.values.email}
                             onChange={formik.handleChange}
                             error={formik.touched.email && Boolean(formik.errors.email)}
                             helperText={formik.touched.email && formik.errors.email}
                         />
-                        <TextField
-                            fullWidth
-                            id="actions"
-                            name="actions"
-                            label="actions"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                            error={formik.touched.email && Boolean(formik.errors.email)}
-                            helperText={formik.touched.email && formik.errors.email}
-                        />
+
                         <SubmitButton
                             style={{
                                 float: 'right',
@@ -247,9 +240,23 @@ export const AddRoom = () => {
                             Add Employee
                         </SubmitButton>
                     </form>
+
+
+                </div>
                 </div>
             </div>
-        </div>
-    );
-};
+
+
+
+   );
+   };
+            export default AddEmployee;
+
+
+
+
+
+
+
+
 

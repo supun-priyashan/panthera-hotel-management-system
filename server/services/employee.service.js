@@ -7,6 +7,7 @@ const addEmployee = async (request, response) => {
     await employee.save((error, employee) => {
         if(error){
             response.status(500).json({ error: error.message });
+            console.log(error.message)
         }
         else{
             response.status(200).

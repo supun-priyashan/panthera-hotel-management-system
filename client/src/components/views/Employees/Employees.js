@@ -25,7 +25,7 @@ export const Employees = () => {
                     nationalId: item.nationalId,
                     phoneNumber: item.phoneNumber,
                     email: item.email,
-                    actions: item.actions,
+
                 })));
                 setTimeout(console.log(employees),3000)
             } else{
@@ -54,7 +54,7 @@ export const Employees = () => {
                             { title: 'NationalID', field: 'nationalId' },
                             { title: 'PhoneNumber', field: 'phoneNumber' },
                             { title: 'Email', field: 'email' },
-                            { title: 'Actions', field: 'action', hidden:true },
+
                         ]}
                         data={
                             employees
