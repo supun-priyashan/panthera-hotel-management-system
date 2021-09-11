@@ -5,9 +5,13 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const roomRoute = require('./routes/room.route');
-const hallRoute = require('./routes/hall.route');
+const hallRoute = require('./routes/hall.route')
 const roomReservationRoute = require('./routes/room.reservation.route');
 const hallReservationRoute = require('./routes/hall.reservation.route');
+
+const foodRoute = require('./routes/food.route');
+const restaurantRoute = require('./routes/restaurant.route');
+
 const fileRoute = require('./routes/fileUpload.route');
 
 dotenv.config();
@@ -41,8 +45,10 @@ app.use('/rooms',roomRoute());
 app.use('/halls',hallRoute());
 app.use('/roomReservations', roomReservationRoute());
 app.use('/hallReservations', hallReservationRoute());
-app.use('/files', fileRoute());
+app.use('/foods',foodRoute());
+app.use('/restaurants',restaurantRoute());
 
+app.use('/files', fileRoute());
 app.use('/uploads', express.static('uploads'));
 
 app.listen(PORT,()=>{

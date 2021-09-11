@@ -1,30 +1,31 @@
-const Hall = require('../models/hall.model');
+const Employee = require('../models/employee.model');
 
-const addHall = async (request, response) => {
+const addEmployee = async (request, response) => {
 
-    const hall = new Hall(request.body);
+    const employee = new Employee(request.body);
 
-    await hall.save((error, hall) => {
+    await employee.save((error, employee) => {
         if(error){
             response.status(500).json({ error: error.message });
+            console.log(error.message)
         }
         else{
             response.status(200).
             json({
                 success: true,
-                hall: hall
+                employee: employee
             })
         }
     });
 }
 
-const getHalls = async (request, response) => {
+const getEmployee = async (request, response) => {
     try{
-        const halls = await Hall.find();
+        const employees = await Employee.find();
         response.status(200).
         json({
             success: true,
-            halls: halls
+            employees: employees
         })
     } catch (error) {
         response.status(404).json({
@@ -35,6 +36,6 @@ const getHalls = async (request, response) => {
 }
 
 module.exports = {
-    addHall,
-    getHalls
+    getEmployee,
+    addEmployee
 }
