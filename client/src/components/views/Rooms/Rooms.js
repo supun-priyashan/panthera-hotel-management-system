@@ -35,6 +35,50 @@ export const Rooms = () => {
         })
     },[])
 
+    const deleteRoom = async (props) => {
+
+        console.log(props.data.id);
+
+        const id = props.data.id;
+
+        await axios.delete('http://localhost:8080/rooms/' + id).
+        then((response) => {
+            if(response.data.success){
+                alert("Successfully deleted.");
+
+                axios.get('http://localhost:8080/rooms').
+                then((response) => {
+                    if(response.data.success) {
+                        console.log(response.data.rooms);
+                        setRooms(response.data.rooms.map((item) => ({
+                            id: item._id,
+                            roomName: item.roomName,
+                            type: item.type,
+                            beds: item.beds,
+                            guests: item.guests,
+                            space: item.space,
+                            facilities: item.facilities.join(),
+                            image: item.image,
+                            price: item.price,
+                            description: item.description,
+                        })));
+                    } else{
+                        alert('An error occurred while retrieving data');
+                        console.log(response.data.error);
+                    }
+                })
+
+            }else {
+                alert('An error happened');
+                console.log(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+
+
+    }
+
     return (
         <div className={'content'}>
             <div className={'dashboard-header'}>
@@ -111,7 +155,9 @@ export const Rooms = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Delete Room"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.id)}
+                                                onClick={(event, rowData) =>
+                                                    deleteRoom(props)
+                                                }
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
