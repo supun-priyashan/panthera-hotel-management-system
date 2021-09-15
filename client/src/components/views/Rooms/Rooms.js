@@ -17,7 +17,7 @@ export const Rooms = () => {
                 console.log(response.data.rooms);
                 setRooms(response.data.rooms.map((item) => ({
                     id: item._id,
-                    roomName: item.name,
+                    name: item.name,
                     type: item.type,
                     beds: item.beds,
                     guests: item.guests,
@@ -27,7 +27,6 @@ export const Rooms = () => {
                     price: item.price,
                     description: item.description,
                 })));
-                setTimeout(console.log(rooms),3000)
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -52,7 +51,7 @@ export const Rooms = () => {
                         console.log(response.data.rooms);
                         setRooms(response.data.rooms.map((item) => ({
                             id: item._id,
-                            roomName: item.name,
+                            name: item.name,
                             type: item.type,
                             beds: item.beds,
                             guests: item.guests,
@@ -90,7 +89,7 @@ export const Rooms = () => {
                         title="Rooms and Suites"
                         columns={[
                             { title: 'id', field: 'id', hidden: true },
-                            { title: 'Name', field: 'roomName' },
+                            { title: 'Name', field: 'name' },
                             { title: 'Type', field: 'type' },
                             { title: 'Guests', field: 'guests', type: 'numeric' },
                             { title: 'Beds', field: 'beds', type: 'numeric' },
@@ -138,8 +137,11 @@ export const Rooms = () => {
                                                     type="button"
                                                     title="Edit Room"
                                                     onClick={(event, rowData) => {
-                                                        history.push('/rooms/edit-room/' + props.data.id);
-                                                        console.log(props.data.id);
+                                                        history.push({
+                                                            pathname:'/rooms/edit-room/' + props.data.id,
+                                                            state: props.data
+                                                        });
+                                                        console.log(props.data);
                                                     }}
                                                 >
                                                     <span class="MuiIconButton-label">
