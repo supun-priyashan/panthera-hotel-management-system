@@ -84,8 +84,8 @@ export const Employees = () => {
                             Container: props => <Paper {...props} elevation={0}/>,
                             Action:
                                 props => {
-                                    if(props.action.icon === 'edit'){
-                                        return(
+                                    if (props.action.icon === 'edit') {
+                                        return (
                                             <button
                                                 class="MuiButtonBase-root
                                                 MuiIconButton-root MuiIconButton-colorInherit"
@@ -104,14 +104,15 @@ export const Employees = () => {
                                             </button>
                                         )
                                     }
-                                    if(props.action.icon === 'delete'){
-                                        return(
+                                    if (props.action.icon === 'delete') {
+                                        return (
                                             <button
                                                 class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
                                                 title="Delete User"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.name)}
+                                                onClick={() => deleteEmployee(employees._id)}
+
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
@@ -124,8 +125,8 @@ export const Employees = () => {
                                             </button>
                                         )
                                     }
-                                    if(props.action.icon === 'add_box'){
-                                        return(
+                                    if (props.action.icon === 'add_box') {
+                                        return (
                                             <Button
                                                 onClick={(event) => history.push('/employees/add-employee/')}
                                                 variant="contained"
@@ -137,7 +138,7 @@ export const Employees = () => {
                                                     borderRadius: 35,
                                                     backgroundColor: '#5a2360',
                                                     fontFamily: 'Roboto',
-                                                    color:'white',
+                                                    color: 'white',
                                                 }}
                                                 size="medium"
                                             >
@@ -147,7 +148,8 @@ export const Employees = () => {
                                     }
                                 }
 
-                        }}
+                        }
+                        }
 
                         options={{
                             actionsColumnIndex: -1,
@@ -164,5 +166,6 @@ export const Employees = () => {
             </div>
         </div>
     );
-};
+}
+
 

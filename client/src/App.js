@@ -15,6 +15,7 @@ import {Restaurants} from "./components/views/Restaurant/Restaurants";
 import {AddRestaurant} from "./components/views/Restaurant/AddRestaurant";
 import {AddMenu} from "./components/views/Restaurant/AddMenu";
 
+
 function App() {
     return (
         <Router>
@@ -33,6 +34,7 @@ function App() {
                     <Route path='/restaurants/add-restaurant' exact component={AddRestaurant} />
                     <Route path='/employees' exact component={Employees} />
                     <Route path='/employees/add-employee' exact component={AddEmployee} />
+
 
                 </Switch>
             </div>
