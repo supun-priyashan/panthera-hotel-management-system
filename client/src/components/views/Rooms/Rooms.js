@@ -17,7 +17,7 @@ export const Rooms = () => {
                 console.log(response.data.rooms);
                 setRooms(response.data.rooms.map((item) => ({
                     id: item._id,
-                    roomName: item.roomName,
+                    roomName: item.name,
                     type: item.type,
                     beds: item.beds,
                     guests: item.guests,
@@ -52,7 +52,7 @@ export const Rooms = () => {
                         console.log(response.data.rooms);
                         setRooms(response.data.rooms.map((item) => ({
                             id: item._id,
-                            roomName: item.roomName,
+                            roomName: item.name,
                             type: item.type,
                             beds: item.beds,
                             guests: item.guests,
@@ -130,22 +130,27 @@ export const Rooms = () => {
                                 props => {
                                     if(props.action.icon === 'edit'){
                                         return(
-                                            <button
-                                                class="MuiButtonBase-root
-                                                MuiIconButton-root MuiIconButton-colorInherit"
-                                                tabindex="0"
-                                                type="button"
-                                                title="Edit Room"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.id)}
-                                            >
-                                                <span class="MuiIconButton-label">
-                                                    <span class="material-icons MuiIcon-root"
-                                                          aria-hidden="true">
-                                                        edit
-                                                    </span>
-                                            </span>
-                                                <span class="MuiTouchRipple-root"></span>
-                                            </button>
+                                            /*<Link to={"/rooms/edit-room/"}>*/
+                                                <button
+                                                    class="MuiButtonBase-root
+                                                    MuiIconButton-root MuiIconButton-colorInherit"
+                                                    tabindex="0"
+                                                    type="button"
+                                                    title="Edit Room"
+                                                    onClick={(event, rowData) => {
+                                                        history.push('/rooms/edit-room/' + props.data.id);
+                                                        console.log(props.data.id);
+                                                    }}
+                                                >
+                                                    <span class="MuiIconButton-label">
+                                                        <span class="material-icons MuiIcon-root"
+                                                              aria-hidden="true">
+                                                            edit
+                                                        </span>
+                                                </span>
+                                                    <span class="MuiTouchRipple-root"></span>
+                                                </button>
+                                            //</Link>
                                         )
                                     }
                                     if(props.action.icon === 'delete'){

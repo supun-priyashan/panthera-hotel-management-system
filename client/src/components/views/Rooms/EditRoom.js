@@ -7,7 +7,7 @@ import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui
 import * as yup from "yup";
 import {useFormik,Field} from "formik";
 import styled from "styled-components";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 const SubmitButton = styled.button`
   width: 120px;
@@ -37,11 +37,26 @@ const SubmitButton = styled.button`
 
 const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
 
-export const AddRoom = () => {
+export const EditRoom = (props) => {
 
     const [imageFile,setImageFile] = useState();
+    const [room,setRoom] = useState({});
 
     const history = useHistory();
+
+    useEffect(async () => {
+        await axios.get('http://localhost:8080/rooms/'+props.match.params.id).
+        then((response) => {
+            if(response.data.success) {
+                console.log(response.data.room);
+                setRoom(response.data.room);
+                setTimeout(() => {console.log(room)},3000)
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
 
     const validationSchema = yup.object({
         name: yup
@@ -84,12 +99,13 @@ export const AddRoom = () => {
             beds: '',
             price: '',
             description: '',
-            facilities: [],
-            image: null,
+            facilities: '',
+            image: ''
         },
+        enableReinitialize: true,
+        values:{room},
         validationSchema: validationSchema,
         onSubmit: (values) => {
-
             const formData = new FormData();
             formData.append('file',imageFile);
             const config = {
@@ -99,7 +115,7 @@ export const AddRoom = () => {
             };
 
             const room = {
-                name: values.name,
+                roomName: values.name,
                 type: values.type,
                 space: values.space,
                 guests: values.guests,
@@ -107,12 +123,12 @@ export const AddRoom = () => {
                 price: values.price,
                 description: values.description,
                 facilities: values.facilities,
-                image: imageFile.name,
+                image: imageFile.name
             }
 
             console.log(imageFile,room);
 
-            axios.post('http://localhost:8080/rooms', room)
+            axios.put('http://localhost:8080/rooms', room)
                 .then(response => {
                     axios.post("http://localhost:8080/files",formData,config)
                         .then(() => {
@@ -130,9 +146,7 @@ export const AddRoom = () => {
         },
     });
 
-    useEffect(() => {},[])
-
-    return (
+    return(
         <div className={'content'}>
             <div className={'dashboard-header'}>
                 Rooms & Suite Management
