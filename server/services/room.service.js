@@ -1,4 +1,5 @@
 const Room = require('../models/room.model');
+const {request, response} = require("express");
 
 const addRoom = async (request, response) => {
 
@@ -34,7 +35,25 @@ const getRooms = async (request, response) => {
     }
 }
 
+const updateRoom = async (request,response) => {
+    const room = new Room(request.body);
+
+    await room.save((error,room) => {
+        if(error){
+            response.status(500).json({ error: error.message });
+        }
+        else{
+            response.status(200).
+            json({
+                success: true,
+                room: room
+            })
+        }
+    });
+}
+
 module.exports = {
     getRooms,
-    addRoom
+    addRoom,
+    updateRoom
 }

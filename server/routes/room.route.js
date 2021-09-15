@@ -6,6 +6,7 @@ const RoomService = require('../services/room.service');
 module.exports = () => {
     router.get('/', RoomService.getRooms);
     router.post('/', RoomService.addRoom);
+    router.put('/', RoomService.updateRoom);
 
     return router;
 }
