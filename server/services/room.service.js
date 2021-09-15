@@ -1,4 +1,5 @@
 const Room = require('../models/room.model');
+const {request, response} = require("express");
 
 const addRoom = async (request, response) => {
 
@@ -34,7 +35,62 @@ const getRooms = async (request, response) => {
     }
 }
 
+const getRoom = async(request,response) => {
+    try {
+        Room.findById(request.params.id, (error, data) => {
+            if (error) {
+                response.status(500).json({error: error.message});
+            } else {
+                response.status(200).json({
+                    success: true,
+                    room: data
+                })
+            }
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+const updateRoom = async (request,response) => {
+    const room = new Room(request.body);
+
+    console.log(room);
+
+    await Room.findByIdAndUpdate(request.body._id,room,
+        (error,room) => {
+            if(error){
+                response.status(500).json({ error: error.message });
+            }
+            else{
+                response.status(200).
+                json({
+                    success: true,
+                    room: room
+                })
+            }
+    });
+}
+
+const deleteRoom = async (request,response) => {
+    await Room.findByIdAndRemove(request.params.id,(error,room) => {
+        if(error){
+            response.status(500).json({ error: error.message });
+        }
+        else{
+            response.status(200).
+            json({
+                success: true,
+                room: room
+            })
+        }
+    })
+}
+
 module.exports = {
     getRooms,
-    addRoom
+    getRoom,
+    addRoom,
+    updateRoom,
+    deleteRoom
 }

@@ -50,7 +50,7 @@ export const AddHall = () => {
             .string('Select room type')
             .required('Type is required'),
         space: yup
-            .number()
+            .number('Space should be a number')
             .label('space')
             .positive()
             .required('Space is required'),
