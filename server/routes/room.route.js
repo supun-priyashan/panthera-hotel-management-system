@@ -7,6 +7,7 @@ module.exports = () => {
     router.get('/', RoomService.getRooms);
     router.post('/', RoomService.addRoom);
     router.put('/', RoomService.updateRoom);
+    router.delete('/:id',RoomService.deleteRoom)
 
     return router;
 }

@@ -52,8 +52,24 @@ const updateRoom = async (request,response) => {
     });
 }
 
+const deleteRoom = async (request,response) => {
+    await Room.findByIdAndRemove(request.params.id,(error,room) => {
+        if(error){
+            response.status(500).json({ error: error.message });
+        }
+        else{
+            response.status(200).
+            json({
+                success: true,
+                room: room
+            })
+        }
+    })
+}
+
 module.exports = {
     getRooms,
     addRoom,
-    updateRoom
+    updateRoom,
+    deleteRoom
 }
