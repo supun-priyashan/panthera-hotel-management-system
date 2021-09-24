@@ -9,6 +9,7 @@ import {
     InputGroup,
     Container,
     Row,
+    Label,
     Col, FormGroup, Form, Card, CardHeader, CardTitle, CardBody, CardFooter,
 } from "reactstrap";
 
@@ -129,7 +130,7 @@ function ConfirmRoomReservationPage(props) {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Rooms & Guests: 1 Room, 2 Adults, 0 Children</p>
+                                                        }}>Beds & Guests: 1 bed, 2 Adults, 0 Children</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
@@ -155,75 +156,59 @@ function ConfirmRoomReservationPage(props) {
 
                                         <Container>
 
-                                            <br></br>
-                                            <Row>
-                                                <Col lg="6" sm="6">
-                                                    <p className="category">First Name</p>
-                                                    <FormGroup>
+                                            <Form>
+                                                <br></br>
+                                                <div className="form-row">
+                                                    <FormGroup className="col-md-6">
+                                                        <label htmlFor="inputEmail4">First Name</label>
                                                         <Input
                                                             id="firstName"
+                                                            placeholder="First Name"
                                                             name="firstName"
                                                             label="First Name"
                                                             defaultValue=""
                                                             type="text"
-                                                            value={firstName}
-                                                            onChange={(e) => {setFirstName(e.target.value)}}
-                                                            inputProps={{ placeholder: "First Name" }}
                                                         ></Input>
                                                     </FormGroup>
-                                                </Col>
-                                                <Col lg="6" sm="6">
-                                                    <p className="category">Last Name</p>
-                                                    <FormGroup>
+                                                    <br></br>
+                                                    <FormGroup className="col-md-6">
+                                                        <label htmlFor="inputPassword4">Last Name</label>
                                                         <Input
                                                             id="lastName"
+                                                            placeholder="Last Name"
                                                             name="lastName"
                                                             label="Last Name"
                                                             defaultValue=""
                                                             type="text"
-                                                            value={lastName}
-                                                            onChange={(e) => {setLastName(e.target.value)}}
-                                                            inputProps={{ placeholder: "Last Name" }}
                                                         ></Input>
                                                     </FormGroup>
-                                                </Col>
-                                            </Row>
-                                            <br></br>
-                                            <Row>
-                                                <Col lg="12" sm="6">
-                                                    <p className="category">Email</p>
-                                                    <FormGroup>
-                                                        <Input
-                                                            id="email"
-                                                            name="email"
-                                                            label="e-mail"
-                                                            defaultValue=""
-                                                            type="text"
-                                                            value={email}
-                                                            onChange={(e) => {setEmail(e.target.value)}}
-                                                            inputProps={{ placeholder: "E-mail" }}
-                                                        ></Input>
-                                                    </FormGroup>
-                                                </Col>
-                                            </Row>
-                                            <br></br>
-                                            <Row>
-                                                <Col lg="12" sm="6">
-                                                    <p className="category">Mobile</p>
-                                                    <FormGroup>
-                                                        <Input
-                                                            id="mobile"
-                                                            name="mobile"
-                                                            label="Mobile"
-                                                            defaultValue=""
-                                                            type="number"
-                                                            value={mobile}
-                                                            onChange={(e) => {setMobile(e.target.value)}}
-                                                            inputProps={{ placeholder: "Mobile" }}
-                                                        ></Input>
-                                                    </FormGroup>
-                                                </Col>
-                                            </Row>
+                                                </div>
+                                                <br></br>
+                                                <br></br>
+                                                <FormGroup>
+                                                    <label htmlFor="inputAddress">Email</label>
+                                                    <Input
+                                                        id="email"
+                                                        placeholder="Email"
+                                                        name="email"
+                                                        label="e-mail"
+                                                        defaultValue=""
+                                                        type="text"
+                                                    ></Input>
+                                                </FormGroup>
+                                                <br></br>
+                                                <br></br>
+                                                <FormGroup>
+                                                    <label htmlFor="inputAddress2">Mobile</label>
+                                                    <Input
+                                                        id="mobile"
+                                                        name="mobile"
+                                                        placeholder="Mobile"
+                                                        defaultValue=""
+                                                        type="number"
+                                                    ></Input>
+                                                </FormGroup>
+                                            </Form>
 
                                         </Container>
 
@@ -307,7 +292,7 @@ function ConfirmRoomReservationPage(props) {
                                                         onClick={(e) => onSubmit(e)}
                                                         size="lg"
                                                     >
-                                                        BOOK NOW
+                                                        Confirm Room
                                                     </Button>
 
 

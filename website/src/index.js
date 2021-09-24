@@ -32,6 +32,10 @@ import RoomsPage from "views/pages/RoomsPage";
 import RestaurantsPage from "views/pages/RestaurantsPage";
 import FoodsPage from "views/pages/FoodsPage";
 import HallsPage from "views/pages/HallsPage";
+import RoomReservationPage from "./views/pages/RoomReservationPage";
+import HallReservationsPage from "./views/pages/HallReservationsPage";
+import ConfirmRoomReservationPage from "./views/pages/ConfirmRoomReservationPage";
+import ConfirmHallReservationPage from "./views/pages/ConfirmHallReservationPage";
 
 
 ReactDOM.render(
@@ -44,6 +48,10 @@ ReactDOM.render(
           <Route path='/profile' exact component={ProfilePage} />
           <Route path='/restaurants' exact component={RestaurantsPage} />
           <Route path='/foods' exact component={FoodsPage} />
+            <Route path='/reservations/room' exact component={RoomReservationPage} />
+            <Route path='/reservations/hall' exact component={HallReservationsPage} />
+            <Route path='/confirm/rooms' exact component={ConfirmRoomReservationPage} />
+            <Route path='/confirm/halls' exact component={ConfirmHallReservationPage} />
 
         </Switch>
       </div>

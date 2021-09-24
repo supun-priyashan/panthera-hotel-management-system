@@ -4,12 +4,15 @@ import Datetime from "react-datetime";
 import {
     Button,
     Input,
+    Form,
+    Label,
     InputGroupAddon,
     InputGroupText,
     InputGroup,
     Container,
     Row,
-    Col, FormGroup,
+    Col,
+    FormGroup,
 } from "reactstrap";
 
 // core components
@@ -75,6 +78,7 @@ function RoomReservationPage(props) {
             state: {
                 arrival:arrivalDate,
                 departure:departureDate,
+
             } // your data array of objects
         })
     }
@@ -98,68 +102,75 @@ function RoomReservationPage(props) {
                                             You can write here details about one of your team members.
                                             You can give more details about what they do. Feel free to
                                             add some links for people to be able to follow them outside the site.
-                                            You can write here details about one of your team members.
-                                            You can give more details about what they do. Feel free to
-                                            add some links for people to be able to follow them outside the site.
+                                            Feel free to add some links for people to be able to follow them outside the site.
                                         </p>
 
-                                        <Row>
-                                            <Col md="5">
-                                                <div className="datepicker-container">
-                                                    <FormGroup>
-                                                        <Datetime
-                                                            id="arrivalDate"
-                                                            name="arrivalDate"
-                                                            label="ArrivalDate"
-                                                            value={arrivalDate}
-                                                            onChange={(e)=>setArrivalDate(e._d)}
-                                                            timeFormat={false}
-                                                            inputProps={{ placeholder: "ArrivalDate Picker" }}
-                                                        />
-                                                        {/*<Input
-                                                            id="arrivalDate"
-                                                            name="arrivalDate"
-                                                            label="ArrivalDate"
-                                                            value={arrivalDate}
-                                                            onChange={setArrivalDate}
-                                                            type={'date'}
-                                                        />*/}
-                                                    </FormGroup>
-                                                </div>
-                                            </Col>
 
-                                            <Col md="2">
-                                                <div className="datepicker-container">
-                                                    <p>to</p>
-                                                </div>
-                                            </Col>
+                                        {/*<Form>*/}
+                                        {/*    <div className="form-row">*/}
+                                        {/*        <div className="col-md-6">*/}
+                                        {/*            <label htmlFor="inputEmail4">ArrivalDate Picker</label>*/}
+                                        {/*            <Datetime*/}
+                                        {/*                id="arrivalDate"*/}
+                                        {/*                name="arrivalDate"*/}
+                                        {/*                label="ArrivalDate"*/}
+                                        {/*                value={arrivalDate}*/}
+                                        {/*                onChange={(e)=>setArrivalDate(e._d)}*/}
+                                        {/*                timeFormat={false}*/}
+                                        {/*                inputProps={{ placeholder: "ArrivalDate Picker" }}*/}
+                                        {/*            />*/}
+                                        {/*            /!*<Input id="inputEmail4" placeholder="Email" type="email"></Input>*!/*/}
+                                        {/*        </div>*/}
+                                        {/*        <div className="col-md-6">*/}
+                                        {/*            <label htmlFor="inputPassword4">DepatureDate Picker</label>*/}
+                                        {/*            <Datetime*/}
+                                        {/*                id="departureDate"*/}
+                                        {/*                name="departureDate"*/}
+                                        {/*                label="DepartureDate"*/}
+                                        {/*                timeFormat={false}*/}
+                                        {/*                value={departureDate}*/}
+                                        {/*                onChange={(e)=>setDepartureDate(e._d)}*/}
+                                        {/*                inputProps={{ placeholder: "DepatureDate Picker" }}*/}
+                                        {/*            />*/}
+                                        {/*            /!*<Input*!/*/}
+                                        {/*            /!*    id="inputPassword4"*!/*/}
+                                        {/*            /!*    placeholder="Password"*!/*/}
+                                        {/*            /!*    type="password"*!/*/}
+                                        {/*            /!*></Input>*!/*/}
+                                        {/*        </div>*/}
+                                        {/*        <div className="col-md-6">*/}
+                                        {/*            <label htmlFor="inputPassword4">Rooms</label>*/}
+                                        {/*            <Datetime*/}
+                                        {/*                id="rooms"*/}
+                                        {/*                name="rooms"*/}
+                                        {/*                label="Rooms"*/}
+                                        {/*                type="number"*/}
+                                        {/*            />*/}
 
-                                            <Col md="5">
-                                                <div className="datepicker-container">
-                                                    <FormGroup>
-                                                        <Datetime
-                                                            id="departureDate"
-                                                            name="departureDate"
-                                                            label="DepartureDate"
-                                                            timeFormat={false}
-                                                            value={departureDate}
-                                                            onChange={(e)=>setDepartureDate(e._d)}
-                                                            inputProps={{ placeholder: "DepatureDate Picker" }}
-                                                        />
-                                                    </FormGroup>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                        <Button
-                                            block
-                                            className="btn-round"
-                                            color="info"
-                                            href="#pablo"
-                                            onClick={onSubmit}
-                                            size="lg"
-                                        >
-                                            BOOK NOW
-                                        </Button>
+                                        {/*        </div>*/}
+                                        {/*        <div className="col-md-6">*/}
+                                        {/*            <label htmlFor="inputPassword4">Guests</label>*/}
+                                        {/*            <Datetime*/}
+                                        {/*                id="guests"*/}
+                                        {/*                name="guests"*/}
+                                        {/*                label="Guests"*/}
+                                        {/*                type="number"*/}
+                                        {/*            />*/}
+                                        {/*        </div>*/}
+                                        {/*    </div>*/}
+                                        {/*    <Button*/}
+                                        {/*        type="submit"*/}
+                                        {/*        block*/}
+                                        {/*        className="btn-round"*/}
+                                        {/*        color="info"*/}
+                                        {/*        href="#pablo"*/}
+                                        {/*        onClick={onSubmit}*/}
+                                        {/*        size="lg">*/}
+                                        {/*        BOOK NOW*/}
+                                        {/*    </Button>*/}
+                                        {/*</Form>*/}
+
+
                                     </div>
                                 </Col>
                                 <Col className="ml-auto mr-auto text-left" md="6">
@@ -167,7 +178,7 @@ function RoomReservationPage(props) {
                                         <Fragment>
                                             <div className="card" style={{
                                                 width: "38rem",
-                                                height: "28rem",
+                                                height: "30rem",
                                                 margin: "10px",
                                                 backgroundColor: "#F8FCFA",
                                             }} >
