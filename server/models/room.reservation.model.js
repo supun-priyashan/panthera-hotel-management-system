@@ -1,4 +1,5 @@
 //This is the module for room reservation mongoose model
+//room model
 const mongoose = require('mongoose');
 
 const roomReservationSchema = new mongoose.Schema({
