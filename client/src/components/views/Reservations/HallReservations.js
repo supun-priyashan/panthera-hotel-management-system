@@ -2,8 +2,11 @@ import React, {useEffect, useState} from 'react';
 import MaterialTable from 'material-table'
 import {Button,  Icon, Paper} from "@material-ui/core";
 import axios from "axios";
+import {useHistory} from "react-router-dom";
 
 export const HallReservation = () => {
+
+    const history = useHistory();
 
     const [hallReservations,setHallReservations] = useState([]);
 
@@ -30,6 +33,50 @@ export const HallReservation = () => {
             }
         })
     },[])
+
+    const deleteHallReservation = async (props) => {
+
+        console.log(props.data.id);
+
+        const id = props.data.id;
+
+        await axios.delete('http://localhost:8080/hallReservations/' + id).
+        then((response) => {
+            if(response.data.success){
+                alert("Successfully deleted.");
+
+                axios.get('http://localhost:8080/hallReservations').
+                then((response) => {
+                    if(response.data.success) {
+                        console.log(response.data.hallReservations);
+                        setHallReservations(response.data.hallReservations.map((item) => ({
+                            id: item._id,
+                            customerName: item.customerName,
+                            email: item.email,
+                            contactNumber: item.contactNumber,
+                            hallName: item.hallName,
+                            hallType: item.hallType,
+                            eventType: item.eventType,
+                            noOfGuests: item.noOfGuests,
+                            arrivalDate: item.arrivalDate,
+                            departureDate: item.departureDate,
+                        })));
+                    } else{
+                        alert('An error occurred while retrieving data');
+                        console.log(response.data.error);
+                    }
+                })
+
+            }else {
+                alert('An error happened');
+                console.log(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+
+
+    }
 
     return (
         <div className={'content'}>
@@ -58,13 +105,13 @@ export const HallReservation = () => {
                         actions={[
                             {
                                 icon: 'edit',
-                                tooltip: 'Edit User',
+                                tooltip: 'Edit Hall Reservation',
                                 onClick: (event, rowData) => alert("You saved " + rowData.name)
                             },
 
                             {
                                 icon: 'delete',
-                                tooltip: 'Delete User',
+                                tooltip: 'Delete Hall Reservation',
 
                             }
                         ]}
@@ -79,8 +126,14 @@ export const HallReservation = () => {
                                                 MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
-                                                title="Edit User"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.name)}
+                                                title="Edit Hall Reservation"
+                                                onClick={(event, rowData) => {
+                                                    history.push({
+                                                        pathname:'/hallReservations/edit-hallReservations/' + props.data.id,
+                                                        state: props.data
+                                                    });
+                                                    console.log(props.data);
+                                                }}
                                             >
                                                 <span class="MuiIconButton-label">
                                                     <span class="material-icons MuiIcon-root"
@@ -98,8 +151,10 @@ export const HallReservation = () => {
                                                 class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
-                                                title="Delete User"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.name)}
+                                                title="Delete Hall Reservation"
+                                                onClick={(event, rowData) =>
+                                                    deleteHallReservation(props)
+                                                }
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
