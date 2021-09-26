@@ -32,7 +32,7 @@ export const Restaurants = () => {
                     restaurantName: item.restaurantName,
                     caption: item.caption,
                     images: item.images,
-                    imageCount: item.images.length,
+                    //imageCount: item.images.length,
                     description: item.description,
                 })));
                 setTimeout(console.log(restaurants),3000)
