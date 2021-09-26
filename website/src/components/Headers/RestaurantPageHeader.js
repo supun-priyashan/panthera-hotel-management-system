@@ -34,9 +34,9 @@ function RestaurantPageHeader() {
         > </div>
                 <div className="content-center">
                     <Container>
-                        <h1 className="title">LUXURY AWAITS YOU</h1>
+                        <h1 className="title">MEALS THAT HEAL</h1>
                         <div className="text-center">
-                            Explore from our world class rooms & suites
+                            All flavours of the world in one place
                         </div>
                     </Container>
                 </div>

@@ -28,7 +28,7 @@ function FoodPageHeader({restaurantName}) {
                     className="page-header-image"
                     style={{
                         backgroundImage:
-                            "url(" + require("assets/img/restaurantHeader.jpg").default + ")",
+                            "url(" + require("assets/img/foodHeader.jpg").default + ")",
                     }}
                     ref={pageHeader}
                 ></div>
@@ -36,7 +36,7 @@ function FoodPageHeader({restaurantName}) {
                     <Container>
                         <h1 className="title">{restaurantName} Restaurant</h1>
                         <div className="text-center">
-                            Explore from our world class rooms & suites
+                            Celebrate food with multiple cuisines from your favourite resort in the city.
                         </div>
                     </Container>
                 </div>
