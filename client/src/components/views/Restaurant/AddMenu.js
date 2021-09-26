@@ -124,6 +124,7 @@ export const AddMenu = () => {
                             error={formik.touched.foodName && Boolean(formik.errors.foodName)}
                             helperText={formik.touched.foodName && formik.errors.foodName}
                         />
+                        <br/><br/>
                         <TextField
                             fullWidth
                             id="price"
@@ -135,6 +136,8 @@ export const AddMenu = () => {
                             error={formik.touched.price && Boolean(formik.errors.price)}
                             helperText={formik.touched.price && formik.errors.price}
                         />
+                        <br/><br/>
+                        <br/>
                         <InputLabel id="type">Restaurant Type</InputLabel>
                         <TextField
                             labelId="restaurantType"
@@ -147,13 +150,14 @@ export const AddMenu = () => {
                             onChange={formik.handleChange}
                             error={formik.touched.restaurantType && Boolean(formik.errors.restaurantType)}
                             helperText={formik.touched.restaurantType && formik.errors.restaurantType}
-                            style={{'marginTop': '10px'}}
+                            style={{'marginTop': '10px', width : '150px'}}
                         >
                             <MenuItem value={'Echo'}>Echo</MenuItem>
                             <MenuItem value={'Tea Lounge'}>Tea Lounge</MenuItem>
                             <MenuItem value={'Tao'}>Tao</MenuItem>
                             <MenuItem value={'Aswedduma'}>Aswedduma</MenuItem>
                         </TextField>
+                        <br/><br/>
                         <TextField
                             fullWidth
                             id="description"
@@ -165,18 +169,22 @@ export const AddMenu = () => {
                             error={formik.touched.description && Boolean(formik.errors.description)}
                             helperText={formik.touched.description && formik.errors.description}
                         />
+                        <br/><br/><br/>
                         <InputLabel id="image" style={{
                             marginTop: '10px',
                         }}>Image</InputLabel>
+                        <br/>
                         <Input
                             id="image"
                             name="image"
                             type="file"
+                            /*style={}*/
                             value={formik.values.image}
                             onChange={(e) => {setImageFile((e.target.files[0]))}}
                             error={formik.touched.image && Boolean(formik.errors.image)}
                             helperText={formik.touched.image && formik.errors.image}
                         />
+                        <br/><br/><br/>
                         <SubmitButton
                             style={{
                                 float: 'right',
@@ -186,7 +194,7 @@ export const AddMenu = () => {
                             }}
                             type = "submit"
                         >
-                            Add Restaurant
+                            Add Food
                         </SubmitButton>
                     </form>
                 </div>
