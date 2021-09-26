@@ -31,7 +31,7 @@ function RoomsHeader() {
               "url(" + require("assets/img/bg5.webp").default + ")",
           }}
           ref={pageHeader}
-        > </div>
+        ></div>
         <div className="content-center">
           <Container>
             <h1 className="title">LUXURY AWAITS YOU</h1>
