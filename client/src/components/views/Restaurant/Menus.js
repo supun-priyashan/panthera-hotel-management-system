@@ -45,7 +45,7 @@ export const Menus = () => {
                             { title: 'Price', field: 'price' },
                             { title: 'Restaurant Type', field: 'restaurantType' },
                             { title: 'Description', field: 'description'},
-                            { title: 'Images', field: 'image', type: 'numeric' },
+                            //{ title: 'Images', field: 'image', type: 'numeric' },
                         ]}
                         data={
                             menus
@@ -144,7 +144,7 @@ export const Menus = () => {
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
-                            exportButton: true,
+                            //exportButton: true,
                             sorting: true,
                             pageSize: 6,
                             pageSizeOptions: [6],

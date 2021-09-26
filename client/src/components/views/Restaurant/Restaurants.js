@@ -31,8 +31,8 @@ export const Restaurants = () => {
                     id: item._id,
                     restaurantName: item.restaurantName,
                     caption: item.caption,
-                    images: item.images,
-                    imageCount: item.images.length,
+                    // image: item.image,
+                    // imageCount: item.images.length,
                     description: item.description,
                 })));
                 setTimeout(console.log(restaurants),3000)
@@ -57,7 +57,7 @@ export const Restaurants = () => {
                             { title: 'Name', field: 'restaurantName' },
                             { title: 'Caption', field: 'caption' },
                             { title: 'Description', field: 'description'},
-                            { title: 'Images', field: 'imageCount', type: 'numeric' },
+                            //{ title: 'Images', field: 'imageCount', type: 'numeric' },
                         ]}
                         data={
                             restaurants
@@ -156,7 +156,7 @@ export const Restaurants = () => {
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
-                            exportButton: true,
+                            //exportButton: true,
                             sorting: true,
                             pageSize: 6,
                             pageSizeOptions: [6],
