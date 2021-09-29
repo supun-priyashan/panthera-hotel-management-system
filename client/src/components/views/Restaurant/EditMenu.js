@@ -101,11 +101,12 @@ export const EditMenu = (props) => {
 
     const formik = useFormik({
         initialValues: {
-            foodName: '',
-            price: '',
-            restaurantType: '',
-            description:'',
-            image: null,
+            _id: id,
+            foodName: foodName,
+            price: price,
+            restaurantType: restaurantType,
+            description:description,
+            //image: null,
         },
         enableReinitialize: true,
         validationSchema: validationSchema,
@@ -120,11 +121,12 @@ export const EditMenu = (props) => {
             };
 
             const food = {
+                _id: id,
                 foodName: values.foodName,
                 price: values.price,
                 restaurantType: values.restaurantType,
                 description: values.description,
-                image: imageFile.name,
+                //image: imageFile.name,
             }
 
             axios.put('http://localhost:8080/foods', food)
@@ -260,21 +262,20 @@ export const EditMenu = (props) => {
                             helperText={formik.touched.description && formik.errors.description}
                         />
                         <br/><br/><br/>
-                        <InputLabel id="image" style={{
-                            marginTop: '10px',
-                        }}>Image</InputLabel>
-                        <br/>
-                        <Input
-                            id="image"
-                            name="image"
-                            type="file"
-                            /*style={}*/
-                            value={formik.values.image}
-                            onChange={(e) => {setImageFile((e.target.files[0]))}}
-                            error={formik.touched.image && Boolean(formik.errors.image)}
-                            helperText={formik.touched.image && formik.errors.image}
-                        />
-                        <br/><br/><br/>
+                        {/*<InputLabel id="image" style={{*/}
+                        {/*    marginTop: '10px',*/}
+                        {/*}}>Image</InputLabel>*/}
+                        {/*<br/>*/}
+                        {/*<Input*/}
+                        {/*    id="image"*/}
+                        {/*    name="image"*/}
+                        {/*    type="file"*/}
+                        {/*    value={formik.values.image}*/}
+                        {/*    onChange={(e) => {setImageFile((e.target.files[0]))}}*/}
+                        {/*    error={formik.touched.image && Boolean(formik.errors.image)}*/}
+                        {/*    helperText={formik.touched.image && formik.errors.image}*/}
+                        {/*/>*/}
+                        {/*<br/><br/><br/>*/}
                         <SubmitButton
                             style={{
                                 float: 'right',
@@ -284,7 +285,7 @@ export const EditMenu = (props) => {
                             }}
                             type = "submit"
                         >
-                            Add Food
+                            Save Changes
                         </SubmitButton>
                     </form>
                 </div>
