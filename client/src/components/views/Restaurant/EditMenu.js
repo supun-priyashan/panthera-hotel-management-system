@@ -36,7 +36,6 @@ const SubmitButton = styled.button`
   }
 `;
 
-const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
 
 export const EditMenu = (props) => {
 
