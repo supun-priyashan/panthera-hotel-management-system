@@ -41,15 +41,15 @@ const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
 export const EditMenu = (props) => {
 
     const [isLoading,setIsLoading] = useState(true);
-    const [customerName,setCustomerName] = useState('');
-    const [email,setEmail] = useState('');
-    const [contactNumber,setContactNumber] = useState('');
-    const [roomName,setRoomName] = useState('');
-    const [roomType,setRoomType] = useState('');
+    const [foodName,setFoodName] = useState('');
+    const [price,setPrice] = useState('');
+    const [restaurantType,setRestaurantType] = useState('');
+    const [description,setDescription] = useState('');
+    /*const [roomType,setRoomType] = useState('');
     const [noOfBeds, setBeds] = useState('');
     const [noOfGuests, setGuests] = useState('');
     const [arrivalDate, setArrivalDate] = useState('');
-    const [departureDate, setDepartureDate] = useState('');
+    const [departureDate, setDepartureDate] = useState('');*/
     const [id, setId] = useState('');
 
     const history = useHistory();
@@ -57,22 +57,22 @@ export const EditMenu = (props) => {
     const data = history.location.state;
 
     useEffect(async () => {
-        await axios.get('http://localhost:8080/roomReservations/'+props.match.params.id).
+        await axios.get('http://localhost:8080/foods/'+props.match.params.id).
         then((response) => {
             if(response.data.success) {
 
-                console.log(response.data.roomReservation);
-                const data = response.data.roomReservation;
+                console.log(response.data.food);
+                const data = response.data.food;
 
-                setCustomerName(data.customerName);
-                setEmail(data.email);
-                setContactNumber(data.contactNumber);
-                setRoomName(data.roomName);
-                setRoomType(data.roomType);
+                setFoodName(data.foodName);
+                setPrice(data.price);
+                setRestaurantType(data.restaurantType);
+                setDescription(data.description);
+                /*setRoomType(data.roomType);
                 setBeds(data.noOfBeds);
                 setGuests(data.noOfGuests);
                 setArrivalDate(data.arrivalDate);
-                setDepartureDate(data.departureDate);
+                setDepartureDate(data.departureDate);*/
                 setId(data._id);
 
                 setIsLoading(false);
@@ -85,52 +85,27 @@ export const EditMenu = (props) => {
     },[])
 
     const validationSchema = yup.object({
-        customerName: yup
-            .string('Enter room name')
-            .required('Name is required'),
-        email: yup
-            .string('Enter email')
-            .required('Email is required'),
-        contactNumber: yup
-            .string('Enter contact number')
-            .required('Contact Number is required'),
-        roomName: yup
-            .string('Select room name')
-            .required('Room Name is required'),
-        roomType: yup
-            .string('Select room type')
-            .required('Room Type is required'),
-        noOfBeds: yup
-            .number()
-            .label('beds')
-            .positive()
-            .required('Bed count is required'),
-        noOfGuests: yup
-            .number()
-            .label('guests')
-            .positive()
-            .required('Guest count is required'),
-        arrivalDate: yup
-            .date('Select arrival date')
-            .required('Arrival Date is required'),
-        departureDate: yup
-            .date('Select departure date')
-            .required('Departure Date is required'),
+        foodName: yup
+            .string('Enter food name')
+            .required('Food Name is required'),
+        price: yup
+            .string('Enter food price')
+            .required('Food price is required'),
+        restaurantType: yup
+            .string('Enter Restaurant')
+            .required('Restaurant is required'),
+        description: yup
+            .string('Enter Description')
+            .required('Description is required'),
     });
 
     const formik = useFormik({
         initialValues: {
-            _id: id,
-            customerName: customerName,
-            email: email,
-            contactNumber: contactNumber,
-            roomName: roomName,
-            roomType: roomType,
-            noOfBeds: noOfBeds,
-            noOfGuests: noOfGuests,
-            arrivalDate: arrivalDate,
-            departureDate: departureDate,
-
+            foodName: '',
+            price: '',
+            restaurantType: '',
+            description:'',
+            image: null,
         },
         enableReinitialize: true,
         validationSchema: validationSchema,
@@ -144,21 +119,15 @@ export const EditMenu = (props) => {
                 }
             };
 
-            const roomReservation = {
-                _id: id,
-                customerName: values.customerName,
-                email: values.email,
-                contactNumber: values.contactNumber,
-                roomName: values.roomName,
-                roomType: values.roomType,
-                noOfBeds: values.noOfBeds,
-                noOfGuests: values.noOfGuests,
-                arrivalDate: values.arrivalDate,
-                departureDate: values.departureDate,
-
+            const food = {
+                foodName: values.foodName,
+                price: values.price,
+                restaurantType: values.restaurantType,
+                description: values.description,
+                image: imageFile.name,
             }
 
-            axios.put('http://localhost:8080/roomReservations', roomReservation)
+            axios.put('http://localhost:8080/foods', food)
                 .then((response) => {
                     if (response.data.success) {
                         alert('Room Details Successfully Updated')
@@ -184,41 +153,41 @@ export const EditMenu = (props) => {
         },
     });
 
-    return isLoading ? (
-        <div>
-            <div className={'content'}>
-                <div className={'dashboard-header'}>
-                    Rooms & Suite Reservation Management
-                    <div className={'dashboard-subheader'}>
-                        {/*TODO Align icon an route to go back*/}
-                        <IconButton aria-label="back"
-                                    onClick={() =>{
-                                        history.goBack();
-                                    }}>
-                            <Icon style={{
-                                color: '#5a2360',
-                            }}>arrow_back_ios</Icon>
-                        </IconButton>
-                        Edit Room Reservation Details
+    return isLoading ?(
+            <div>
+                <div className={'content'}>
+                    <div className={'dashboard-header'}>
+                        Food Management
+                        <div className={'dashboard-subheader'}>
+                            {/*TODO Align icon an route to go back*/}
+                            <IconButton aria-label="back"
+                                        onClick={() =>{
+                                            history.goBack();
+                                        }}>
+                                <Icon style={{
+                                    color: '#5a2360',
+                                }}>arrow_back_ios</Icon>
+                            </IconButton>
+                            Edit Food Details
+                        </div>
                     </div>
-                </div>
-                <div className={'main-container'}>
-                    <div className={'form-container'}>
-                        Loading...
-                        <JumpCircleLoading
-                            color ="#5a2360"
-                            speed = {0.5}
-                            size = "large"
+                    <div className={'main-container'}>
+                        <div className={'form-container'}>
+                            Loading...
+                            <JumpCircleLoading
+                                color ="#5a2360"
+                                speed = {0.5}
+                                size = "large"
 
-                        />
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    ):(
+        ):(
         <div className={'content'}>
             <div className={'dashboard-header'}>
-                Rooms & Suite Reservation Management
+                Food Management
                 <div className={'dashboard-subheader'}>
                     {/*TODO Align icon an route to go back*/}
                     <IconButton aria-label="back"
@@ -229,7 +198,7 @@ export const EditMenu = (props) => {
                             color: '#5a2360',
                         }}>arrow_back_ios</Icon>
                     </IconButton>
-                    Edit Room Reservation Details
+                    Edit Food Details
                 </div>
             </div>
             <div className={'main-container'}>
@@ -237,128 +206,90 @@ export const EditMenu = (props) => {
                     <form onSubmit={formik.handleSubmit}>
                         <TextField
                             fullWidth
-                            id="customerName"
-                            name="customerName"
-                            label="customerName"
-                            value={formik.values.customerName}
+                            id="foodName"
+                            name="foodName"
+                            label="Food Name"
+                            value={formik.values.foodName}
                             onChange={formik.handleChange}
-                            error={formik.touched.customerName && Boolean(formik.errors.customerName)}
-                            helperText={formik.touched.customerName && formik.errors.customerName}
+                            error={formik.touched.foodName && Boolean(formik.errors.foodName)}
+                            helperText={formik.touched.foodName && formik.errors.foodName}
                         />
+                        <br/><br/>
                         <TextField
                             fullWidth
-                            id="email"
-                            name="email"
-                            label="email"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                            error={formik.touched.email && Boolean(formik.errors.email)}
-                            helperText={formik.touched.email && formik.errors.email}
-                        />
-                        <TextField
-                            fullWidth
-                            id="contactNumber"
-                            name="contactNumber"
-                            label="contactNumber"
-                            value={formik.values.contactNumber}
-                            onChange={formik.handleChange}
-                            error={formik.touched.contactNumber && Boolean(formik.errors.contactNumber)}
-                            helperText={formik.touched.contactNumber && formik.errors.contactNumber}
-                        />
-                        <InputLabel id="type">Room Name</InputLabel>
-                        <TextField
-                            labelId="roomName"
-                            select
-                            id="roomName"
-                            name="roomName"
-                            autoWidth
-                            variant = 'outlined'
-                            value={formik.values.roomName}
-                            onChange={formik.handleChange}
-                            error={formik.touched.roomName && Boolean(formik.errors.roomName)}
-                            helperText={formik.touched.roomName && formik.errors.roomName}
-                            style={{'marginTop': '10px'}}
-                        >
-                            <MenuItem value={'Deluxe double room'}>Deluxe double room</MenuItem>
-                            <MenuItem value={'Luxury triple room'}>Luxury triple room</MenuItem>
-                        </TextField>
-                        <InputLabel id="type">Room Type</InputLabel>
-                        <TextField
-                            labelId="roomType"
-                            select
-                            id="roomType"
-                            name="roomType"
-                            autoWidth
-                            variant = 'outlined'
-                            value={formik.values.roomType}
-                            onChange={formik.handleChange}
-                            error={formik.touched.roomType && Boolean(formik.errors.roomType)}
-                            helperText={formik.touched.roomType && formik.errors.roomType}
-                            style={{'marginTop': '10px'}}
-                        >
-                            <MenuItem value={'Room'}>Room</MenuItem>
-                            <MenuItem value={'Suite'}>Suite</MenuItem>
-                        </TextField>
-                        <TextField
-                            fullWidth
-                            id="noOfBeds"
-                            name="noOfBeds"
-                            label="noOfBeds"
+                            id="price"
+                            name="price"
+                            label="Price"
                             type="number"
-                            value={formik.values.noOfBeds}
+                            value={formik.values.price}
                             onChange={formik.handleChange}
-                            error={formik.touched.noOfBeds && Boolean(formik.errors.noOfBeds)}
-                            helperText={formik.touched.noOfBeds && formik.errors.noOfBeds}
+                            error={formik.touched.price && Boolean(formik.errors.price)}
+                            helperText={formik.touched.price && formik.errors.price}
                         />
+                        <br/><br/>
+                        <br/>
+                        <InputLabel id="type">Restaurant Type</InputLabel>
+                        <TextField
+                            labelId="restaurantType"
+                            select
+                            id="restaurantType"
+                            name="restaurantType"
+                            autoWidth
+                            variant = 'outlined'
+                            value={formik.values.restaurantType}
+                            onChange={formik.handleChange}
+                            error={formik.touched.restaurantType && Boolean(formik.errors.restaurantType)}
+                            helperText={formik.touched.restaurantType && formik.errors.restaurantType}
+                            style={{'marginTop': '10px', width : '150px'}}
+                        >
+                            <MenuItem value={'Echo'}>Echo</MenuItem>
+                            <MenuItem value={'Tea Lounge'}>Tea Lounge</MenuItem>
+                            <MenuItem value={'Tao'}>Tao</MenuItem>
+                            <MenuItem value={'Aswedduma'}>Aswedduma</MenuItem>
+                        </TextField>
+                        <br/><br/>
                         <TextField
                             fullWidth
-                            id="noOfGuests"
-                            name="noOfGuests"
-                            label="noOfGuests"
-                            type="noOfGuests"
-                            value={formik.values.noOfGuests}
+                            id="description"
+                            name="description"
+                            label="Description"
+                            multiline
+                            value={formik.values.description}
                             onChange={formik.handleChange}
-                            error={formik.touched.noOfGuests && Boolean(formik.errors.noOfGuests)}
-                            helperText={formik.touched.noOfGuests && formik.errors.noOfGuests}
+                            error={formik.touched.description && Boolean(formik.errors.description)}
+                            helperText={formik.touched.description && formik.errors.description}
                         />
-
-                        <TextField
-                            fullWidth
-                            id="arrivalDate"
-                            name="arrivalDate"
-                            label="arrivalDate"
-                            value={formik.values.arrivalDate}
-                            onChange={formik.handleChange}
-                            error={formik.touched.arrivalDate && Boolean(formik.errors.arrivalDate)}
-                            helperText={formik.touched.arrivalDate && formik.errors.arrivalDate}
+                        <br/><br/><br/>
+                        <InputLabel id="image" style={{
+                            marginTop: '10px',
+                        }}>Image</InputLabel>
+                        <br/>
+                        <Input
+                            id="image"
+                            name="image"
+                            type="file"
+                            /*style={}*/
+                            value={formik.values.image}
+                            onChange={(e) => {setImageFile((e.target.files[0]))}}
+                            error={formik.touched.image && Boolean(formik.errors.image)}
+                            helperText={formik.touched.image && formik.errors.image}
                         />
-                        <TextField
-                            fullWidth
-                            id="departureDate"
-                            name="departureDate"
-                            label="departureDate"
-                            value={formik.values.departureDate}
-                            onChange={formik.handleChange}
-                            error={formik.touched.departureDate && Boolean(formik.errors.departureDate)}
-                            helperText={formik.touched.departureDate && formik.errors.departureDate}
-                        />
-
-
+                        <br/><br/><br/>
                         <SubmitButton
                             style={{
                                 float: 'right',
                                 marginTop: '10px',
                                 backgroundColor: '#5a2360',
-                                fontFamily: 'Josefin Sans',
-                                fontSize: '13px'
+                                fontFamily: 'Josefin Sans'
                             }}
                             type = "submit"
                         >
-                            Save Changes
+                            Add Food
                         </SubmitButton>
                     </form>
                 </div>
             </div>
         </div>
+
     );
 };
