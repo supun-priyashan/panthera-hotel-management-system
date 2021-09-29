@@ -35,6 +35,49 @@ export const Halls = () => {
         })
     },[])
 
+    const deleteHall = async (props) => {
+
+        console.log(props.data.id);
+
+        const id = props.data.id;
+
+        await axios.delete('http://localhost:8080/halls/' + id).
+        then((response) => {
+            if(response.data.success){
+                alert("Successfully deleted.");
+
+                axios.get('http://localhost:8080/halls').
+                then((response) => {
+                    if(response.data.success) {
+                        console.log(response.data.halls);
+                        setHalls(response.data.halls.map((item) => ({
+                            id: item._id,
+                            hallName: item.hallName,
+                            type: item.type,
+                            height: item.height,
+                            guests: item.guests,
+                            space: item.space,
+                            facilities: item.facilities.join(),
+                            image: item.image,
+                            events: item.events.join(),
+                            price: item.price,
+                            description: item.description,
+                        })));
+                    } else{
+                        alert('An error occurred while retrieving data');
+                        console.log(response.data.error);
+                    }
+                })
+
+            }else {
+                alert('An error happened');
+                console.log(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     return (
         <div className={'content'}>
             <div className={'dashboard-header'}>
@@ -93,7 +136,13 @@ export const Halls = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Edit Hall"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.id)}
+                                                onClick={(event, rowData) => {
+                                                    history.push({
+                                                        pathname:'/halls/edit-hall/' + props.data.id,
+                                                        state: props.data
+                                                    });
+                                                    console.log(props.data);
+                                                }}
                                             >
                                                 <span class="MuiIconButton-label">
                                                     <span class="material-icons MuiIcon-root"
@@ -112,7 +161,7 @@ export const Halls = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Delete Hall"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.id)}
+                                                onClick={(event, rowData) => deleteHall(props)}
                                             >
                                                 <span
                                                     class="MuiIconButton-label">

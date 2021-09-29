@@ -74,8 +74,6 @@ export const Rooms = () => {
         }).catch((error) => {
             console.log(error);
         })
-
-
     }
 
     return (
