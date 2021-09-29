@@ -34,6 +34,52 @@ export const Employees = () => {
             }
         })
     },[])
+    const deleteEmployee = async (props) => {
+
+        console.log(props.data.id);
+
+        const id = props.data.id;
+
+        await axios.delete('http://localhost:8080/employees/' + id).
+        then((response) => {
+            if(response.data.success){
+                alert("Employee Successfully deleted.");
+
+                axios.get('http://localhost:8080/employees').
+                then((response) => {
+                    if(response.data.success) {
+                        console.log(response.data.employees);
+                        setEmployees(response.data.employees.map((item) => ({
+                            id:item._id,
+                            employeeName: item.employeeName,
+                            type: item.type,
+                            gender: item.gender,
+                            dateOfBirth: item.dateOfBirth,
+                            permanentAddress: item.permanentAddress,
+                            nationalId: item.nationalId,
+                            phoneNumber: item.phoneNumber,
+                            email: item.email,
+
+                        })));
+                    } else{
+                        alert('An error occurred while retrieving data');
+                        console.log(response.data.error);
+                    }
+                })
+
+            }else {
+                alert('An error happened');
+                console.log(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+
+
+    }
+
+
+
 
     return (
         <div className={'content'}>
@@ -92,7 +138,14 @@ export const Employees = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Edit User"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.name)}
+                                                onClick={(event, rowData) => {
+                                                    history.push({
+                                                        pathname: '/employees/edit-employee/' + props.data.id,
+                                                        state: props.data
+                                                    });
+                                                    console.log(props.data);
+                                                }
+                                                }
                                             >
                                                 <span class="MuiIconButton-label">
                                                     <span class="material-icons MuiIcon-root"
@@ -111,7 +164,9 @@ export const Employees = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Delete User"
-                                                onClick={() => deleteEmployee(employees._id)}
+                                                onClick={(event, rowData) => deleteEmployee(props)
+                                                }
+
 
                                             >
                                                 <span
@@ -146,10 +201,12 @@ export const Employees = () => {
                                             </Button>
                                         )
                                     }
-                                }
 
+
+                                }
                         }
                         }
+
 
                         options={{
                             actionsColumnIndex: -1,
@@ -166,6 +223,7 @@ export const Employees = () => {
             </div>
         </div>
     );
-}
+};
+
 
 

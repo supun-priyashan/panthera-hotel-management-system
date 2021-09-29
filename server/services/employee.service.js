@@ -20,7 +20,23 @@ const addEmployee = async (request, response) => {
     });
 }
 
-const getEmployee = async (request, response) => {
+const getEmployee = async(request,response) => {
+    try {
+        Employee.findById(request.params.id, (error, data) => {
+            if (error) {
+                response.status(500).json({error: error.message});
+            } else {
+                response.status(200).json({
+                    success: true,
+                    room: data
+                })
+            }
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+const getEmployees = async (request, response) => {
     try{
         const employees = await Employee.find();
         response.status(200).
@@ -36,49 +52,46 @@ const getEmployee = async (request, response) => {
     }
 }
 //change
-const updateEmployee = async(request,response) => {
-    let userId = request.params.id;
-    const {
-        employeeName, gender, dateOfBirth, permanentAddress, nationalID, type, phoneNumber, email
+const updateEmployee = async (request,response) => {
+    const employee = new Employee(request.body);
 
-    } = request.body;
-    const updateemployee = {
-        employeeName,
-        gender,
-        dateOfBirth,
-        permanentAddress,
-        nationalID,
-        type,
-        phoneNumber,
-        email
-    }
-    const update = await Employee.findByIdAndUpdate(userId, updateemployee).then(() => {
-        res.status(200).send({
-            status: "user updated", user: update
-        }).catch((err) => {
-            console.log(err);
-            res.status(500).send({status: "Error with updated data"});
+    console.log(employee);
 
-        })
-    })
+    await Employee.findByIdAndUpdate(request.body._id,employee,
+        (error,employee) => {
+            if(error){
+                response.status(500).json({ error: error.message });
+            }
+            else{
+                response.status(200).
+                json({
+                    success: true,
+                    employee:employee
+                })
+            }
+        });
 }
-    const deleteEmployee = async (request, response) => {
-        let userId = request.params.id;
-        await Employee.findByIdAndDelete(userId).then(() => {
-            res.status(200).send({status: "user deleted"});
-        }).catch((err) => {
-            console.log(err.message);
-            res.status(500).send({status: "error with delete user", error: err.message});
-        })
 
-
-
+const deleteEmployee = async (request,response) => {
+    await Employee.findByIdAndRemove(request.params.id,(error,employee) => {
+        if(error){
+            response.status(500).json({ error: error.message });
+        }
+        else{
+            response.status(200).
+            json({
+                success: true,
+                employee: employee
+            })
+        }
+    })
 }
 
 
 
 
 module.exports = {
+    getEmployees,
     getEmployee,
     addEmployee,
     updateEmployee,

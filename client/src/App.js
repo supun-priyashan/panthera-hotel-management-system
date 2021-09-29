@@ -9,6 +9,7 @@ import {AddRoom} from "./components/views/Rooms/AddRoom";
 import {EditRoom} from "./components/views/Rooms/EditRoom";
 import {Employees} from "./components/views/Employees/Employees";
 import {AddEmployee} from "./components/views/Employees/AddEmployee";
+import {EditEmployee} from "./components/views/Employees/EditEmployee";
 import {RoomReservation} from "./components/views/Reservations/RoomReservations";
 import {HallReservation} from "./components/views/Reservations/HallReservations";
 import {Menus} from "./components/views/Restaurant/Menus";
@@ -36,6 +37,7 @@ function App() {
                     <Route path='/restaurants/add-restaurant' exact component={AddRestaurant} />
                     <Route path='/employees' exact component={Employees} />
                     <Route path='/employees/add-employee' exact component={AddEmployee} />
+                    <Route path='/employees/edit-employee/:id' exact component={EditEmployee} />
 
 
                 </Switch>
