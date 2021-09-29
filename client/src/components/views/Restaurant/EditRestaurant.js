@@ -59,12 +59,12 @@ export const EditRestaurant = (props) => {
         then((response) => {
             if(response.data.success) {
 
-                console.log(response.data.restaurants);
-                const data = response.data.restaurants;
+                console.log(response.data.restaurant);
+                const data = response.data.restaurant;
 
                 setRestaurantName(data.restaurantName);
                 setCaption(data.caption);
-                setDescription(data.restaurantType);
+                setDescription(data.description);
                 /*setRoomType(data.roomType);
                 setBeds(data.noOfBeds);
                 setGuests(data.noOfGuests);
@@ -113,6 +113,7 @@ export const EditRestaurant = (props) => {
             };
 
             const restaurants = {
+                _id: id,
                 restaurantName: values.restaurantName,
                 caption: values.caption,
                 description: values.description,
@@ -223,18 +224,18 @@ export const EditRestaurant = (props) => {
                                 helperText={formik.touched.description && formik.errors.description}
                             />
                             <br/><br/>
-                            <InputLabel id="image" style={{
-                                marginTop: '10px',
-                            }}>Image</InputLabel>
-                            <Input
-                                id="image"
-                                name="image"
-                                type="file"
-                                value={formik.values.image}
-                                onChange={(e) => {setImageFile((e.target.files[0]))}}
-                                error={formik.touched.image && Boolean(formik.errors.image)}
-                                helperText={formik.touched.image && formik.errors.image}
-                            />
+                            {/*<InputLabel id="image" style={{*/}
+                            {/*    marginTop: '10px',*/}
+                            {/*}}>Image</InputLabel>*/}
+                            {/*<Input*/}
+                            {/*    id="image"*/}
+                            {/*    name="image"*/}
+                            {/*    type="file"*/}
+                            {/*    value={formik.values.image}*/}
+                            {/*    onChange={(e) => {setImageFile((e.target.files[0]))}}*/}
+                            {/*    error={formik.touched.image && Boolean(formik.errors.image)}*/}
+                            {/*    helperText={formik.touched.image && formik.errors.image}*/}
+                            {/*/>*/}
                             <br/><br/><br/>
                             <SubmitButton
                                 style={{

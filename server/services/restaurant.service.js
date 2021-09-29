@@ -41,7 +41,7 @@ const getRestaurant = async(request,response) => {
             } else {
                 response.status(200).json({
                     success: true,
-                    Restaurant: data
+                    restaurant: data
                 })
             }
         })
@@ -55,7 +55,7 @@ const updateRestaurant = async (request,response) => {
 
     console.log(restaurant);
 
-    await Restaurant.findByIdAndUpdate(request.body._id,food,
+    await Restaurant.findByIdAndUpdate(request.body._id,restaurant,
         (error,restaurant) => {
             if(error){
                 response.status(500).json({ error: error.message });
