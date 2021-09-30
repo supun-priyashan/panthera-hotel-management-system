@@ -42,17 +42,16 @@ ReactDOM.render(
     <Router>
       <div>
         <Switch>
-          <Route path='/rooms' exact component={RoomsPage} />
-          <Route path='/halls' exact component={HallsPage} />
-          <Route path='/' exact component={LandingPage} />
-          <Route path='/profile' exact component={ProfilePage} />
-          <Route path='/restaurants' exact component={RestaurantsPage} />
-          <Route path='/foods' exact component={FoodsPage} />
+            <Route path='/rooms' exact component={RoomsPage} />
+            <Route path='/halls' exact component={HallsPage} />
+            <Route path='/' exact component={LandingPage} />
+            <Route path='/profile' exact component={ProfilePage} />
+            <Route path='/restaurants' exact component={RestaurantsPage} />
+            <Route path='/foods' exact component={FoodsPage} />
             <Route path='/reservations/room' exact component={RoomReservationPage} />
             <Route path='/reservations/hall' exact component={HallReservationsPage} />
             <Route path='/confirm/rooms' exact component={ConfirmRoomReservationPage} />
             <Route path='/confirm/halls' exact component={ConfirmHallReservationPage} />
-
         </Switch>
       </div>
     </Router>,
