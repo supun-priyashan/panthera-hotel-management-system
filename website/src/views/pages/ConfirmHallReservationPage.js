@@ -36,6 +36,14 @@ function ConfirmHallReservationPage() {
     const [eventType,setEventType] = useState('');
     const [guests,setGuests] = useState('');
 
+    const [name,setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [image, setImage] = useState('');
+    const [id, setId] = useState('');
+
+    const [isLoading,setIsLoading] = useState(true);
+
+
     let data;
     let dates = history.location.state;
 
@@ -59,7 +67,29 @@ function ConfirmHallReservationPage() {
     }, []);
 
     useEffect(() => {
+        console.log(dates)
+        axios.get('http://localhost:8080/halls/'+dates.hallId).
+        then((response) => {
+            if(response.data.success) {
 
+                console.log(response.data.hall);
+                const data = response.data.hall;
+
+                setName(data.hallName);
+                setPrice(data.price);
+                setImage(data.image);
+                setId(data._id);
+
+                setIsLoading(false);
+
+
+                console.log(name);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
     },[])
 
     useEffect(() => {
@@ -186,7 +216,7 @@ function ConfirmHallReservationPage() {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Hall & Guests: ballroom hall(s), {guests} guest(s)</p>
+                                                        }}>Hall & Guests: {name} hall, {guests} guest(s)</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
@@ -291,7 +321,7 @@ function ConfirmHallReservationPage() {
                                         <Fragment>
                                             <div className="card" style={{
                                                 width: "38rem",
-                                                height: "27rem",
+                                                height: "30rem",
                                                 margin: "10px",
 
                                             }} >
@@ -305,53 +335,17 @@ function ConfirmHallReservationPage() {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "black",
-                                                                }}>Hall Charges</p>
+                                                                }}>Total Charges</p>
                                                             </div>
                                                         </Col>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 1200,000.00</p>
+                                                                }}>LKR {price}</p>
                                                             </div>
                                                         </Col>
                                                     </Row>
-                                                    <br></br>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "black",
-                                                                }}>Service Charge and Tax</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "#404A45",
-                                                                }}>LKR 9350.75</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <hr></hr>
-                                                    <br></br>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "black",
-                                                                }}>Total Charge</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "#404A45",
-                                                                }}>LKR 1,209,350.75</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-
                                                     <br></br>
 
                                                     <Button
@@ -364,6 +358,21 @@ function ConfirmHallReservationPage() {
                                                     >
                                                         BOOK NOW
                                                     </Button>
+
+                                                    <br></br>
+                                                    <hr></hr>
+                                                    <br></br>
+                                                    <p className="category" style={{
+                                                        color: "black",
+                                                    }}>Cancellation Terms</p>
+
+                                                    <p className="description">
+                                                        Zero-refund: no refund after booking
+                                                    </p>
+                                                    <p className="description">
+                                                        This policy means that you will be reimbursed any payment that you have made if you cancel the reservation made
+                                                    </p>
+                                                    <p className="card-text"></p>
 
 
                                                 </div>

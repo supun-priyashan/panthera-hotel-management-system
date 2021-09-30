@@ -24,7 +24,6 @@ import HallReservationsHeader from "../../components/Headers/HallReservationsHea
 import {useHistory} from "react-router";
 
 function HallReservationPage() {
-    const [guests, setGuests] = useState('');
     const [eventType, setEventType] = useState('Party');
     const [arrival, setArrivalDate] = useState('');
     const [departureDate, setDepartureDate] = useState('');
@@ -33,7 +32,25 @@ function HallReservationPage() {
 
     const [option,setOption] = useState()
 
+    const [bookedGuests, setBookedGuests] = useState('');
+
+
+    const [roomReservations,setRoomReservations] = useState([]);
+
+    const [name,setName] = useState('');
+    const [type,setType] = useState('');
+    const [space, setSpace] = useState('');
+    const [guests, setGuests] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [facilities, setFacilities] = useState([]);
+    const [image, setImage] = useState('');
+    const [id, setId] = useState('');
+
+    const [isLoading,setIsLoading] = useState(true);
+
     const history = useHistory();
+    let dates = history.location.state;
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -46,6 +63,37 @@ function HallReservationPage() {
             document.body.classList.remove("sidebar-collapse");
         };
     }, []);
+
+    useEffect(() => {
+        console.log(dates)
+        axios.get('http://localhost:8080/halls/'+dates.hallId).
+        then((response) => {
+            if(response.data.success) {
+
+                console.log(response.data.hall);
+                const data = response.data.hall;
+
+                setName(data.hallName);
+                setType(data.type);
+                setSpace(data.space);
+                setGuests(data.guests);
+                setPrice(data.price);
+                setDescription(data.description);
+                setFacilities(data.facilities);
+                setImage(data.image);
+                setId(data._id);
+
+                setIsLoading(false);
+
+
+                console.log(name);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
 
     useEffect(() => {
         axios.get('http://localhost:8080/hallReservations').
@@ -87,11 +135,18 @@ function HallReservationPage() {
         })
     }
 
-    return (
+    return isLoading?(
         <>
             <IndexNavbar />
             <div className="wrapper">
-                <HallReservationsHeader />
+                <TransparentFooter/>
+            </div>
+        </>
+    ):(
+        <>
+            <IndexNavbar />
+            <div className="wrapper">
+                <HallReservationsHeader hallName={name} img={image}/>
                 <div className="section section-about-us">
                     <Container>
 
@@ -107,9 +162,7 @@ function HallReservationPage() {
                                         <p className="category">Colombo, Sri Lanka</p>
 
                                         <p className="description">
-                                            You can write here details about one of your team members.
-                                            You can give more details about what they do. Feel free to
-                                            add some links for people to be able to follow them outside the site.
+                                            {description}
                                         </p>
                                         <hr></hr>
                                         <h5 className="title">Supported Events</h5>
@@ -128,74 +181,27 @@ function HallReservationPage() {
                                         <hr/>
                                         <h5 className="title">Features</h5>
 
-                                        <Row>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Reception area</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Garden</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Car parking</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Projection</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Wifi</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Welcome drinks</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Smoking area</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Security personnel</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Air conditioning</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Handicap access</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Dance floor</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Open bar</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
+                                        {facilities.length > 0 && facilities.map((item,index)=>{
+                                            return(
+                                                <Row>
+                                                    <Col className="ml-auto mr-auto text-left" md="4">
+                                                        <div className="team-player">
+                                                            <p>{item}</p>
+                                                        </div>
+                                                    </Col>
+
+                                                    <Col className="ml-auto mr-auto text-left" md="4">
+                                                        <div className="team-player">
+                                                            <p>    </p>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+
+                                            )
+                                        })}
+
+
+
 
                                     </div>
                                 </Col>
@@ -209,7 +215,7 @@ function HallReservationPage() {
                                                 backgroundColor: "#F8FCFA",
                                             }} >
                                                 <div className="card-body">
-                                                    <h5 className="title">BOOK NOW FOR LKR 1,200,000.00</h5>
+                                                    <h5 className="title">BOOK NOW FOR LKR {price}</h5>
                                                     <br></br>
 
                                                     {/*<Form>*/}

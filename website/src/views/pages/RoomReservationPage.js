@@ -251,6 +251,11 @@ function RoomReservationPage(props) {
                                                                         <p>{item}</p>
                                                                     </div>
                                                                 </Col>
+                                                                <Col className="ml-auto mr-auto text-left" md="4">
+                                                                    <div className="team-player">
+                                                                        <p>    </p>
+                                                                    </div>
+                                                                </Col>
                                                             </Row>
 
                                                         )

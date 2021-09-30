@@ -36,6 +36,17 @@ function ConfirmRoomReservationPage(props) {
     const [beds,setBeds] = useState('');
     const [guests,setGuests] = useState('');
 
+
+
+
+    const [name,setName] = useState('');
+
+    const [price, setPrice] = useState('');
+    const [image, setImage] = useState('');
+    const [id, setId] = useState('');
+
+    const [isLoading,setIsLoading] = useState(true);
+
     let dates = history.location.state;
 
     const [roomReservations,setRoomReservations] = useState([]);
@@ -54,6 +65,33 @@ function ConfirmRoomReservationPage(props) {
 
 
     let data = useLocation();
+
+    useEffect(() => {
+        console.log(dates)
+        axios.get('http://localhost:8080/rooms/'+dates.roomId).
+        then((response) => {
+            if(response.data.success) {
+
+                console.log(response.data.room);
+                const data = response.data.room;
+
+                setName(data.roomName);
+                setBeds(data.beds);
+                setPrice(data.price);
+                setImage(data.image);
+                setId(data._id);
+
+                setIsLoading(false);
+
+
+                console.log(name);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
 
     useEffect(() => {
         console.log("History data" , dates);
@@ -184,7 +222,7 @@ function ConfirmRoomReservationPage(props) {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Room Type: DELUXE DOUBLE ROOM</p>
+                                                        }}>Room Type: {name}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -278,7 +316,7 @@ function ConfirmRoomReservationPage(props) {
                                         <Fragment>
                                             <div className="card" style={{
                                                 width: "38rem",
-                                                height: "27rem",
+                                                height: "30rem",
                                                 margin: "10px",
 
                                             }} >
@@ -292,55 +330,18 @@ function ConfirmRoomReservationPage(props) {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "black",
-                                                                }}>Room Charges</p>
+                                                                }}>Total Charges</p>
                                                             </div>
                                                         </Col>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 61,923.20</p>
+                                                                }}>LKR {price}</p>
                                                             </div>
                                                         </Col>
                                                     </Row>
                                                     <br></br>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "black",
-                                                                }}>Service Charge and Tax</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "#404A45",
-                                                                }}>LKR 6350.75</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <hr></hr>
-                                                    <br></br>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "black",
-                                                                }}>Total Charge</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "#404A45",
-                                                                }}>LKR 68,273.95</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-
-                                                    <br></br>
-
                                                     <Button
                                                         block
                                                         className="btn-round"
@@ -351,6 +352,54 @@ function ConfirmRoomReservationPage(props) {
                                                     >
                                                         Confirm Room
                                                     </Button>
+                                                    <br></br>
+                                                    {/*<Row>*/}
+                                                    {/*    <Col className="ml-auto mr-auto text-left" md="4">*/}
+                                                    {/*        <div className="team-player">*/}
+                                                    {/*            <p className="category" style={{*/}
+                                                    {/*                color: "black",*/}
+                                                    {/*            }}>Service Charge and Tax</p>*/}
+                                                    {/*        </div>*/}
+                                                    {/*    </Col>*/}
+                                                    {/*    <Col className="ml-auto mr-auto text-left" md="4">*/}
+                                                    {/*        <div className="team-player">*/}
+                                                    {/*            <p className="category" style={{*/}
+                                                    {/*                color: "#404A45",*/}
+                                                    {/*            }}>LKR 6350.75</p>*/}
+                                                    {/*        </div>*/}
+                                                    {/*    </Col>*/}
+                                                    {/*</Row>*/}
+                                                    <hr></hr>
+                                                    <br></br>
+                                                    {/*<Row>*/}
+                                                    {/*    <Col className="ml-auto mr-auto text-left" md="4">*/}
+                                                    {/*        <div className="team-player">*/}
+                                                    {/*            <p className="category" style={{*/}
+                                                    {/*                color: "black",*/}
+                                                    {/*            }}>Total Charge</p>*/}
+                                                    {/*        </div>*/}
+                                                    {/*    </Col>*/}
+                                                    {/*    <Col className="ml-auto mr-auto text-left" md="4">*/}
+                                                    {/*        <div className="team-player">*/}
+                                                    {/*            <p className="category" style={{*/}
+                                                    {/*                color: "#404A45",*/}
+                                                    {/*            }}>LKR 68,273.95</p>*/}
+                                                    {/*        </div>*/}
+                                                    {/*    </Col>*/}
+                                                    {/*</Row>*/}
+                                                    <p className="category" style={{
+                                                        color: "black",
+                                                    }}>Cancellation Terms</p>
+
+                                                    <p className="description">
+                                                        Zero-refund: no refund after booking
+                                                    </p>
+                                                    <p className="description">
+                                                        This policy means that you will be reimbursed any payment that you have made if you cancel the reservation made
+                                                    </p>
+                                                    <p className="card-text"></p>
+
+
 
 
                                                 </div>
