@@ -68,7 +68,7 @@ export const AddEmployee = () => {
             gender: '',
             dateOfBirth: '',
             permanentAddress: '',
-            nationalId: '',
+            nationalID: '',
             phoneNumber: '',
             email: '',
 
@@ -88,12 +88,12 @@ export const AddEmployee = () => {
                 gender: values.gender,
                 dateOfBirth: values.dateOfBirth,
                 permanentAddress: values.permanentAddress,
-                nationalID: values.nationalId,
+                nationalID: values.nationalID,
                 phoneNumber: values.phoneNumber,
                 email: values.email,
             }
             console.log("imageFile",employees);
-            axios.post('http://localhost:8080/employees', employees)
+            axios.post('http://localhost:4000/employees', employees)
                 .then(response => {
                     if (response.data.success) {
                         alert('Employee  Successfully Added')
@@ -199,13 +199,13 @@ export const AddEmployee = () => {
                         />
                         <TextField
                             fullWidth
-                            id="nationalId"
-                            name="nationalId"
+                            id="nationalID"
+                            name="nationalID"
                             label="NationalID"
-                            value={formik.values.nationalId}
+                            value={formik.values.nationalID}
                             onChange={formik.handleChange}
-                            error={formik.touched.nationalId && Boolean(formik.errors.nationalId)}
-                            helperText={formik.touched.nationalId && formik.errors.nationalId}
+                            error={formik.touched.nationalID && Boolean(formik.errors.nationalID)}
+                            helperText={formik.touched.nationalID && formik.errors.nationalID}
                         />
                         <TextField
                             fullWidth

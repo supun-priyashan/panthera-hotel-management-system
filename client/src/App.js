@@ -16,6 +16,8 @@ import {Menus} from "./components/views/Restaurant/Menus";
 import {Restaurants} from "./components/views/Restaurant/Restaurants";
 import {AddRestaurant} from "./components/views/Restaurant/AddRestaurant";
 import {AddMenu} from "./components/views/Restaurant/AddMenu";
+import {EditRoomReservations} from "./components/views/Reservations/EditRoomReservations";
+import {EditHallReservations} from "./components/views/Reservations/EditHallReservations";
 
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
                     <Route path='/rooms' exact component={Rooms} />
                     <Route path='/rooms/add-room' exact component={AddRoom} />
                     <Route path='/rooms/edit-room/:id' exact component={EditRoom} />
+                    <Route path='/roomReservations/edit-roomReservations/:id' exact component={EditRoomReservations} />
+                    <Route path='/hallReservations/edit-hallReservations/:id' exact component={EditHallReservations} />
                     <Route path='/reservations/rooms' exact component={RoomReservation} />
                     <Route path='/reservations/halls' exact component={HallReservation} />
                     <Route path='/restaurant/menus' exact component={Menus} />

@@ -43,7 +43,7 @@ export const EditEmployee = (props)=>{
     const [gender, setGender] = useState('');
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [permanentAddress, setPermanentAddress] = useState('');
-    const [nationalId, setNationalId] = useState('');
+    const [nationalID, setNationalID] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState([]);
     const [id, setId] = useState('');
@@ -52,19 +52,19 @@ export const EditEmployee = (props)=>{
     const data = history.location.state;
 
     useEffect(async () => {
-        await axios.get('http://localhost:8080/employees/'+props.match.params.id).
+        await axios.get('http://localhost:4000/employees/'+props.match.params.id).
         then((response) => {
-            if(response.data.success) {
+            if(response.data.success){
 
-                console.log(response.data.employee);
+                console.log(" response data" ,response.data.employee);
                 const data = response.data.employee;
 
-                setName(data.name);
+                setName(data.employeeName);
                 setType(data.type);
                 setGender(data.gender);
                 setDateOfBirth(data.dateOfBirth);
                 setPermanentAddress(data.permanentAddress);
-                setNationalId(data.nationalId);
+                setNationalID(data.nationalID);
                 setPhoneNumber(data.phoneNumber);
                 setEmail(data.email);
                 setId(data._id);
@@ -92,7 +92,7 @@ export const EditEmployee = (props)=>{
         permanentAddress: yup
             .string('Enter permanent address')
             .required('Permanent address is required'),
-        nationalId: yup
+        nationalID: yup
             .string('Enter the National ID card number')
             .required('NIC is required'),
         phoneNumber: yup
@@ -111,7 +111,7 @@ export const EditEmployee = (props)=>{
             gender: gender,
             dateOfBirth: dateOfBirth,
             permanentAddress: permanentAddress,
-            nationalId: nationalId,
+            nationalID: nationalID,
             phoneNumber: phoneNumber,
             email: email,
 
@@ -134,15 +134,13 @@ export const EditEmployee = (props)=>{
                 gender: values.gender,
                 dateOfBirth: values.dateOfBirth,
                 permanentAddress: values.permanentAddress,
-                nationalID: values.nationalId,
+                nationalID: values.nationalID,
                 phoneNumber: values.phoneNumber,
                 email: values.email,
             }
 
-            axios.put('http://localhost:8080/employees', employee)
+            axios.put('http://localhost:4000/employees', employee)
                 .then(response => {
-                    axios.post('http://localhost:8080/files',formData,config)
-                        .then(() => {
                             if (response.data.success) {
                                 alert('Employee  Successfully Added')
 
@@ -150,11 +148,9 @@ export const EditEmployee = (props)=>{
                                 alert('Failed to add employee')
                             }
 
-                        }).catch(error => {
-                        alert(error);
-                    })
+                        })
                     console.log("employees", values)
-                })
+
         },
     });
     return isLoading ? (
@@ -278,13 +274,13 @@ export const EditEmployee = (props)=>{
                         />
                         <TextField
                             fullWidth
-                            id="nationalId"
-                            name="nationalId"
+                            id="nationalID"
+                            name="nationalID"
                             label="NationalID"
-                            value={formik.values.nationalId}
+                            value={formik.values.nationalID}
                             onChange={formik.handleChange}
-                            error={formik.touched.nationalId && Boolean(formik.errors.nationalId)}
-                            helperText={formik.touched.nationalId && formik.errors.nationalId}
+                            error={formik.touched.nationalID && Boolean(formik.errors.nationalID)}
+                            helperText={formik.touched.nationalID && formik.errors.nationalID}
                         />
                         <TextField
                             fullWidth

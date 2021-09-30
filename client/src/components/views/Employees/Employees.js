@@ -11,7 +11,7 @@ export const Employees = () => {
     const [employees,setEmployees] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/employees').
+        axios.get('http://localhost:4000/employees').
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.employees);
@@ -22,7 +22,7 @@ export const Employees = () => {
                     gender: item.gender,
                     dateOfBirth: item.dateOfBirth,
                     permanentAddress: item.permanentAddress,
-                    nationalId: item.nationalId,
+                    nationalID: item.nationalID,
                     phoneNumber: item.phoneNumber,
                     email: item.email,
 
@@ -40,12 +40,12 @@ export const Employees = () => {
 
         const id = props.data.id;
 
-        await axios.delete('http://localhost:8080/employees/' + id).
+        await axios.delete('http://localhost:4000/employees/' + id).
         then((response) => {
             if(response.data.success){
                 alert("Employee Successfully deleted.");
 
-                axios.get('http://localhost:8080/employees').
+                axios.get('http://localhost:4000/employees').
                 then((response) => {
                     if(response.data.success) {
                         console.log(response.data.employees);
@@ -56,7 +56,7 @@ export const Employees = () => {
                             gender: item.gender,
                             dateOfBirth: item.dateOfBirth,
                             permanentAddress: item.permanentAddress,
-                            nationalId: item.nationalId,
+                            nationalID: item.nationalID,
                             phoneNumber: item.phoneNumber,
                             email: item.email,
 
@@ -97,7 +97,7 @@ export const Employees = () => {
                             { title: 'Gender', field: 'gender' },
                             { title: 'DateOfBirth', field: 'dateOfBirth' },
                             { title: 'PermanentAddress', field: 'permanentAddress' },
-                            { title: 'NationalID', field: 'nationalId' },
+                            { title: 'NationalID', field: 'nationalID' },
                             { title: 'PhoneNumber', field: 'phoneNumber' },
                             { title: 'Email', field: 'email' },
 

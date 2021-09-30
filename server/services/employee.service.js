@@ -28,7 +28,7 @@ const getEmployee = async(request,response) => {
             } else {
                 response.status(200).json({
                     success: true,
-                    room: data
+                    employee: data
                 })
             }
         })
@@ -60,6 +60,7 @@ const updateEmployee = async (request,response) => {
     await Employee.findByIdAndUpdate(request.body._id,employee,
         (error,employee) => {
             if(error){
+                console.log(error);
                 response.status(500).json({ error: error.message });
             }
             else{
