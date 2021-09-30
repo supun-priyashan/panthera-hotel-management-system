@@ -27,7 +27,7 @@ function App() {
                     <Route path='/halls' exact component={Halls} />
                     <Route path='/halls/add-hall' exact component={AddHall} />
                     <Route path='/halls/edit-hall/:id' exact component={EditHall} />
-                    <Route path='/rooms' exact component={Rooms} />
+                    <Route path='/rooms' exact component={Rooms}/>
                     <Route path='/rooms/add-room' exact component={AddRoom} />
                     <Route path='/rooms/edit-room/:id' exact component={EditRoom} />
                     <Route path='/roomReservations/edit-roomReservations/:id' exact component={EditRoomReservations} />

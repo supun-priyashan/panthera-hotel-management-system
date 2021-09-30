@@ -224,7 +224,7 @@ export const Rooms = () => {
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
-                            //exportButton: true,
+                            exportButton: true,
                             sorting: true,
                             pageSize: 6,
                             pageSizeOptions: [6],
