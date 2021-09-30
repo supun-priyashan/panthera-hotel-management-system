@@ -77,10 +77,12 @@ function RoomsPage() {
                                     {rooms.length > 0 && rooms.map((item,index)=>{
                                         return(
                                             <Fragment key={index}>
-                                                    <div className="card" style={{
+                                                    <div className="card"
+                                                         style={{
                                                         width: "20rem",
                                                         margin: "25px 25px 25px 25px",
-                                                    }} onClick={() => history.push({
+                                                        }}
+                                                         onClick={() => history.push({
                                                         pathname: '/reservations/room',
                                                         state: {
                                                             roomId:item.id
