@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table'
 import {Button, Icon, Link, Paper} from "@material-ui/core";
 import axios from "axios";
+import {JumpCircleLoading} from "react-loadingg";
 
 
 export const Rooms = () => {
@@ -10,6 +11,7 @@ export const Rooms = () => {
     const history = useHistory();
 
     const [rooms,setRooms] = useState([]);
+    const [isLoading,setIsLoading] = useState(true);
 
     useEffect(() => {
         axios.get('http://localhost:8080/rooms').
@@ -28,6 +30,7 @@ export const Rooms = () => {
                     price: item.price,
                     description: item.description,
                 })));
+                setIsLoading(false);
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -75,11 +78,27 @@ export const Rooms = () => {
         }).catch((error) => {
             console.log(error);
         })
-
-
     }
 
-    return (
+    return isLoading ? (
+            <div className={'content'}>
+                <div className={'dashboard-header'}>
+                    Rooms & Suite Management
+                </div>
+                <div className={'main-container-tables'}>
+                    <div className={'table-container'}>
+                        Fetching data...
+                        <JumpCircleLoading
+                            color ="#5a2360"
+                            speed = {0.5}
+                            size = "large"
+
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+        :(
         <div className={'content'}>
             <div className={'dashboard-header'}>
                 Rooms & Suite Management
@@ -206,7 +225,7 @@ export const Rooms = () => {
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
-                            //exportButton: true,
+                            exportButton: true,
                             sorting: true,
                             pageSize: 6,
                             pageSizeOptions: [6],

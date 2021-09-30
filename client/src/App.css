@@ -94,3 +94,36 @@
   align-items: center;
   justify-content: center;
 }
+
+.dashboard-card-container{
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-right: 100px;
+  background-color: #5A2360;
+}
+.dashboard-card-sub-container{
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #00bbff;
+}
+
+.card {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 100px;
+  height: 100px;
+  min-height: 100%;
+  border-radius: 5px;
+  flex: 1;
+  flex-grow: 1;
+}
+
