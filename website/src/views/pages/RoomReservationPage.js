@@ -28,14 +28,27 @@ import {useHistory} from "react-router";
 function RoomReservationPage(props) {
     const [arrival, setArrivalDate] = useState('');
     const [departureDate, setDepartureDate] = useState('');
-    const [beds, setBeds] = useState('');
-    const [guests, setGuests] = useState('');
+    const [bookedBeds, setBookedBeds] = useState('');
+    const [bookedGuests, setBookedGuests] = useState('');
 
 
     const [roomReservations,setRoomReservations] = useState([]);
-    const [rooms,setRooms] = useState([]);
+
+    const [name,setName] = useState('');
+    const [type,setType] = useState('');
+    const [space, setSpace] = useState('');
+    const [guests, setGuests] = useState('');
+    const [beds, setBeds] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [facilities, setFacilities] = useState([]);
+    const [image, setImage] = useState('');
+    const [id, setId] = useState('');
+
+    const [isLoading,setIsLoading] = useState(true);
 
     const history = useHistory();
+    let dates = history.location.state;
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -50,18 +63,30 @@ function RoomReservationPage(props) {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/rooms').
+        console.log(dates)
+        axios.get('http://localhost:8080/rooms/'+dates.roomId).
         then((response) => {
             if(response.data.success) {
-                console.log(response.data.rooms);
-                setRooms(response.data.rooms.map((item) => ({
-                    id: item._id,
-                    name: item.name,
-                    facilities: item.facilities.join(),
-                    image: item.image,
-                    price: item.price,
-                    description: item.description,
-                })));
+
+                console.log(response.data.room);
+                const data = response.data.room;
+
+                setName(data.roomName);
+                setType(data.type);
+                setSpace(data.space);
+                setGuests(data.guests);
+                setBeds(data.beds);
+                setPrice(data.price);
+                setDescription(data.description);
+                setFacilities(data.facilities);
+                setImage(data.image);
+                setId(data._id);
+
+                setIsLoading(false);
+
+
+                console.log(name);
+
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -96,24 +121,31 @@ function RoomReservationPage(props) {
     },[])
 
     const onSubmit = () => {
-        console.log(arrival,"-",departureDate,"-",beds,"-",guests);
+        console.log(arrival,"-",departureDate,"-",bookedBeds,"-",bookedGuests);
         history.push({
             pathname: '/confirm/rooms',
             state: {
                 arrival:arrival,
                 departure:departureDate,
-                beds:beds,
-                guests:guests,
+                beds:bookedBeds,
+                guests:bookedGuests,
 
             } // your data array of objects
         })
     }
 
-    return (
+    return isLoading?(
         <>
             <IndexNavbar />
             <div className="wrapper">
-                <RoomReservationsHeader />
+                <TransparentFooter/>
+            </div>
+        </>
+    ):(
+        <>
+            <IndexNavbar />
+            <div className="wrapper">
+                <RoomReservationsHeader roomName={name} img={image} />
 
                 <div className="section section-team text-center">
                     <Container>
@@ -125,10 +157,7 @@ function RoomReservationPage(props) {
                                         <h2 className="title">ABOUT THIS ROOM</h2>
 
                                         <p className="description">
-                                            You can write here details about one of your team members.
-                                            You can give more details about what they do. Feel free to
-                                            add some links for people to be able to follow them outside the site.
-                                            Feel free to add some links for people to be able to follow them outside the site.
+                                            {description}
                                         </p>
 
 
@@ -172,7 +201,7 @@ function RoomReservationPage(props) {
                                                         label="Beds"
                                                         placeholder="Beds"
                                                         type="number"
-                                                        onChange={(e) => {setBeds(e.target.value)}}
+                                                        onChange={(e) => {setBookedBeds(e.target.value)}}
                                                     />
 
                                                 </div>
@@ -184,7 +213,7 @@ function RoomReservationPage(props) {
                                                         label="Guests"
                                                         placeholder="Guests"
                                                         type="number"
-                                                        onChange={(e)=>{setGuests(e.target.value)}}
+                                                        onChange={(e)=>{setBookedGuests(e.target.value)}}
                                                     />
                                                 </div>
                                             </div>
@@ -214,78 +243,20 @@ function RoomReservationPage(props) {
                                             }} >
                                                 <div className="card-body">
                                                     <h5 className="title">ROOM FACILITIES</h5>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Kettle,tea & coffee</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Flat screen TV</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Breakfast included</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Hairdryer</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Soundproofing</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Air conditioning</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Balcony</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Bathroom & slippers</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Free Wifi</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>No Prepayment</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Flexible Rate</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p>Shower-bathtub combination</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
+                                                    {facilities.length > 0 && facilities.map((item,index)=>{
+                                                        return(
+                                                            <Row>
+                                                                <Col className="ml-auto mr-auto text-left" md="4">
+                                                                    <div className="team-player">
+                                                                        <p>{item}</p>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+
+                                                        )
+                                                    })}
+                                                    <br></br>
+                                                    <br></br>
                                                     <Row>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
                                                             <div className="team-player">
@@ -298,7 +269,7 @@ function RoomReservationPage(props) {
                                                             <div className="team-player">
                                                                 <p style={{
                                                                     fontWeight: "bold",
-                                                                }}>LKR 61,923.20</p>
+                                                                }}>{price}</p>
                                                             </div>
                                                         </Col>
                                                     </Row>

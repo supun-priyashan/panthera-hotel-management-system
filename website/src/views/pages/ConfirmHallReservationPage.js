@@ -21,6 +21,7 @@ import axios from "axios";
 import ConfirmRoomReservationHeader from "../../components/Headers/ConfirmRoomReservationHeader";
 import {Link} from "react-router-dom";
 import {useHistory, useLocation} from "react-router";
+import ColoredNavbar from "../../components/Navbars/ColoredNavbar";
 // import {useHistory} from "react-router";
 
 
@@ -145,7 +146,7 @@ function ConfirmHallReservationPage() {
 
     return (
         <>
-            <IndexNavbar />
+            <ColoredNavbar />
             <div className="wrapper">
                 <div className="section section-team">
                     <Container>

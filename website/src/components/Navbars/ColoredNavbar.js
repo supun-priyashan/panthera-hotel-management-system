@@ -13,8 +13,8 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-function IndexNavbar() {
-  const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
+function ColoredNavbar() {
+  const [navbarColor, setNavbarColor] = React.useState("#5A2360");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   React.useEffect(() => {
     const updateNavbarColor = () => {
@@ -27,7 +27,7 @@ function IndexNavbar() {
         document.documentElement.scrollTop < 400 ||
         document.body.scrollTop < 400
       ) {
-        setNavbarColor("navbar-transparent");
+        setNavbarColor("#5A2360");
       }
     };
     window.addEventListener("scroll", updateNavbarColor);
@@ -118,7 +118,7 @@ function IndexNavbar() {
               </NavItem>
               <NavItem>
                 <NavLink
-                    to="/aboutUs" tag={Link}
+                    to="/#" tag={Link}
                 >
                   <p>About</p>
                 </NavLink>
@@ -131,4 +131,4 @@ function IndexNavbar() {
   );
 }
 
-export default IndexNavbar;
+export default ColoredNavbar;

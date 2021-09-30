@@ -5,7 +5,7 @@ import { Button, Container } from "reactstrap";
 
 // core components
 
-function RoomReservationsHeader() {
+function RoomReservationsHeader(props) {
     let pageHeader = React.createRef();
 
     React.useEffect(() => {
@@ -35,7 +35,7 @@ function RoomReservationsHeader() {
 
                 <div className="content-center">
                     <Container>
-                        <h1 className="title">DELUXE DOUBLE ROOM</h1>
+                        <h1 className="title">{props.roomName}</h1>
                     </Container>
                 </div>
                 {/*<Container>

@@ -22,6 +22,7 @@ import AboutUsFooter from "components/Footers/AboutUsFooter";
 import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
 import {useHistory} from "react-router";
+import ColoredNavbar from "../../components/Navbars/ColoredNavbar";
 
 
 function AboutUsPage(props) {
@@ -40,7 +41,7 @@ function AboutUsPage(props) {
 
     return (
         <>
-            <IndexNavbar />
+            <ColoredNavbar />
             <div className="wrapper">
 
                 <div className="section section-team text-center">
