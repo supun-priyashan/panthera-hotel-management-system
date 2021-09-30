@@ -17,10 +17,13 @@ import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import RoomsHeader from "../../components/Headers/RoomsHeader";
 import axios from "axios";
+import {Link} from "@mui/material";
+import {useHistory} from "react-router";
 
 function RoomsPage() {
 
     const [rooms,setRooms] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -74,15 +77,21 @@ function RoomsPage() {
                                     {rooms.length > 0 && rooms.map((item,index)=>{
                                         return(
                                             <Fragment key={index}>
-                                                <div className="card" style={{
-                                                    width: "20rem",
-                                                    margin: "25px 25px 25px 25px",
-                                                }} >
-                                                    <img className="card-img-top" src={'http://localhost:8080/uploads/'+item.image}  alt="Room image"/>
-                                                    <div className="card-body">
-                                                        <p className="card-text">{item.roomName}</p>
+                                                    <div className="card" style={{
+                                                        width: "20rem",
+                                                        margin: "25px 25px 25px 25px",
+                                                    }} onClick={() => history.push({
+                                                        pathname: '/reservations/room',
+                                                        state: {
+                                                            roomId:item.id
+                                                        }
+                                                    })}>
+                                                        <img className="card-img-top" src={'http://localhost:8080/uploads/'+item.image}  alt="Room image"/>
+                                                        <div className="card-body">
+                                                            <p className="card-text">{item.roomName}</p>
+                                                        </div>
                                                     </div>
-                                                </div>
+
                                             </Fragment>
                                         )
                                     })}
