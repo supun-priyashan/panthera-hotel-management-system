@@ -3,12 +3,14 @@ import {useHistory} from "react-router-dom";
 import axios from "axios";
 import MaterialTable from "material-table";
 import {Button, Icon, Paper} from "@material-ui/core";
+import {JumpCircleLoading} from "react-loadingg";
 
 export const Halls = () => {
 
     const history = useHistory();
 
     const [halls,setHalls] = useState([]);
+    const [isLoading,setIsLoading] = useState(true);
 
     useEffect(() => {
         axios.get('http://localhost:8080/halls').
@@ -28,6 +30,7 @@ export const Halls = () => {
                     price: item.price,
                     description: item.description,
                 })));
+                setIsLoading(false);
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -78,7 +81,25 @@ export const Halls = () => {
         })
     }
 
-    return (
+    return isLoading ? (
+            <div className={'content'}>
+                <div className={'dashboard-header'}>
+                    Reception Hall Management
+                </div>
+                <div className={'main-container-tables'}>
+                    <div className={'table-container'}>
+                        Fetching data...
+                        <JumpCircleLoading
+                            color ="#5a2360"
+                            speed = {0.5}
+                            size = "large"
+
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+        : (
         <div className={'content'}>
             <div className={'dashboard-header'}>
                 Reception Hall Management
