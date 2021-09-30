@@ -6,7 +6,6 @@ const hallReservationSchema = new mongoose.Schema({
     email: {  type: String, required: true, unique: true },
     contactNumber: { type: String, required: true, trim: true },
     hallName: { type: String, required: true, trim: true },
-    hallType: { type: String, required: true, trim: true },
     eventType: { type: String, required: true, trim: true },
     noOfGuests: { type: Number, required: true },
     arrivalDate: { type: Date, required: true },

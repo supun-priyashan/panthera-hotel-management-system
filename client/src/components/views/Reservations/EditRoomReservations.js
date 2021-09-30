@@ -46,7 +46,6 @@ export const EditRoomReservations = (props) => {
     const [email,setEmail] = useState('');
     const [contactNumber,setContactNumber] = useState('');
     const [roomName,setRoomName] = useState('');
-    const [roomType,setRoomType] = useState('');
     const [noOfBeds, setBeds] = useState('');
     const [noOfGuests, setGuests] = useState('');
     const [arrivalDate, setArrivalDate] = useState('');
@@ -69,7 +68,6 @@ export const EditRoomReservations = (props) => {
                 setEmail(data.email);
                 setContactNumber(data.contactNumber);
                 setRoomName(data.roomName);
-                setRoomType(data.roomType);
                 setBeds(data.noOfBeds);
                 setGuests(data.noOfGuests);
                 setArrivalDate(data.arrivalDate);
@@ -98,9 +96,6 @@ export const EditRoomReservations = (props) => {
         roomName: yup
             .string('Select room name')
             .required('Room Name is required'),
-        roomType: yup
-            .string('Select room type')
-            .required('Room Type is required'),
         noOfBeds: yup
             .number()
             .label('beds')
@@ -126,7 +121,6 @@ export const EditRoomReservations = (props) => {
             email: email,
             contactNumber: contactNumber,
             roomName: roomName,
-            roomType: roomType,
             noOfBeds: noOfBeds,
             noOfGuests: noOfGuests,
             arrivalDate: arrivalDate,
@@ -151,7 +145,6 @@ export const EditRoomReservations = (props) => {
                 email: values.email,
                 contactNumber: values.contactNumber,
                 roomName: values.roomName,
-                roomType: values.roomType,
                 noOfBeds: values.noOfBeds,
                 noOfGuests: values.noOfGuests,
                 arrivalDate: values.arrivalDate,
@@ -282,23 +275,6 @@ export const EditRoomReservations = (props) => {
                         >
                             <MenuItem value={'Deluxe double room'}>Deluxe double room</MenuItem>
                             <MenuItem value={'Luxury triple room'}>Luxury triple room</MenuItem>
-                        </TextField>
-                        <InputLabel id="type">Room Type</InputLabel>
-                        <TextField
-                            labelId="roomType"
-                            select
-                            id="roomType"
-                            name="roomType"
-                            autoWidth
-                            variant = 'outlined'
-                            value={formik.values.roomType}
-                            onChange={formik.handleChange}
-                            error={formik.touched.roomType && Boolean(formik.errors.roomType)}
-                            helperText={formik.touched.roomType && formik.errors.roomType}
-                            style={{'marginTop': '10px'}}
-                        >
-                            <MenuItem value={'Room'}>Room</MenuItem>
-                            <MenuItem value={'Suite'}>Suite</MenuItem>
                         </TextField>
                         <TextField
                             fullWidth

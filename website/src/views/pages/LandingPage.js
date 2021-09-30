@@ -98,6 +98,7 @@ function LandingPage() {
                     natural reasons, there’s huge variety of the state of the
                     ice.
                   </p>
+
                 </Col>
               </Row>
             </div>

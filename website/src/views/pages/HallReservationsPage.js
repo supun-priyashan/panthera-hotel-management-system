@@ -9,7 +9,7 @@ import {
     InputGroup,
     Container,
     Row,
-    Col, FormGroup,
+    Col, FormGroup, Form,
 } from "reactstrap";
 
 // core components
@@ -26,7 +26,7 @@ import {useHistory} from "react-router";
 function HallReservationPage() {
     const [guests, setGuests] = useState('');
     const [eventType, setEventType] = useState('Party');
-    const [arrivalDate, setArrivalDate] = useState('');
+    const [arrival, setArrivalDate] = useState('');
     const [departureDate, setDepartureDate] = useState('');
 
     const [hallReservations,setHallReservations] = useState([]);
@@ -75,14 +75,14 @@ function HallReservationPage() {
 
 
     function onSubmit(e) {
-
+        console.log(arrival,"-",departureDate,"-",eventType,"-",guests);
         history.push({
             pathname: '/confirm/halls',
             state: {
-                arrival:arrivalDate,
+                arrival:arrival,
                 departure:departureDate,
-                count:guests,
-                type: eventType,
+                guests:guests,
+                eventType: eventType,
             } // your data array of objects
         })
     }
@@ -211,10 +211,86 @@ function HallReservationPage() {
                                                 <div className="card-body">
                                                     <h5 className="title">BOOK NOW FOR LKR 1,200,000.00</h5>
                                                     <br></br>
+
+                                                    {/*<Form>*/}
+                                                    {/*    <div className="form-row">*/}
+                                                    {/*        <div className="col-md-6">*/}
+                                                    {/*            <label htmlFor="inputEmail4">Guest Count</label>*/}
+                                                    {/*            <Input*/}
+                                                    {/*                id="guests"*/}
+                                                    {/*                name="guests"*/}
+                                                    {/*                label="Guest Count"*/}
+                                                    {/*                type="number"*/}
+                                                    {/*                value={guests}*/}
+                                                    {/*                onChange={(e) => {setGuests(e.target.value)}}*/}
+                                                    {/*                inputProps={{ placeholder: "Guest Count" }}*/}
+                                                    {/*            ></Input>*/}
+                                                    {/*            /!*<Input id="inputEmail4" placeholder="Email" type="email"></Input>*!/*/}
+                                                    {/*        </div>*/}
+                                                    {/*        <div className="col-md-6">*/}
+                                                    {/*            <label htmlFor="inputPassword4">Event Type</label>*/}
+                                                    {/*            <Input*/}
+                                                    {/*                id="eventType"*/}
+                                                    {/*                name="eventType"*/}
+                                                    {/*                label="Event Type"*/}
+                                                    {/*                defaultValue=""*/}
+                                                    {/*                type="select"*/}
+                                                    {/*                value={eventType}*/}
+                                                    {/*                onChange={(e) => {setEventType(e.target.value)}}*/}
+                                                    {/*                inputProps={{ placeholder: "Event Type" }}*/}
+                                                    {/*            >*/}
+                                                    {/*                <option value={"Wedding"}>Wedding</option>*/}
+                                                    {/*                <option value={"Party"}>Party</option>*/}
+                                                    {/*            </Input>*/}
+                                                    {/*            /!*<Input*!/*/}
+                                                    {/*            /!*    id="inputPassword4"*!/*/}
+                                                    {/*            /!*    placeholder="Password"*!/*/}
+                                                    {/*            /!*    type="password"*!/*/}
+                                                    {/*            /!*></Input>*!/*/}
+                                                    {/*        </div>*/}
+                                                    {/*        <div className="col-md-6">*/}
+                                                    {/*            <col>*/}
+                                                    {/*            <label htmlFor="inputPassword4">Pick dates to reveal packages</label>*/}
+                                                    {/*            <Input*/}
+                                                    {/*                id="arrivalDate"*/}
+                                                    {/*                name="arrivalDate"*/}
+                                                    {/*                label="Arrival Date"*/}
+                                                    {/*                type="date"*/}
+                                                    {/*                value={arrivalDate}*/}
+                                                    {/*                onChange={(e)=>setArrivalDate(e.target.value)}*/}
+                                                    {/*                inputProps={{ placeholder: "ArrivalDate Picker" }}*/}
+                                                    {/*            />*/}
+
+                                                    {/*        </div>*/}
+                                                    {/*        <div className="col-md-6">*/}
+                                                    {/*            <Input*/}
+                                                    {/*                id="departureDate"*/}
+                                                    {/*                name="departureDate"*/}
+                                                    {/*                label="Departure Date"*/}
+                                                    {/*                type="date"*/}
+                                                    {/*                value={departureDate}*/}
+                                                    {/*                onChange={(e)=>setDepartureDate(e.target.value)}*/}
+                                                    {/*                inputProps={{ placeholder: "DepatureDate Picker" }}*/}
+                                                    {/*            />*/}
+                                                    {/*        </div>*/}
+                                                    {/*    </div>*/}
+                                                    {/*    <Button*/}
+                                                    {/*        type="submit"*/}
+                                                    {/*        block*/}
+                                                    {/*        className="btn-round"*/}
+                                                    {/*        color="info"*/}
+                                                    {/*        href="#pablo"*/}
+                                                    {/*        onClick={onSubmit}*/}
+                                                    {/*        size="lg">*/}
+                                                    {/*        BOOK NOW*/}
+                                                    {/*    </Button>*/}
+                                                    {/*</Form>*/}
+
+                                                    <Form>
                                                     <Row>
                                                         <Col lg="6" sm="6">
                                                             <p className="category">Guest Count</p>
-                                                            <FormGroup>
+                                                            <div>
                                                                 <Input
                                                                     id="guests"
                                                                     name="guests"
@@ -224,17 +300,16 @@ function HallReservationPage() {
                                                                     onChange={(e) => {setGuests(e.target.value)}}
                                                                     inputProps={{ placeholder: "Guest Count" }}
                                                                 ></Input>
-                                                            </FormGroup>
+                                                            </div>
                                                         </Col>
                                                         <Col lg="6" sm="6">
                                                             <p className="category">Event Type</p>
 
-                                                            <FormGroup>
+                                                            <div>
                                                                 <Input
                                                                     id="eventType"
                                                                     name="eventType"
                                                                     label="Event Type"
-                                                                    defaultValue=""
                                                                     type="select"
                                                                     value={eventType}
                                                                     onChange={(e) => {setEventType(e.target.value)}}
@@ -243,7 +318,7 @@ function HallReservationPage() {
                                                                     <option value={"Wedding"}>Wedding</option>
                                                                     <option value={"Party"}>Party</option>
                                                                 </Input>
-                                                            </FormGroup>
+                                                            </div>
                                                         </Col>
                                                     </Row>
                                                     <p className="category">Pick dates to reveal packages</p>
@@ -251,13 +326,13 @@ function HallReservationPage() {
                                                         <Col lg="6" sm="6">
                                                                     <div className="datepicker-container">
                                                                         <FormGroup>
-                                                                            <Datetime
+                                                                            <Input
                                                                                 id="arrivalDate"
                                                                                 name="arrivalDate"
-                                                                                label="ArrivalDate"
-                                                                                value={arrivalDate}
-                                                                                onChange={(e)=>setArrivalDate(e._d)}
-                                                                                timeFormat={false}
+                                                                                label="Arrival Date"
+                                                                                type="date"
+                                                                                value={arrival}
+                                                                                onChange={(e)=>setArrivalDate(e.target.value)}
                                                                                 inputProps={{ placeholder: "ArrivalDate Picker" }}
                                                                             />
                                                                         </FormGroup>
@@ -268,13 +343,13 @@ function HallReservationPage() {
                                                                 <Col lg="6" sm="6">
                                                                     <div className="datepicker-container">
                                                                         <FormGroup>
-                                                                            <Datetime
+                                                                            <Input
                                                                                 id="departureDate"
                                                                                 name="departureDate"
-                                                                                label="DepartureDate"
-                                                                                timeFormat={false}
+                                                                                label="Departure Date"
+                                                                                type="date"
                                                                                 value={departureDate}
-                                                                                onChange={(e)=>setDepartureDate(e._d)}
+                                                                                onChange={(e)=>setDepartureDate(e.target.value)}
                                                                                 inputProps={{ placeholder: "DepatureDate Picker" }}
                                                                             />
                                                                         </FormGroup>
@@ -283,15 +358,16 @@ function HallReservationPage() {
                                                     </Row>
                                                     <br></br>
                                                     <Button
+                                                        type="submit"
                                                         block
                                                         className="btn-round"
                                                         color="info"
                                                         href="#pablo"
-                                                        onClick={(e) => onSubmit(e)}
-                                                        size="lg"
-                                                    >
+                                                        onClick={onSubmit}
+                                                        size="lg">
                                                         BOOK NOW
                                                     </Button>
+                                                    </Form>
                                                     <br></br>
                                                     <hr></hr>
                                                     <br></br>

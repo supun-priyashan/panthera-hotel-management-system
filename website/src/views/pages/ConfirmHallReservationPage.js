@@ -20,7 +20,8 @@ import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
 import ConfirmRoomReservationHeader from "../../components/Headers/ConfirmRoomReservationHeader";
 import {Link} from "react-router-dom";
-import {useHistory} from "react-router";
+import {useHistory, useLocation} from "react-router";
+// import {useHistory} from "react-router";
 
 
 function ConfirmHallReservationPage() {
@@ -29,16 +30,20 @@ function ConfirmHallReservationPage() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState('');
-
+    const [arrival,setArrival] = useState('');
+    const [departure,setDeparture] = useState('');
+    const [eventType,setEventType] = useState('');
+    const [guests,setGuests] = useState('');
 
     let data;
+    let dates = history.location.state;
 
     useLayoutEffect(() => {
         data = history.location.state;
         console.log("History", data);
     })
 
-    const [roomReservations,setRoomReservations] = useState([]);
+    const [hallReservations,setHallReservations] = useState([]);
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -56,19 +61,86 @@ function ConfirmHallReservationPage() {
 
     },[])
 
+    useEffect(() => {
+        console.log("History data" , dates);
+
+        console.log("data ", data);
+
+        //setTimeout(()=>{
+        setArrival(dates.arrival);
+        setDeparture(dates.departure);
+        setEventType(dates.eventType);
+        setGuests(dates.guests);
+        //},5000)
+
+        axios.get('http://localhost:8080/hallmReservations').
+        then((response) => {
+            if(response.data.success) {
+                console.log(response.data.hallReservations);
+                /*setRooms(response.data.rooms.map((item) => ({
+                    id: item._id,
+                    roomName: item.roomName,
+                    type: item.type,
+                    beds: item.beds,
+                    guests: item.guests,
+                    space: item.space,
+                    facilities: item.facilities,
+                    image: item.image,
+                    price: item.price,
+                    description: item.description,
+                })));*/
+                setHallReservations(response.data.hallReservations);
+                setTimeout(() => console.log(hallReservations.length),5000)
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
+
+    // const onSubmit = (e) => {
+    //     e.preventDefault();
+    //     if(!firstName ){
+    //         alert("Firstname is required");
+    //     }else if(!lastName){
+    //         alert("LastName is required");
+    //     }else if(!email){
+    //         alert("Email is required");
+    //     }else if(!mobile){
+    //         alert("Mobile is required");
+    //     } else{
+    //         alert("Reservation success");
+    //     }
+    // }
+
     const onSubmit = (e) => {
-        e.preventDefault();
-        if(!firstName ){
-            alert("Firstname is required");
-        }else if(!lastName){
-            alert("LastName is required");
-        }else if(!email){
-            alert("Email is required");
-        }else if(!mobile){
-            alert("Mobile is required");
-        } else{
-            alert("Reservation success");
+
+        const hall = {
+            customerName: firstName + " " + lastName,
+            email: email,
+            contactNumber: mobile,
+            arrivalDate: arrival,
+            departureDate: departure,
+            noOfGuests: guests,
+            eventType: eventType,
+            hallName: 'deluxe double'
         }
+
+        console.log(hall);
+
+        axios.post('http://localhost:8080/hallReservations',hall)
+            .then(response => {
+                if (response.data.success) {
+                    alert('Hall Reserved  Successfully')
+
+                } else {
+                    alert('Failed to Reserve the Hall')
+                }
+
+            }).catch(error => {
+            alert(error);
+        })
+
     }
 
     return (
@@ -108,17 +180,17 @@ function ConfirmHallReservationPage() {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>16-08-2021 / 16-08-2021</p>
+                                                        }}>{arrival} / {departure}</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Hall & Guests: Ballroom, 150 guests</p>
+                                                        }}>Hall & Guests: ballroom hall(s), {guests} guest(s)</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Event Type: Wedding </p>
+                                                        }}>Event Type: {eventType} </p>
                                                     </div>
                                                 </Col>
                                             </Row>
