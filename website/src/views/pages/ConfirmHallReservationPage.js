@@ -94,7 +94,7 @@ function ConfirmHallReservationPage() {
         setGuests(dates.guests);
         //},5000)
 
-        axios.get('http://localhost:8080/hallmReservations').
+        /*axios.get('http://localhost:8080/hallmReservations').
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.hallReservations);
@@ -105,7 +105,7 @@ function ConfirmHallReservationPage() {
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
             }
-        })
+        })*/
     },[])
 
 

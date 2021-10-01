@@ -63,7 +63,7 @@ function RoomReservationPage(props) {
                 console.log(response.data.room);
                 const data = response.data.room;
 
-                setName(data.roomName);
+                setName(data.name);
                 setType(data.type);
                 setSpace(data.space);
                 setGuests(data.guests);
@@ -75,7 +75,6 @@ function RoomReservationPage(props) {
                 setId(data._id);
 
                 setIsLoading(false);
-
 
                 console.log(name);
 

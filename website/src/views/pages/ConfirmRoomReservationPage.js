@@ -64,7 +64,7 @@ function ConfirmRoomReservationPage(props) {
                 console.log(response.data.room);
                 const data = response.data.room;
 
-                setName(data.roomName);
+                setName(data.name);
                 setBeds(data.beds);
                 setPrice(data.price);
                 setId(data._id);

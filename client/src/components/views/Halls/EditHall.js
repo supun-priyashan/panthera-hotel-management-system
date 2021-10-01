@@ -72,7 +72,7 @@ export const EditHall = (props) => {
                 setType(data.type);
                 setSpace(data.space);
                 setGuests(data.guests);
-                setHeight(data.beds);
+                setHeight(data.height);
                 setPrice(data.price);
                 setDescription(data.description);
                 setFacilities(data.facilities);

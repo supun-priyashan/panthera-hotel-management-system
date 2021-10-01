@@ -93,7 +93,7 @@ export const AddEmployee = () => {
                 email: values.email,
             }
             console.log("imageFile",employees);
-            axios.post('http://localhost:4000/employees', employees)
+            axios.post('http://localhost:8080/employees', employees)
                 .then(response => {
                     if (response.data.success) {
                         alert('Employee  Successfully Added')

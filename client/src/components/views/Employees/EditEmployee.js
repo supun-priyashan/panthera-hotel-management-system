@@ -52,7 +52,7 @@ export const EditEmployee = (props)=>{
     const data = history.location.state;
 
     useEffect(async () => {
-        await axios.get('http://localhost:4000/employees/'+props.match.params.id).
+        await axios.get('http://localhost:8080/employees/'+props.match.params.id).
         then((response) => {
             if(response.data.success){
 
@@ -139,7 +139,7 @@ export const EditEmployee = (props)=>{
                 email: values.email,
             }
 
-            axios.put('http://localhost:4000/employees', employee)
+            axios.put('http://localhost:8080/employees', employee)
                 .then(response => {
                             if (response.data.success) {
                                 alert('Employee  Successfully Added')

@@ -12,7 +12,7 @@ export const SidebarData = [
                 path: '/reservations/rooms'
             },
             {
-                title: 'Revenue',
+                title: 'Halls',
                 path: '/reservations/halls'
             }
         ]

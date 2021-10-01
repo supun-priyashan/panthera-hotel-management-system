@@ -60,16 +60,6 @@ function AboutUsPage(props) {
                                     <p className="description">
                                         Having embraced over 3 decades of expertise in hospitality our vision and beliefs are firmly grounded in extending a true personalized service to all our guests, laced with an unforgettable luxury hotel experience.
                                     </p>
-
-                                    <Button
-                                        type="submit"
-                                        block
-                                        className="btn-round"
-                                        color="info"
-                                        href="#pablo"
-                                        size="lg">
-                                        View Gallery
-                                    </Button>
                                 </Col>
                                 <Col className="ml-auto mr-auto text-left" md="5">
 

@@ -29,6 +29,7 @@ function App() {
             <Sidebar />
             <div>
                 <Switch>
+                    <Route path='/' exact component={RoomReservation} />
                     <Route path='/halls' exact component={Halls} />
                     <Route path='/halls/add-hall' exact component={AddHall} />
                     <Route path='/halls/edit-hall/:id' exact component={EditHall} />

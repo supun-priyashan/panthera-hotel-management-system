@@ -11,7 +11,7 @@ export const Employees = () => {
     const [employees,setEmployees] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/employees').
+        axios.get('http://localhost:8080/employees').
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.employees);
@@ -40,12 +40,12 @@ export const Employees = () => {
 
         const id = props.data.id;
 
-        await axios.delete('http://localhost:4000/employees/' + id).
+        await axios.delete('http://localhost:8080/employees/' + id).
         then((response) => {
             if(response.data.success){
                 alert("Employee Successfully deleted.");
 
-                axios.get('http://localhost:4000/employees').
+                axios.get('http://localhost:8080/employees').
                 then((response) => {
                     if(response.data.success) {
                         console.log(response.data.employees);
