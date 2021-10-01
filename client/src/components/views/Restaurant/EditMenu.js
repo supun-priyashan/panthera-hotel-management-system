@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import Icon from '@material-ui/core/Icon';
 import axios from "axios";
-import {Button, IconButton, Input, InputLabel, MenuItem, TextField} from "@material-ui/core";
+import {Button, Chip, IconButton, Input, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import * as yup from "yup";
-import {useFormik} from "formik";
+import {useFormik,Field} from "formik";
 import styled from "styled-components";
+import {useHistory, useLocation} from "react-router-dom";
+import { JumpCircleLoading } from 'react-loadingg';
 
 const SubmitButton = styled.button`
   width: 120px;
@@ -33,9 +36,52 @@ const SubmitButton = styled.button`
   }
 `;
 
-export const AddMenu = () => {
 
-    const [imageFile,setImageFile] = useState([]);
+export const EditMenu = (props) => {
+
+    const [isLoading,setIsLoading] = useState(true);
+    const [foodName,setFoodName] = useState('');
+    const [price,setPrice] = useState('');
+    const [restaurantType,setRestaurantType] = useState('');
+    const [description,setDescription] = useState('');
+    const [image,setImage] = useState('');
+    /*const [noOfBeds, setBeds] = useState('');
+    const [noOfGuests, setGuests] = useState('');
+    const [arrivalDate, setArrivalDate] = useState('');
+    const [departureDate, setDepartureDate] = useState('');*/
+    const [id, setId] = useState('');
+
+    const history = useHistory();
+
+    const data = history.location.state;
+
+    useEffect(async () => {
+        await axios.get('http://localhost:8080/foods/'+props.match.params.id).
+        then((response) => {
+            if(response.data.success) {
+
+                console.log(response.data.food);
+                const data = response.data.food;
+
+                setFoodName(data.foodName);
+                setPrice(data.price);
+                setRestaurantType(data.restaurantType);
+                setDescription(data.description);
+                setImage(data.image);
+                /*setBeds(data.noOfBeds);
+                setGuests(data.noOfGuests);
+                setArrivalDate(data.arrivalDate);
+                setDepartureDate(data.departureDate);*/
+                setId(data._id);
+
+                setIsLoading(false);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
 
     const validationSchema = yup.object({
         foodName: yup
@@ -54,61 +100,106 @@ export const AddMenu = () => {
 
     const formik = useFormik({
         initialValues: {
-            foodName: '',
-            price: '',
-            restaurantType: '',
-            description:'',
-            image: null,
+            _id: id,
+            foodName: foodName,
+            price: price,
+            restaurantType: restaurantType,
+            description:description,
+            imageFile:image,
         },
+        enableReinitialize: true,
         validationSchema: validationSchema,
+
         onSubmit: (values) => {
+
             const formData = new FormData();
-            formData.append('file',imageFile);
             const config = {
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
             };
+
             const food = {
+                _id: id,
                 foodName: values.foodName,
                 price: values.price,
                 restaurantType: values.restaurantType,
                 description: values.description,
-                image: imageFile.name,
+                image: image,
             }
 
-            console.log(imageFile,food);
+            axios.put('http://localhost:8080/foods', food)
+                .then((response) => {
+                    if (response.data.success) {
+                        alert('Room Details Successfully Updated')
 
-            axios.post('http://localhost:8080/foods', food)
-                .then(response => {
-                    axios.post("http://localhost:8080/files",formData,config)
-                        .then(() => {
-                            if (response.data.success) {
-                                alert('Food Successfully Added')
-                            } else {
-                                alert('Failed to add food')
-                            }
-                        }).catch((error) => {
-                        alert(error.message);
-                    });
+                    } else {
+                        alert('Failed to update')
+                    }
+                });
 
-                }).catch((error) => console.error(error))
-
+            // .then(response => {
+            //     axios.post("http://localhost:8080/files",formData,config)
+            //         .then(() => {
+            //             if (response.data.success) {
+            //                 alert('Room Details Successfully Updated')
+            //
+            //             } else {
+            //                 alert('Failed to update')
+            //             }
+            //         }).catch((error) => {
+            //         alert(error.message);
+            //     });
+            // })
         },
     });
 
-    return (
+    return isLoading ?(
+            <div>
+                <div className={'content'}>
+                    <div className={'dashboard-header'}>
+                        Food Management
+                        <div className={'dashboard-subheader'}>
+                            {/*TODO Align icon an route to go back*/}
+                            <IconButton aria-label="back"
+                                        onClick={() =>{
+                                            history.goBack();
+                                        }}>
+                                <Icon style={{
+                                    color: '#5a2360',
+                                }}>arrow_back_ios</Icon>
+                            </IconButton>
+                            Edit Food Details
+                        </div>
+                    </div>
+                    <div className={'main-container'}>
+                        <div className={'form-container'}>
+                            Loading...
+                            <JumpCircleLoading
+                                color ="#5a2360"
+                                speed = {0.5}
+                                size = "large"
+
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ):(
         <div className={'content'}>
             <div className={'dashboard-header'}>
                 Food Management
                 <div className={'dashboard-subheader'}>
                     {/*TODO Align icon an route to go back*/}
-                    <IconButton aria-label="delete">
+                    <IconButton aria-label="back"
+                                onClick={() =>{
+                                    history.goBack();
+                                }}>
                         <Icon style={{
                             color: '#5a2360',
                         }}>arrow_back_ios</Icon>
                     </IconButton>
-                    Add a Food
+                    Edit Food Details
                 </div>
             </div>
             <div className={'main-container'}>
@@ -178,9 +269,8 @@ export const AddMenu = () => {
                             id="image"
                             name="image"
                             type="file"
-                            /*style={}*/
                             value={formik.values.image}
-                            onChange={(e) => {setImageFile((e.target.files[0]))}}
+                            onChange={(e) => {setImage((e.target.files[0]))}}
                             error={formik.touched.image && Boolean(formik.errors.image)}
                             helperText={formik.touched.image && formik.errors.image}
                         />
@@ -194,12 +284,12 @@ export const AddMenu = () => {
                             }}
                             type = "submit"
                         >
-                            Add Food
+                            Save Changes
                         </SubmitButton>
                     </form>
                 </div>
             </div>
         </div>
+
     );
 };
-

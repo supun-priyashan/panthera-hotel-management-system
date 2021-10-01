@@ -92,10 +92,11 @@ function FoodsPage() {
                                                         <p className="card-text">{item.foodName}</p>
                                                     </div>
                                                     <div className="card-body">
-                                                        <p className="card-text">Rs.{item.price}</p>
+                                                        <p className="card-text">Rs. {item.price}.00</p>
                                                     </div>
                                                     <div className="card-body">
-                                                        <Button
+                                                        {/*<p className="card-text">{item.description}</p>*/}
+                                                        {/*<Button
                                                             style={{
                                                                 float: 'center',
                                                                 marginTop: '10px',
@@ -105,7 +106,7 @@ function FoodsPage() {
                                                             type = "submit"
                                                         >
                                                             View more
-                                                        </Button>
+                                                        </Button>*/}
                                                     </div>
                                                 </div>
                                             </Fragment>

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table'
 import {Button, Icon, Link, Paper} from "@material-ui/core";
 import axios from "axios";
-
+//test comments
 export const Menus = () => {
 
     const history = useHistory();
@@ -30,6 +30,45 @@ export const Menus = () => {
         })
     },[])
 
+    const deleteMenu = async (props) => {
+
+        console.log(props.data.id);
+
+        const id = props.data.id;
+
+        await axios.delete('http://localhost:8080/foods/' + id).
+        then((response) => {
+            if(response.data.success){
+                alert("Successfully deleted.");
+
+                axios.get('http://localhost:8080/foods').
+                then((response) => {
+                    if(response.data.success) {
+                        console.log(response.data.foods);
+                        setMenus(response.data.foods.map((item) => ({
+                            id: item._id,
+                            foodName: item.foodName,
+                            price: item.price,
+                            restaurantType: item.restaurantType,
+                            description:item.description,
+                        })));
+                    } else{
+                        alert('An error occurred while retrieving data');
+                        console.log(response.data.error);
+                    }
+                })
+
+            }else {
+                alert('An error happened');
+                console.log(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+
+
+    }
+
     return (
         <div className={'content'}>
             <div className={'dashboard-header'}>
@@ -45,7 +84,7 @@ export const Menus = () => {
                             { title: 'Price', field: 'price' },
                             { title: 'Restaurant Type', field: 'restaurantType' },
                             { title: 'Description', field: 'description'},
-                            { title: 'Images', field: 'image', type: 'numeric' },
+                            //{ title: 'Images', field: 'image', type: 'numeric' },
                         ]}
                         data={
                             menus
@@ -53,13 +92,13 @@ export const Menus = () => {
                         actions={[
                             {
                                 icon: 'edit',
-                                tooltip: 'Edit User',
+                                tooltip: 'Edit Food Data',
                                 onClick: (event, rowData) => alert("You saved " + rowData.name)
                             },
 
                             {
                                 icon: 'delete',
-                                tooltip: 'Delete User',
+                                tooltip: 'Delete Food',
 
                             },
                             {
@@ -84,7 +123,13 @@ export const Menus = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Edit User"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.name)}
+                                                onClick={(event, rowData) => {
+                                                    history.push({
+                                                        pathname:'/restaurants/edit-menu/' + props.data.id,
+                                                        state: props.data
+                                                    });
+                                                    console.log(props.data);
+                                                }}
                                             >
                                                 <span class="MuiIconButton-label">
                                                     <span class="material-icons MuiIcon-root"
@@ -103,7 +148,9 @@ export const Menus = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Delete User"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.name)}
+                                                onClick={(event, rowData) =>
+                                                    deleteMenu(props)
+                                                }
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
@@ -144,7 +191,7 @@ export const Menus = () => {
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
-                            exportButton: true,
+                            //exportButton: true,
                             sorting: true,
                             pageSize: 6,
                             pageSizeOptions: [6],
