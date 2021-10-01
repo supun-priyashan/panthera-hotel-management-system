@@ -97,18 +97,29 @@ function HallReservationPage() {
 
 
     function onSubmit(e) {
-        console.log(arrival,"-",departureDate,"-",eventType,"-",guests);
-        history.push({
-            pathname: '/confirm/halls',
-            state: {
-                id:id,
-                name:name,
-                arrival:arrival,
-                departure:departureDate,
-                guests:guests,
-                eventType: eventType,
-            } // your data array of objects
-        })
+        e.preventDefault();
+        if(!guests ){
+            alert("Guest count is required");
+        }else if(!eventType){
+            alert("Event Type is required");
+        }else if(!arrival){
+            alert("Arrival date is required");
+        }else if(!departureDate){
+            alert("Departure date is required");
+        } else {
+            console.log(arrival, "-", departureDate, "-", eventType, "-", guests);
+            history.push({
+                pathname: '/confirm/halls',
+                state: {
+                    id: id,
+                    name: name,
+                    arrival: arrival,
+                    departure: departureDate,
+                    guests: guests,
+                    eventType: eventType,
+                } // your data array of objects
+            })
+        }
     }
 
     return isLoading?(

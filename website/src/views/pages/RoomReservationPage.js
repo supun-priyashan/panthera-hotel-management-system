@@ -99,19 +99,30 @@ function RoomReservationPage(props) {
         })
     },[])
 
-    const onSubmit = () => {
-        console.log(arrival,"-",departureDate,"-",bookedBeds,"-",bookedGuests);
-        history.push({
-            pathname: '/confirm/rooms',
-            state: {
-                id:id,
-                arrival:arrival,
-                departure:departureDate,
-                beds:bookedBeds,
-                guests:bookedGuests,
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if(!arrival ){
+            alert("Arrival date is required");
+        }else if(!departureDate){
+            alert("Departure date is required");
+        }else if(!bookedBeds){
+            alert("Bed count is required");
+        }else if(!bookedGuests){
+            alert("Guest count is required");
+        } else {
+            console.log(arrival, "-", departureDate, "-", bookedBeds, "-", bookedGuests);
+            history.push({
+                pathname: '/confirm/rooms',
+                state: {
+                    id: id,
+                    arrival: arrival,
+                    departure: departureDate,
+                    beds: bookedBeds,
+                    guests: bookedGuests,
 
-            } // your data array of objects
-        })
+                } // your data array of objects
+            })
+        }
     }
 
     return isLoading?(
