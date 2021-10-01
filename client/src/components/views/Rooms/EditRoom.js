@@ -10,6 +10,7 @@ import styled from "styled-components";
 import {useHistory, useLocation} from "react-router-dom";
 import { JumpCircleLoading } from 'react-loadingg';
 
+
 const SubmitButton = styled.button`
   width: 120px;
   height: 40px;
@@ -203,6 +204,7 @@ export const EditRoom = (props) => {
                             size = "large"
 
                         />
+
                     </div>
                 </div>
             </div>
