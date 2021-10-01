@@ -3,7 +3,9 @@ const Employee = require('../models/employee.model');
 const addEmployee = async (request, response) => {
 
     const employee = new Employee(request.body);
+
     console.log(employee);
+
 
     await employee.save((error, employee) => {
         if(error){
@@ -37,6 +39,7 @@ const getEmployee = async(request,response) => {
     }
 }
 const getEmployees = async (request, response) => {
+
     try{
         const employees = await Employee.find();
         response.status(200).
@@ -51,6 +54,7 @@ const getEmployees = async (request, response) => {
         });
     }
 }
+
 //change
 const updateEmployee = async (request,response) => {
     const employee = new Employee(request.body);

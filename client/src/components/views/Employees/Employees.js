@@ -34,6 +34,7 @@ export const Employees = () => {
             }
         })
     },[])
+
     const deleteEmployee = async (props) => {
 
         console.log(props.data.id);
@@ -77,9 +78,6 @@ export const Employees = () => {
 
 
     }
-
-
-
 
     return (
         <div className={'content'}>
@@ -159,6 +157,7 @@ export const Employees = () => {
                                     }
                                     if (props.action.icon === 'delete') {
                                         return (
+
                                             <button
                                                 class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
@@ -166,8 +165,6 @@ export const Employees = () => {
                                                 title="Delete User"
                                                 onClick={(event, rowData) => deleteEmployee(props)
                                                 }
-
-
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
@@ -193,8 +190,8 @@ export const Employees = () => {
                                                     borderRadius: 35,
                                                     backgroundColor: '#5a2360',
                                                     fontFamily: 'Roboto',
-                                                    color: 'white',
-                                                }}
+                                                    color: 'white',                         
+                                                          }}
                                                 size="medium"
                                             >
                                                 Add an Employee
@@ -206,7 +203,6 @@ export const Employees = () => {
                                 }
                         }
                         }
-
 
                         options={{
                             actionsColumnIndex: -1,
