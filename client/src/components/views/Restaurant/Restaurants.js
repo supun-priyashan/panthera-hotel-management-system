@@ -1,15 +1,3 @@
-/*
-
-
-export const Restaurants = () => {
-    return (
-        <div>
-            <h1>Restaurants</h1>
-        </div>
-    );
-};
-*/
-
 import React, {useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table'
@@ -31,8 +19,8 @@ export const Restaurants = () => {
                     id: item._id,
                     restaurantName: item.restaurantName,
                     caption: item.caption,
-                    images: item.images,
-                    imageCount: item.images.length,
+                    // image: item.image,
+                    // imageCount: item.images.length,
                     description: item.description,
                 })));
                 setTimeout(console.log(restaurants),3000)
@@ -42,6 +30,46 @@ export const Restaurants = () => {
             }
         })
     },[])
+
+    const deleteRestaurant = async (props) => {
+
+        console.log(props.data.id);
+
+        const id = props.data.id;
+
+        await axios.delete('http://localhost:8080/restaurants/' + id).
+        then((response) => {
+            if(response.data.success){
+                alert("Successfully deleted.");
+
+                axios.get('http://localhost:8080/restaurants').
+                then((response) => {
+                    if(response.data.success) {
+                        console.log(response.data.restaurants);
+                        setRestaurants(response.data.restaurants.map((item) => ({
+                            id: item._id,
+                            restaurantName: item.restaurantName,
+                            caption: item.caption,
+                            // image: item.image,
+                            // imageCount: item.images.length,
+                            description: item.description,
+                        })));
+                    } else{
+                        alert('An error occurred while retrieving data');
+                        console.log(response.data.error);
+                    }
+                })
+
+            }else {
+                alert('An error happened');
+                console.log(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+
+
+    }
 
     return (
         <div className={'content'}>
@@ -57,7 +85,7 @@ export const Restaurants = () => {
                             { title: 'Name', field: 'restaurantName' },
                             { title: 'Caption', field: 'caption' },
                             { title: 'Description', field: 'description'},
-                            { title: 'Images', field: 'imageCount', type: 'numeric' },
+                            //{ title: 'Images', field: 'imageCount', type: 'numeric' },
                         ]}
                         data={
                             restaurants
@@ -96,7 +124,13 @@ export const Restaurants = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Edit User"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.name)}
+                                                onClick={(event, rowData) => {
+                                                    history.push({
+                                                        pathname:'/restaurants/edit-restaurant/' + props.data.id,
+                                                        state: props.data
+                                                    });
+                                                    console.log(props.data);
+                                                }}
                                             >
                                                 <span class="MuiIconButton-label">
                                                     <span class="material-icons MuiIcon-root"
@@ -115,7 +149,9 @@ export const Restaurants = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Delete User"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.name)}
+                                                onClick={(event, rowData) =>
+                                                    deleteRestaurant(props)
+                                                }
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
@@ -156,7 +192,7 @@ export const Restaurants = () => {
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
-                            exportButton: true,
+                            //exportButton: true,
                             sorting: true,
                             pageSize: 6,
                             pageSizeOptions: [6],

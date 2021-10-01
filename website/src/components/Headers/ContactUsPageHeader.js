@@ -3,9 +3,10 @@ import React from "react";
 // reactstrap components
 import { Button, Container } from "reactstrap";
 
+
 // core components
 
-function RestaurantPageHeader() {
+function ContactUsPageHeader() {
     let pageHeader = React.createRef();
 
     React.useEffect(() => {
@@ -25,19 +26,19 @@ function RestaurantPageHeader() {
         <>
             <div className="page-header page-header-small">
                 <div
-          className="page-header-image"
-          style={{
-            backgroundImage:
-              "url(" + require("assets/img/restaurantHeader.jpg").default + ")",
-          }}
-          ref={pageHeader}
-        > </div>
+                    className="page-header-image"
+                    style={{
+                        backgroundImage:
+                            "url(" + require("assets/img/contactheader.jpg").default + ")",
+                    }}
+                    ref={pageHeader}
+                > </div>
                 <div className="content-center">
                     <Container>
-                        <h1 className="title">MEALS THAT HEAL</h1>
-                        <div className="text-center">
-                            All flavours of the world in one place
-                        </div>
+                        <h1 className="title">REACH FROM ANYWHERE</h1>
+                        {/*<div className="text-center">
+                            Reach Us Anywhere, Anytime!
+                        </div>*/}
                     </Container>
                 </div>
             </div>
@@ -45,4 +46,4 @@ function RestaurantPageHeader() {
     );
 }
 
-export default RestaurantPageHeader;
+export default ContactUsPageHeader;

@@ -7,7 +7,8 @@ import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui
 import * as yup from "yup";
 import {useFormik,Field} from "formik";
 import styled from "styled-components";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
+import { JumpCircleLoading } from 'react-loadingg';
 
 const SubmitButton = styled.button`
   width: 120px;
@@ -35,13 +36,58 @@ const SubmitButton = styled.button`
   }
 `;
 
-const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
+const facilitiesSet = ['Smoking area','Parking','Open Bar','Air Conditioned','Dance Floor'];
+const eventsSet = ['Weddings','Conferences'];
 
-export const AddRoom = () => {
+export const EditHall = (props) => {
 
     const [imageFile,setImageFile] = useState();
+    const [isLoading,setIsLoading] = useState(true);
+
+    const [name,setName] = useState('');
+    const [type,setType] = useState('');
+    const [space, setSpace] = useState('');
+    const [guests, setGuests] = useState('');
+    const [height, setHeight] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [facilities, setFacilities] = useState([]);
+    const [events, setEvents] = useState([]);
+    const [image, setImage] = useState('');
+    const [id, setId] = useState('');
 
     const history = useHistory();
+
+    const data = history.location.state;
+
+    useEffect(async () => {
+        await axios.get('http://localhost:8080/halls/'+props.match.params.id).
+        then((response) => {
+            if(response.data.success) {
+
+                console.log(response.data.hall);
+                const data = response.data.hall;
+
+                setName(data.hallName);
+                setType(data.type);
+                setSpace(data.space);
+                setGuests(data.guests);
+                setHeight(data.beds);
+                setPrice(data.price);
+                setDescription(data.description);
+                setFacilities(data.facilities);
+                setEvents(data.events);
+                setImage(data.image);
+                setId(data._id);
+
+                setIsLoading(false);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
 
     const validationSchema = yup.object({
         name: yup
@@ -51,7 +97,7 @@ export const AddRoom = () => {
             .string('Select room type')
             .required('Type is required'),
         space: yup
-            .number()
+            .number('Space should be a number')
             .label('space')
             .positive()
             .required('Space is required'),
@@ -60,11 +106,10 @@ export const AddRoom = () => {
             .label('guests')
             .positive()
             .required('Guest count is required'),
-        beds: yup
+        height: yup
             .number()
-            .label('beds')
-            .positive()
-            .required('Bed count is required'),
+            .label('height')
+            .positive(),
         price: yup
             .number()
             .label('price')
@@ -77,17 +122,20 @@ export const AddRoom = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            type: '',
-            space: '',
-            guests: '',
-            beds: '',
-            price: '',
-            description: '',
-            facilities: [],
+            name: name,
+            type: type,
+            space: space,
+            guests: guests,
+            height: height,
+            price: price,
+            description: description,
+            facilities: facilities,
+            events: events,
             image: null,
         },
+        enableReinitialize: true,
         validationSchema: validationSchema,
+
         onSubmit: (values) => {
 
             const formData = new FormData();
@@ -98,44 +146,74 @@ export const AddRoom = () => {
                 }
             };
 
-            const room = {
-                name: values.name,
+            const hall = {
+                hallName: values.name,
                 type: values.type,
                 space: values.space,
                 guests: values.guests,
-                beds: values.beds,
+                height: values.height,
                 price: values.price,
                 description: values.description,
                 facilities: values.facilities,
+                events: values.events,
                 image: imageFile.name,
+                _id: id
             }
 
-            console.log(imageFile,room);
+            console.log(imageFile,hall);
 
-            axios.post('http://localhost:8080/rooms', room)
+            axios.put('http://localhost:8080/halls', hall)
                 .then(response => {
                     axios.post("http://localhost:8080/files",formData,config)
                         .then(() => {
                             if (response.data.success) {
-                                alert('Room Successfully Added')
-
+                                console.log(response.data);
+                                alert('Hall Details Successfully Updated')
                             } else {
-                                alert('Failed to add room')
+                                alert('Failed to update')
                             }
                         }).catch((error) => {
                         alert(error.message);
                     });
-
                 })
         },
     });
 
-    useEffect(() => {},[])
+    return isLoading ? (
+        <div>
+            <div className={'content'}>
+                <div className={'dashboard-header'}>
+                    Rooms & Suite Management
+                    <div className={'dashboard-subheader'}>
+                        {/*TODO Align icon an route to go back*/}
+                        <IconButton aria-label="back"
+                                    onClick={() =>{
+                                        history.goBack();
+                                    }}>
+                            <Icon style={{
+                                color: '#5a2360',
+                            }}>arrow_back_ios</Icon>
+                        </IconButton>
+                        Edit Room Details
+                    </div>
+                </div>
+                <div className={'main-container'}>
+                    <div className={'form-container'}>
+                        Loading...
+                        <JumpCircleLoading
+                            color ="#5a2360"
+                            speed = {0.5}
+                            size = "large"
 
-    return (
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    ):(
         <div className={'content'}>
             <div className={'dashboard-header'}>
-                Rooms & Suite Management
+                Reception Hall Management
                 <div className={'dashboard-subheader'}>
                     {/*TODO Align icon an route to go back*/}
                     <IconButton aria-label="back"
@@ -146,7 +224,10 @@ export const AddRoom = () => {
                             color: '#5a2360',
                         }}>arrow_back_ios</Icon>
                     </IconButton>
-                    Add a Room
+                    <div>
+                        Add a Reception Hall
+                    </div>
+
                 </div>
             </div>
             <div className={'main-container'}>
@@ -176,8 +257,8 @@ export const AddRoom = () => {
                             helperText={formik.touched.type && formik.errors.type}
                             style={{'marginTop': '10px'}}
                         >
-                            <MenuItem value={'Room'}>Room</MenuItem>
-                            <MenuItem value={'Suite'}>Suite</MenuItem>
+                            <MenuItem value={'Indoor'}>Indoor</MenuItem>
+                            <MenuItem value={'Outdoor'}>Outdoor</MenuItem>
                         </TextField>
                         <TextField
                             fullWidth
@@ -192,14 +273,14 @@ export const AddRoom = () => {
                         />
                         <TextField
                             fullWidth
-                            id="beds"
-                            name="beds"
-                            label="Beds"
+                            id="height"
+                            name="height"
+                            label="Height (ft)"
                             type="number"
-                            value={formik.values.beds}
+                            value={formik.values.height}
                             onChange={formik.handleChange}
-                            error={formik.touched.beds && Boolean(formik.errors.beds)}
-                            helperText={formik.touched.beds && formik.errors.beds}
+                            error={formik.touched.height && Boolean(formik.errors.height)}
+                            helperText={formik.touched.height && formik.errors.height}
                         />
                         <TextField
                             fullWidth
@@ -216,7 +297,7 @@ export const AddRoom = () => {
                             fullWidth
                             id="price"
                             name="price"
-                            label="Price per night/person"
+                            label="Price per day"
                             type="number"
                             value={formik.values.price}
                             onChange={formik.handleChange}
@@ -238,7 +319,6 @@ export const AddRoom = () => {
                             multiple
                             id="facilities"
                             options={facilitiesSet}
-                            defaultValue={[facilitiesSet[0]]}
                             freeSolo
                             renderTags={(value, getTagProps) =>
                                 value.map((option, index) => (
@@ -258,6 +338,29 @@ export const AddRoom = () => {
                             error={formik.touched.facilities && Boolean(formik.errors.facilities)}
                             helperText={formik.touched.facilities && formik.errors.facilities}
                         />
+                        <Autocomplete
+                            multiple
+                            id="events"
+                            options={eventsSet}
+                            freeSolo
+                            renderTags={(value, getTagProps) =>
+                                value.map((option, index) => (
+                                    <Chip variant="outlined" label={option} {...getTagProps({ index })} />
+                                ))
+                            }
+                            renderInput={(params) => (
+                                <TextField {...params} variant="standard" label="Events" />
+                            )}
+                            value={formik.values.events}
+                            onChange={(e, value) => {
+                                formik.setFieldValue(
+                                    "events",
+                                    value !== null ? value : formik.initialValues.events
+                                );
+                            }}
+                            error={formik.touched.events && Boolean(formik.errors.events)}
+                            helperText={formik.touched.events && formik.errors.events}
+                        />
                         <InputLabel id="image" style={{
                             marginTop: '10px',
                         }}>Image</InputLabel>
@@ -269,17 +372,17 @@ export const AddRoom = () => {
                             onChange={(e) => {setImageFile((e.target.files[0]))}}
                             error={formik.touched.image && Boolean(formik.errors.image)}
                             helperText={formik.touched.image && formik.errors.image}
-                            />
+                        />
                         <SubmitButton
-                                style={{
-                                    float: 'right',
-                                    marginTop: '10px',
-                                    backgroundColor: '#5a2360',
-                                    fontFamily: 'Josefin Sans'
-                                }}
-                                type = "submit"
+                            style={{
+                                float: 'right',
+                                marginTop: '10px',
+                                backgroundColor: '#5a2360',
+                                fontFamily: 'Josefin Sans'
+                            }}
+                            type = "submit"
                         >
-                            Add Room
+                            Add Hall
                         </SubmitButton>
                     </form>
                 </div>

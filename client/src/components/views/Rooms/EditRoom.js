@@ -7,7 +7,8 @@ import { createTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui
 import * as yup from "yup";
 import {useFormik,Field} from "formik";
 import styled from "styled-components";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
+import { JumpCircleLoading } from 'react-loadingg';
 
 const SubmitButton = styled.button`
   width: 120px;
@@ -37,11 +38,53 @@ const SubmitButton = styled.button`
 
 const facilitiesSet = ['TV','Ensuite Bathroom','Balcony','Mini fridge','WiFi'];
 
-export const AddRoom = () => {
+export const EditRoom = (props) => {
 
     const [imageFile,setImageFile] = useState();
+    const [isLoading,setIsLoading] = useState(true);
+
+    const [name,setName] = useState('');
+    const [type,setType] = useState('');
+    const [space, setSpace] = useState('');
+    const [guests, setGuests] = useState('');
+    const [beds, setBeds] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [facilities, setFacilities] = useState([]);
+    const [image, setImage] = useState('');
+    const [id, setId] = useState('');
 
     const history = useHistory();
+
+    const data = history.location.state;
+
+    useEffect(async () => {
+        await axios.get('http://localhost:8080/rooms/'+props.match.params.id).
+        then((response) => {
+            if(response.data.success) {
+
+                console.log(response.data.room);
+                const data = response.data.room;
+
+                setName(data.name);
+                setType(data.type);
+                setSpace(data.space);
+                setGuests(data.guests);
+                setBeds(data.beds);
+                setPrice(data.price);
+                setDescription(data.description);
+                setFacilities(data.facilities);
+                setImage(data.image);
+                setId(data._id);
+
+                setIsLoading(false);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
 
     const validationSchema = yup.object({
         name: yup
@@ -77,17 +120,20 @@ export const AddRoom = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            type: '',
-            space: '',
-            guests: '',
-            beds: '',
-            price: '',
-            description: '',
-            facilities: [],
-            image: null,
+            _id: id,
+            name: name,
+            type: type,
+            space: space,
+            guests: guests,
+            beds: beds,
+            price: price,
+            description: description,
+            facilities: facilities,
+            image: null
         },
+        enableReinitialize: true,
         validationSchema: validationSchema,
+
         onSubmit: (values) => {
 
             const formData = new FormData();
@@ -99,6 +145,7 @@ export const AddRoom = () => {
             };
 
             const room = {
+                _id: id,
                 name: values.name,
                 type: values.type,
                 space: values.space,
@@ -107,32 +154,60 @@ export const AddRoom = () => {
                 price: values.price,
                 description: values.description,
                 facilities: values.facilities,
-                image: imageFile.name,
+                image: imageFile.name
             }
 
             console.log(imageFile,room);
 
-            axios.post('http://localhost:8080/rooms', room)
+            axios.put('http://localhost:8080/rooms', room)
                 .then(response => {
                     axios.post("http://localhost:8080/files",formData,config)
                         .then(() => {
                             if (response.data.success) {
-                                alert('Room Successfully Added')
+                                alert('Room Details Successfully Updated')
 
                             } else {
-                                alert('Failed to add room')
+                                alert('Failed to update')
                             }
                         }).catch((error) => {
                         alert(error.message);
                     });
-
                 })
         },
     });
 
-    useEffect(() => {},[])
+    return isLoading ? (
+        <div>
+            <div className={'content'}>
+                <div className={'dashboard-header'}>
+                    Rooms & Suite Management
+                    <div className={'dashboard-subheader'}>
+                        {/*TODO Align icon an route to go back*/}
+                        <IconButton aria-label="back"
+                                    onClick={() =>{
+                                        history.goBack();
+                                    }}>
+                            <Icon style={{
+                                color: '#5a2360',
+                            }}>arrow_back_ios</Icon>
+                        </IconButton>
+                        Edit Room Details
+                    </div>
+                </div>
+                <div className={'main-container'}>
+                    <div className={'form-container'}>
+                        Loading...
+                        <JumpCircleLoading
+                            color ="#5a2360"
+                            speed = {0.5}
+                            size = "large"
 
-    return (
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    ):(
         <div className={'content'}>
             <div className={'dashboard-header'}>
                 Rooms & Suite Management
@@ -146,7 +221,7 @@ export const AddRoom = () => {
                             color: '#5a2360',
                         }}>arrow_back_ios</Icon>
                     </IconButton>
-                    Add a Room
+                    Edit Room Details
                 </div>
             </div>
             <div className={'main-container'}>
@@ -238,7 +313,6 @@ export const AddRoom = () => {
                             multiple
                             id="facilities"
                             options={facilitiesSet}
-                            defaultValue={[facilitiesSet[0]]}
                             freeSolo
                             renderTags={(value, getTagProps) =>
                                 value.map((option, index) => (
@@ -275,11 +349,12 @@ export const AddRoom = () => {
                                     float: 'right',
                                     marginTop: '10px',
                                     backgroundColor: '#5a2360',
-                                    fontFamily: 'Josefin Sans'
+                                    fontFamily: 'Josefin Sans',
+                                    fontSize: '13px'
                                 }}
                                 type = "submit"
                         >
-                            Add Room
+                            Save Changes
                         </SubmitButton>
                     </form>
                 </div>

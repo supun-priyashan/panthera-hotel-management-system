@@ -3,8 +3,6 @@ import React from "react";
 // reactstrap components
 import { Button, Container } from "reactstrap";
 
-// core components
-
 function LandingPageHeader() {
   let pageHeader = React.createRef();
 
@@ -34,9 +32,16 @@ function LandingPageHeader() {
         ></div>
         <div className="content-center">
           <Container>
-            <h1 className="title">This is our great company.</h1>
             <div className="text-center">
-              //////
+              <img
+                  alt="..."
+                  className="img-fluid"
+                  src={require("assets/img/Panthera1.jpg").default}
+                  style={{
+                    maxWidth: "30%",
+                    maxHeight: "30%"
+                  }}
+              />
             </div>
           </Container>
         </div>

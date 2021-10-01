@@ -3,12 +3,14 @@ import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table'
 import {Button, Icon, Link, Paper} from "@material-ui/core";
 import axios from "axios";
+import {JumpCircleLoading} from "react-loadingg";
 
 export const Rooms = () => {
 
     const history = useHistory();
 
     const [rooms,setRooms] = useState([]);
+    const [isLoading,setIsLoading] = useState(true);
 
     useEffect(() => {
         axios.get('http://localhost:8080/rooms').
@@ -17,7 +19,7 @@ export const Rooms = () => {
                 console.log(response.data.rooms);
                 setRooms(response.data.rooms.map((item) => ({
                     id: item._id,
-                    roomName: item.roomName,
+                    name: item.name,
                     type: item.type,
                     beds: item.beds,
                     guests: item.guests,
@@ -27,7 +29,7 @@ export const Rooms = () => {
                     price: item.price,
                     description: item.description,
                 })));
-                setTimeout(console.log(rooms),3000)
+                setIsLoading(false);
             } else{
                 alert('An error occurred while retrieving data');
                 console.log(response.data.error);
@@ -35,7 +37,67 @@ export const Rooms = () => {
         })
     },[])
 
-    return (
+    const deleteRoom = async (props) => {
+
+        console.log(props.data.id);
+
+        const id = props.data.id;
+
+        await axios.delete('http://localhost:8080/rooms/' + id).
+        then((response) => {
+            if(response.data.success){
+                alert("Successfully deleted.");
+
+                axios.get('http://localhost:8080/rooms').
+                then((response) => {
+                    if(response.data.success) {
+                        console.log(response.data.rooms);
+                        setRooms(response.data.rooms.map((item) => ({
+                            id: item._id,
+                            name: item.name,
+                            type: item.type,
+                            beds: item.beds,
+                            guests: item.guests,
+                            space: item.space,
+                            facilities: item.facilities.join(),
+                            image: item.image,
+                            price: item.price,
+                            description: item.description,
+                        })));
+                    } else{
+                        alert('An error occurred while retrieving data');
+                        console.log(response.data.error);
+                    }
+                })
+
+            }else {
+                alert('An error happened');
+                console.log(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    return isLoading ? (
+            <div className={'content'}>
+                <div className={'dashboard-header'}>
+                    Rooms & Suite Management
+                </div>
+                <div className={'main-container-tables'}>
+                    <div className={'table-container'}>
+                        Fetching data...
+                        <JumpCircleLoading
+                            color ="#5a2360"
+                            speed = {0.5}
+                            size = "large"
+
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+        :(
         <div className={'content'}>
             <div className={'dashboard-header'}>
                 Rooms & Suite Management
@@ -46,7 +108,7 @@ export const Rooms = () => {
                         title="Rooms and Suites"
                         columns={[
                             { title: 'id', field: 'id', hidden: true },
-                            { title: 'Name', field: 'roomName' },
+                            { title: 'Name', field: 'name' },
                             { title: 'Type', field: 'type' },
                             { title: 'Guests', field: 'guests', type: 'numeric' },
                             { title: 'Beds', field: 'beds', type: 'numeric' },
@@ -86,22 +148,30 @@ export const Rooms = () => {
                                 props => {
                                     if(props.action.icon === 'edit'){
                                         return(
-                                            <button
-                                                class="MuiButtonBase-root
-                                                MuiIconButton-root MuiIconButton-colorInherit"
-                                                tabindex="0"
-                                                type="button"
-                                                title="Edit Room"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.id)}
-                                            >
-                                                <span class="MuiIconButton-label">
-                                                    <span class="material-icons MuiIcon-root"
-                                                          aria-hidden="true">
-                                                        edit
-                                                    </span>
-                                            </span>
-                                                <span class="MuiTouchRipple-root"></span>
-                                            </button>
+                                            /*<Link to={"/rooms/edit-room/"}>*/
+                                                <button
+                                                    class="MuiButtonBase-root
+                                                    MuiIconButton-root MuiIconButton-colorInherit"
+                                                    tabindex="0"
+                                                    type="button"
+                                                    title="Edit Room"
+                                                    onClick={(event, rowData) => {
+                                                        history.push({
+                                                            pathname:'/rooms/edit-room/' + props.data.id,
+                                                            state: props.data
+                                                        });
+                                                        console.log(props.data);
+                                                    }}
+                                                >
+                                                    <span class="MuiIconButton-label">
+                                                        <span class="material-icons MuiIcon-root"
+                                                              aria-hidden="true">
+                                                            edit
+                                                        </span>
+                                                </span>
+                                                    <span class="MuiTouchRipple-root"></span>
+                                                </button>
+                                            //</Link>
                                         )
                                     }
                                     if(props.action.icon === 'delete'){
@@ -111,7 +181,9 @@ export const Rooms = () => {
                                                 tabindex="0"
                                                 type="button"
                                                 title="Delete Room"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.id)}
+                                                onClick={(event, rowData) =>
+                                                    deleteRoom(props)
+                                                }
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
@@ -152,7 +224,7 @@ export const Rooms = () => {
                         options={{
                             actionsColumnIndex: -1,
                             tableLayout: 'auto',
-                            //exportButton: true,
+                            exportButton: true,
                             sorting: true,
                             pageSize: 6,
                             pageSizeOptions: [6],
