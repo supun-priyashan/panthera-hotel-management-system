@@ -12,10 +12,12 @@ import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import axios from "axios";
 import HallsHeader from "../../components/Headers/HallsHeader";
+import {useHistory} from "react-router";
 
 function HallsPage() {
 
     const [halls,setHalls] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -68,10 +70,18 @@ function HallsPage() {
                                     {halls.length > 0 && halls.map((item,index)=>{
                                         return(
                                             <Fragment key={index}>
-                                                <div className="card" style={{
+                                                <div className="card"
+                                                     style={{
                                                     width: "20rem",
                                                     margin: "25px 25px 25px 25px",
-                                                }} >
+                                                     }}
+                                                     onClick={() => history.push({
+                                                         pathname: '/reservations/hall',
+                                                         state: {
+                                                             hallId:item.id
+                                                         }
+                                                     })}
+                                                >
                                                     <img className="card-img-top" src={'http://localhost:8080/uploads/'+item.image}  alt="Room image"/>
                                                     <div className="card-body">
                                                         <p className="card-text">{item.hallName}</p>

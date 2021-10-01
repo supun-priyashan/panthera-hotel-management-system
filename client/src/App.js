@@ -18,6 +18,7 @@ import {EditRoomReservations} from "./components/views/Reservations/EditRoomRese
 import {EditHallReservations} from "./components/views/Reservations/EditHallReservations";
 import {EditMenu} from "./components/views/Restaurant/EditMenu";
 import {EditRestaurant} from "./components/views/Restaurant/EditRestaurant";
+import {EditHall} from "./components/views/Halls/EditHall";
 
 function App() {
     return (
@@ -27,7 +28,8 @@ function App() {
                 <Switch>
                     <Route path='/halls' exact component={Halls} />
                     <Route path='/halls/add-hall' exact component={AddHall} />
-                    <Route path='/rooms' exact component={Rooms} />
+                    <Route path='/halls/edit-hall/:id' exact component={EditHall} />
+                    <Route path='/rooms' exact component={Rooms}/>
                     <Route path='/rooms/add-room' exact component={AddRoom} />
                     <Route path='/rooms/edit-room/:id' exact component={EditRoom} />
                     <Route path='/roomReservations/edit-roomReservations/:id' exact component={EditRoomReservations} />
