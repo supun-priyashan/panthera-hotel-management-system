@@ -44,7 +44,7 @@ function RoomsPage() {
                 console.log(response.data.rooms);
                 setRooms(response.data.rooms.map((item) => ({
                     id: item._id,
-                    roomName: item.roomName,
+                    roomName: item.name,
                     type: item.type,
                     beds: item.beds,
                     guests: item.guests,
@@ -97,12 +97,6 @@ function RoomsPage() {
                                             </Fragment>
                                         )
                                     })}
-                                    {/*<div className="card" style={{width: "20rem"}}>
-                                        <img className="card-img-top" src={'http://localhost:8080/uploads/'+rooms[0].image}  alt="Room image"/>
-                                        <div className="card-body">
-                                            <p className="card-text">{rooms[0].roomName}</p>
-                                        </div>
-                                    </div>*/}
                                 </div>
                             </Col>
                         </Row>

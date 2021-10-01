@@ -36,6 +36,7 @@ const getRooms = async (request, response) => {
 }
 
 const getRoom = async(request,response) => {
+    console.log(request.params);
     try {
         Room.findById(request.params.id, (error, data) => {
             if (error) {

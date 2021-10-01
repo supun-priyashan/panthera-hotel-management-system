@@ -5,7 +5,7 @@ import { Button, Container } from "reactstrap";
 
 // core components
 
-function HallReservationsHeader() {
+function HallReservationsHeader(props) {
     let pageHeader = React.createRef();
 
     React.useEffect(() => {
@@ -13,8 +13,10 @@ function HallReservationsHeader() {
             const updateScroll = () => {
                 let windowScrollTop = window.pageYOffset / 3;
                 if(pageHeader.current)
+                {
                     pageHeader.current.style.transform =
                         "translate3d(0," + windowScrollTop + "px,0)";
+                }
             };
             window.addEventListener("scroll", updateScroll);
             return function cleanup() {
@@ -35,7 +37,7 @@ function HallReservationsHeader() {
                 ></div>
                 <div className="content-center">
                     <Container>
-                        <h1 className="title">Ballroom</h1>
+                        <h1 className="title">{props.hallName}</h1>
                     </Container>
                 </div>
             </div>

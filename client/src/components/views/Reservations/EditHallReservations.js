@@ -45,7 +45,6 @@ export const EditHallReservations = (props) => {
     const [email,setEmail] = useState('');
     const [contactNumber,setContactNumber] = useState('');
     const [hallName,setHallName] = useState('');
-    const [hallType,setHallType] = useState('');
     const [eventType, setEventType] = useState('');
     const [noOfGuests, setGuests] = useState('');
     const [arrivalDate, setArrivalDate] = useState('');
@@ -68,7 +67,6 @@ export const EditHallReservations = (props) => {
                 setEmail(data.email);
                 setContactNumber(data.contactNumber);
                 setHallName(data.hallName);
-                setHallType(data.hallType);
                 setEventType(data.eventType);
                 setGuests(data.noOfGuests);
                 setArrivalDate(data.arrivalDate);
@@ -97,9 +95,6 @@ export const EditHallReservations = (props) => {
         hallName: yup
             .string('Select hall name')
             .required('Hall Name is required'),
-        hallType: yup
-            .string('Select hall type')
-            .required('Hall Type is required'),
         eventType: yup
             .string('Select event type')
             .required('Event Type is required'),
@@ -123,7 +118,6 @@ export const EditHallReservations = (props) => {
             email: email,
             contactNumber: contactNumber,
             hallName: hallName,
-            hallType: hallType,
             eventType: eventType,
             noOfGuests: noOfGuests,
             arrivalDate: arrivalDate,
@@ -147,7 +141,6 @@ export const EditHallReservations = (props) => {
                 email: values.email,
                 contactNumber: values.contactNumber,
                 hallName: values.hallName,
-                hallType: values.hallType,
                 eventType: values.eventType,
                 noOfGuests: values.noOfGuests,
                 arrivalDate: values.arrivalDate,
@@ -276,25 +269,8 @@ export const EditHallReservations = (props) => {
                             helperText={formik.touched.hallName && formik.errors.hallName}
                             style={{'marginTop': '10px'}}
                         >
-                            <MenuItem value={'Ballroom'}>Ballroom</MenuItem>
-                            <MenuItem value={'Luxuryhall'}>Luxuryhall</MenuItem>
-                        </TextField>
-                        <InputLabel id="type">Hall Type</InputLabel>
-                        <TextField
-                            labelId="hallType"
-                            select
-                            id="hallType"
-                            name="hallType"
-                            autoWidth
-                            variant = 'outlined'
-                            value={formik.values.hallType}
-                            onChange={formik.handleChange}
-                            error={formik.touched.hallType && Boolean(formik.errors.hallType)}
-                            helperText={formik.touched.hallType && formik.errors.hallType}
-                            style={{'marginTop': '10px'}}
-                        >
-                            <MenuItem value={'Indoor'}>Indoor</MenuItem>
-                            <MenuItem value={'Outdoor'}>Outdoor</MenuItem>
+                            <MenuItem value={'Grand Ballroom'}>Grand Ballroom</MenuItem>
+                            <MenuItem value={'Imperial Ballroom'}>Imperial Ballroom</MenuItem>
                         </TextField>
                         <InputLabel id="type">Event Type</InputLabel>
                         <TextField

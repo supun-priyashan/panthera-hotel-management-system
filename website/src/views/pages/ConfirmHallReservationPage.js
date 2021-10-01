@@ -1,26 +1,18 @@
 import React, {Fragment, useEffect, useLayoutEffect, useState} from "react";
-import Datetime from "react-datetime";
 // reactstrap components
 import {
     Button,
     Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     Container,
     Row,
-    Col, FormGroup, Form, Card, CardHeader, CardTitle, CardBody, CardFooter,
+    Col, FormGroup,
 } from "reactstrap";
 
 // core components
-import LandingPageHeader from "components/Headers/LandingPageHeader.js";
-import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
-import ConfirmRoomReservationHeader from "../../components/Headers/ConfirmRoomReservationHeader";
-import {Link} from "react-router-dom";
 import {useHistory} from "react-router";
+import ColoredNavbar from "../../components/Navbars/ColoredNavbar";
 
 
 function ConfirmHallReservationPage() {
@@ -29,16 +21,28 @@ function ConfirmHallReservationPage() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState('');
+    const [arrival,setArrival] = useState('');
+    const [departure,setDeparture] = useState('');
+    const [eventType,setEventType] = useState('');
+    const [guests,setGuests] = useState('');
+
+    const [name,setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [image, setImage] = useState('');
+    const [id, setId] = useState('');
+
+    const [isLoading,setIsLoading] = useState(true);
 
 
     let data;
+    let dates = history.location.state;
 
     useLayoutEffect(() => {
         data = history.location.state;
         console.log("History", data);
     })
 
-    const [roomReservations,setRoomReservations] = useState([]);
+    const [hallReservations,setHallReservations] = useState([]);
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -53,10 +57,60 @@ function ConfirmHallReservationPage() {
     }, []);
 
     useEffect(() => {
+        console.log(dates)
+        axios.get('http://localhost:8080/halls/'+dates.id).
+        then((response) => {
+            if(response.data.success) {
 
+                console.log(response.data.hall);
+                const data = response.data.hall;
+
+                setName(data.hallName);
+                setPrice(data.price);
+                setImage(data.image);
+                setId(data._id);
+
+                setIsLoading(false);
+
+
+                console.log(name);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
     },[])
 
+    useEffect(() => {
+        console.log("History data" , dates);
+
+        console.log("data ", data);
+
+        //setTimeout(()=>{
+        setArrival(dates.arrival);
+        setDeparture(dates.departure);
+        setEventType(dates.eventType);
+        setGuests(dates.guests);
+        //},5000)
+
+        /*axios.get('http://localhost:8080/hallmReservations').
+        then((response) => {
+            if(response.data.success) {
+                console.log(response.data.hallReservations);
+
+                setHallReservations(response.data.hallReservations);
+                setTimeout(() => console.log(hallReservations.length),5000)
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })*/
+    },[])
+
+
     const onSubmit = (e) => {
+
         e.preventDefault();
         if(!firstName ){
             alert("Firstname is required");
@@ -64,16 +118,42 @@ function ConfirmHallReservationPage() {
             alert("LastName is required");
         }else if(!email){
             alert("Email is required");
-        }else if(!mobile){
+        }else if(!mobile) {
             alert("Mobile is required");
-        } else{
-            alert("Reservation success");
+        }else {
+
+            const hall = {
+                customerName: firstName + " " + lastName,
+                email: email,
+                contactNumber: mobile,
+                arrivalDate: arrival,
+                departureDate: departure,
+                noOfGuests: guests,
+                eventType: eventType,
+                hallName: name,
+            }
+
+            console.log(hall);
+
+            axios.post('http://localhost:8080/hallReservations', hall)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('Hall Reserved  Successfully')
+
+                    } else {
+                        alert('Failed to Reserve the Hall')
+                    }
+
+                }).catch(error => {
+                alert(error);
+            })
         }
+
     }
 
     return (
         <>
-            <IndexNavbar />
+            <ColoredNavbar />
             <div className="wrapper">
                 <div className="section section-team">
                     <Container>
@@ -108,17 +188,17 @@ function ConfirmHallReservationPage() {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>16-08-2021 / 16-08-2021</p>
+                                                        }}>{arrival} / {departure}</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Hall & Guests: Ballroom, 150 guests</p>
+                                                        }}>Hall & Guests: {name} hall, {guests} guest(s)</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Event Type: Wedding </p>
+                                                        }}>Event Type: {eventType} </p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -218,7 +298,7 @@ function ConfirmHallReservationPage() {
                                         <Fragment>
                                             <div className="card" style={{
                                                 width: "38rem",
-                                                height: "27rem",
+                                                height: "30rem",
                                                 margin: "10px",
 
                                             }} >
@@ -232,65 +312,43 @@ function ConfirmHallReservationPage() {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "black",
-                                                                }}>Hall Charges</p>
+                                                                }}>Total Charges</p>
                                                             </div>
                                                         </Col>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 1200,000.00</p>
+                                                                }}>LKR {price}</p>
                                                             </div>
                                                         </Col>
                                                     </Row>
-                                                    <br></br>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "black",
-                                                                }}>Service Charge and Tax</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "#404A45",
-                                                                }}>LKR 9350.75</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <hr></hr>
-                                                    <br></br>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "black",
-                                                                }}>Total Charge</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "#404A45",
-                                                                }}>LKR 1,209,350.75</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-
                                                     <br></br>
 
                                                     <Button
                                                         block
                                                         className="btn-round"
                                                         color="info"
-                                                        href="#pablo"
                                                         onClick={(e) => onSubmit(e)}
                                                         size="lg"
                                                     >
                                                         BOOK NOW
                                                     </Button>
+
+                                                    <br></br>
+                                                    <hr></hr>
+                                                    <br></br>
+                                                    <p className="category" style={{
+                                                        color: "black",
+                                                    }}>Cancellation Terms</p>
+
+                                                    <p className="description">
+                                                        Zero-refund: no refund after booking
+                                                    </p>
+                                                    <p className="description">
+                                                        This policy means that you will be reimbursed any payment that you have made if you cancel the reservation made
+                                                    </p>
+                                                    <p className="card-text"></p>
 
 
                                                 </div>

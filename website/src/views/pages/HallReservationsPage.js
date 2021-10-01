@@ -4,36 +4,40 @@ import React, {Fragment, useEffect, useState} from "react";
 import {
     Button,
     Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     Container,
     Row,
-    Col, FormGroup,
+    Col, FormGroup, Form,
 } from "reactstrap";
 
 // core components
-import LandingPageHeader from "components/Headers/LandingPageHeader.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import IndexHeader from "../../components/Headers/IndexHeader";
-import RoomsHeader from "../../components/Headers/HallReservationsHeader";
 import axios from "axios";
-import Datetime from "react-datetime";
 import HallReservationsHeader from "../../components/Headers/HallReservationsHeader";
 import {useHistory} from "react-router";
 
 function HallReservationPage() {
-    const [guests, setGuests] = useState('');
     const [eventType, setEventType] = useState('Party');
-    const [arrivalDate, setArrivalDate] = useState('');
+    const [arrival, setArrivalDate] = useState('');
     const [departureDate, setDepartureDate] = useState('');
 
     const [hallReservations,setHallReservations] = useState([]);
 
-    const [option,setOption] = useState()
+
+    const [name,setName] = useState('');
+    const [type,setType] = useState('');
+    const [space, setSpace] = useState('');
+    const [guests, setGuests] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [facilities, setFacilities] = useState([]);
+    const [image, setImage] = useState('');
+    const [id, setId] = useState('');
+
+    const [isLoading,setIsLoading] = useState(true);
 
     const history = useHistory();
+    let dates = history.location.state;
 
     useEffect(() => {
         document.body.classList.add("landing-page");
@@ -48,22 +52,40 @@ function HallReservationPage() {
     }, []);
 
     useEffect(() => {
+        console.log(dates)
+        axios.get('http://localhost:8080/halls/'+dates.hallId).
+        then((response) => {
+            if(response.data.success) {
+
+                console.log(response.data.hall);
+                const data = response.data.hall;
+
+                setName(data.hallName);
+                setType(data.type);
+                setSpace(data.space);
+                setPrice(data.price);
+                setDescription(data.description);
+                setFacilities(data.facilities);
+                setImage(data.image);
+                setId(data._id);
+
+                setIsLoading(false);
+
+
+                console.log(name);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
+
+    useEffect(() => {
         axios.get('http://localhost:8080/hallReservations').
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.hallReservations);
-                /*setRooms(response.data.rooms.map((item) => ({
-                    id: item._id,
-                    roomName: item.roomName,
-                    type: item.type,
-                    beds: item.beds,
-                    guests: item.guests,
-                    space: item.space,
-                    facilities: item.facilities,
-                    image: item.image,
-                    price: item.price,
-                    description: item.description,
-                })));*/
                 setHallReservations(response.data.hallReservations);
                 setTimeout(() => console.log(hallReservations.length),5000)
             } else{
@@ -75,23 +97,43 @@ function HallReservationPage() {
 
 
     function onSubmit(e) {
-
-        history.push({
-            pathname: '/confirm/halls',
-            state: {
-                arrival:arrivalDate,
-                departure:departureDate,
-                count:guests,
-                type: eventType,
-            } // your data array of objects
-        })
+        e.preventDefault();
+        if(!guests ){
+            alert("Guest count is required");
+        }else if(!eventType){
+            alert("Event Type is required");
+        }else if(!arrival){
+            alert("Arrival date is required");
+        }else if(!departureDate){
+            alert("Departure date is required");
+        } else {
+            console.log(arrival, "-", departureDate, "-", eventType, "-", guests);
+            history.push({
+                pathname: '/confirm/halls',
+                state: {
+                    id: id,
+                    name: name,
+                    arrival: arrival,
+                    departure: departureDate,
+                    guests: guests,
+                    eventType: eventType,
+                } // your data array of objects
+            })
+        }
     }
 
-    return (
+    return isLoading?(
         <>
             <IndexNavbar />
             <div className="wrapper">
-                <HallReservationsHeader />
+                <TransparentFooter/>
+            </div>
+        </>
+    ):(
+        <>
+            <IndexNavbar />
+            <div className="wrapper">
+                <HallReservationsHeader hallName={name} img={image}/>
                 <div className="section section-about-us">
                     <Container>
 
@@ -107,9 +149,7 @@ function HallReservationPage() {
                                         <p className="category">Colombo, Sri Lanka</p>
 
                                         <p className="description">
-                                            You can write here details about one of your team members.
-                                            You can give more details about what they do. Feel free to
-                                            add some links for people to be able to follow them outside the site.
+                                            {description}
                                         </p>
                                         <hr></hr>
                                         <h5 className="title">Supported Events</h5>
@@ -128,74 +168,27 @@ function HallReservationPage() {
                                         <hr/>
                                         <h5 className="title">Features</h5>
 
-                                        <Row>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Reception area</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Garden</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Car parking</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Projection</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Wifi</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Welcome drinks</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Smoking area</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Security personnel</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Air conditioning</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Handicap access</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Dance floor</p>
-                                                </div>
-                                            </Col>
-                                            <Col className="ml-auto mr-auto text-left" md="4">
-                                                <div className="team-player">
-                                                    <p>Open bar</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
+                                        {facilities.length > 0 && facilities.map((item,index)=>{
+                                            return(
+                                                <Row>
+                                                    <Col className="ml-auto mr-auto text-left" md="4">
+                                                        <div className="team-player">
+                                                            <p>{item}</p>
+                                                        </div>
+                                                    </Col>
+
+                                                    <Col className="ml-auto mr-auto text-left" md="4">
+                                                        <div className="team-player">
+                                                            <p>    </p>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+
+                                            )
+                                        })}
+
+
+
 
                                     </div>
                                 </Col>
@@ -209,12 +202,14 @@ function HallReservationPage() {
                                                 backgroundColor: "#F8FCFA",
                                             }} >
                                                 <div className="card-body">
-                                                    <h5 className="title">BOOK NOW FOR LKR 1,200,000.00</h5>
+                                                    <h5 className="title">BOOK NOW FOR LKR {price}</h5>
                                                     <br></br>
+
+                                                    <Form>
                                                     <Row>
                                                         <Col lg="6" sm="6">
                                                             <p className="category">Guest Count</p>
-                                                            <FormGroup>
+                                                            <div>
                                                                 <Input
                                                                     id="guests"
                                                                     name="guests"
@@ -224,17 +219,16 @@ function HallReservationPage() {
                                                                     onChange={(e) => {setGuests(e.target.value)}}
                                                                     inputProps={{ placeholder: "Guest Count" }}
                                                                 ></Input>
-                                                            </FormGroup>
+                                                            </div>
                                                         </Col>
                                                         <Col lg="6" sm="6">
                                                             <p className="category">Event Type</p>
 
-                                                            <FormGroup>
+                                                            <div>
                                                                 <Input
                                                                     id="eventType"
                                                                     name="eventType"
                                                                     label="Event Type"
-                                                                    defaultValue=""
                                                                     type="select"
                                                                     value={eventType}
                                                                     onChange={(e) => {setEventType(e.target.value)}}
@@ -243,7 +237,7 @@ function HallReservationPage() {
                                                                     <option value={"Wedding"}>Wedding</option>
                                                                     <option value={"Party"}>Party</option>
                                                                 </Input>
-                                                            </FormGroup>
+                                                            </div>
                                                         </Col>
                                                     </Row>
                                                     <p className="category">Pick dates to reveal packages</p>
@@ -251,13 +245,13 @@ function HallReservationPage() {
                                                         <Col lg="6" sm="6">
                                                                     <div className="datepicker-container">
                                                                         <FormGroup>
-                                                                            <Datetime
+                                                                            <Input
                                                                                 id="arrivalDate"
                                                                                 name="arrivalDate"
-                                                                                label="ArrivalDate"
-                                                                                value={arrivalDate}
-                                                                                onChange={(e)=>setArrivalDate(e._d)}
-                                                                                timeFormat={false}
+                                                                                label="Arrival Date"
+                                                                                type="date"
+                                                                                value={arrival}
+                                                                                onChange={(e)=>setArrivalDate(e.target.value)}
                                                                                 inputProps={{ placeholder: "ArrivalDate Picker" }}
                                                                             />
                                                                         </FormGroup>
@@ -268,13 +262,13 @@ function HallReservationPage() {
                                                                 <Col lg="6" sm="6">
                                                                     <div className="datepicker-container">
                                                                         <FormGroup>
-                                                                            <Datetime
+                                                                            <Input
                                                                                 id="departureDate"
                                                                                 name="departureDate"
-                                                                                label="DepartureDate"
-                                                                                timeFormat={false}
+                                                                                label="Departure Date"
+                                                                                type="date"
                                                                                 value={departureDate}
-                                                                                onChange={(e)=>setDepartureDate(e._d)}
+                                                                                onChange={(e)=>setDepartureDate(e.target.value)}
                                                                                 inputProps={{ placeholder: "DepatureDate Picker" }}
                                                                             />
                                                                         </FormGroup>
@@ -283,15 +277,15 @@ function HallReservationPage() {
                                                     </Row>
                                                     <br></br>
                                                     <Button
+                                                        type="submit"
                                                         block
                                                         className="btn-round"
                                                         color="info"
-                                                        href="#pablo"
-                                                        onClick={(e) => onSubmit(e)}
-                                                        size="lg"
-                                                    >
+                                                        onClick={onSubmit}
+                                                        size="lg">
                                                         BOOK NOW
                                                     </Button>
+                                                    </Form>
                                                     <br></br>
                                                     <hr></hr>
                                                     <br></br>
