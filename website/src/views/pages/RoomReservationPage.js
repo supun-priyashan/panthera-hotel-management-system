@@ -1,25 +1,17 @@
 import React, {Fragment, useEffect, useState} from "react";
-import Datetime from "react-datetime";
 // reactstrap components
 import {
     Button,
     Input,
     Form,
-    Label,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     Container,
     Row,
     Col,
-    FormGroup,
 } from "reactstrap";
 
 // core components
-import LandingPageHeader from "components/Headers/LandingPageHeader.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
 import RoomReservationsHeader from "../../components/Headers/RoomReservationsHeader";
 import {useHistory} from "react-router";
@@ -99,18 +91,6 @@ function RoomReservationPage(props) {
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.roomReservations);
-                /*setRooms(response.data.rooms.map((item) => ({
-                    id: item._id,
-                    roomName: item.roomName,
-                    type: item.type,
-                    beds: item.beds,
-                    guests: item.guests,
-                    space: item.space,
-                    facilities: item.facilities,
-                    image: item.image,
-                    price: item.price,
-                    description: item.description,
-                })));*/
                 setRoomReservations(response.data.roomReservations);
                 setTimeout(() => console.log(roomReservations.length),5000)
             } else{
@@ -125,6 +105,7 @@ function RoomReservationPage(props) {
         history.push({
             pathname: '/confirm/rooms',
             state: {
+                id:id,
                 arrival:arrival,
                 departure:departureDate,
                 beds:bookedBeds,
@@ -174,7 +155,6 @@ function RoomReservationPage(props) {
                                                         onChange={(e)=>setArrivalDate(e.target.value)}
                                                         inputProps={{ placeholder: "ArrivalDate Picker" }}
                                                     />
-                                                    {/*<Input id="inputEmail4" placeholder="Email" type="email"></Input>*/}
                                                 </div>
                                                 <div className="col-md-6">
                                                     <label htmlFor="inputPassword4">Depature Date</label>
@@ -187,11 +167,6 @@ function RoomReservationPage(props) {
                                                         onChange={(e)=>setDepartureDate(e.target.value)}
                                                         inputProps={{ placeholder: "DepatureDate Picker" }}
                                                     />
-                                                    {/*<Input*/}
-                                                    {/*    id="inputPassword4"*/}
-                                                    {/*    placeholder="Password"*/}
-                                                    {/*    type="password"*/}
-                                                    {/*></Input>*/}
                                                 </div>
                                                 <div className="col-md-6">
                                                     <label htmlFor="inputPassword4">Beds</label>
@@ -222,7 +197,6 @@ function RoomReservationPage(props) {
                                                 block
                                                 className="btn-round"
                                                 color="info"
-                                                href="#pablo"
                                                 onClick={onSubmit}
                                                 size="lg">
                                                 BOOK NOW

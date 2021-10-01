@@ -1,26 +1,16 @@
 import React, {Fragment, useEffect, useState} from "react";
-import Datetime from "react-datetime";
 // reactstrap components
 import {
     Button,
     Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     Container,
     Row,
-    Label,
-    Col, FormGroup, Form, Card, CardHeader, CardTitle, CardBody, CardFooter,
+    Col, Form,
 } from "reactstrap";
 
 // core components
-import LandingPageHeader from "components/Headers/LandingPageHeader.js";
-import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
-import ConfirmRoomReservationHeader from "../../components/Headers/ConfirmRoomReservationHeader";
-import {Link} from "react-router-dom";
 import {useHistory, useLocation} from "react-router";
 import ColoredNavbar from "../../components/Navbars/ColoredNavbar";
 
@@ -42,7 +32,6 @@ function ConfirmRoomReservationPage(props) {
     const [name,setName] = useState('');
 
     const [price, setPrice] = useState('');
-    const [image, setImage] = useState('');
     const [id, setId] = useState('');
 
     const [isLoading,setIsLoading] = useState(true);
@@ -67,8 +56,8 @@ function ConfirmRoomReservationPage(props) {
     let data = useLocation();
 
     useEffect(() => {
-        console.log(dates)
-        axios.get('http://localhost:8080/rooms/'+dates.roomId).
+        console.log(data.state.id)
+        axios.get('http://localhost:8080/rooms/'+data.state.id).
         then((response) => {
             if(response.data.success) {
 
@@ -78,13 +67,11 @@ function ConfirmRoomReservationPage(props) {
                 setName(data.roomName);
                 setBeds(data.beds);
                 setPrice(data.price);
-                setImage(data.image);
                 setId(data._id);
 
                 setIsLoading(false);
 
-
-                console.log(name);
+                console.log("responseeee ",response);
 
             } else{
                 alert('An error occurred while retrieving data');
@@ -109,18 +96,6 @@ function ConfirmRoomReservationPage(props) {
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.roomReservations);
-                /*setRooms(response.data.rooms.map((item) => ({
-                    id: item._id,
-                    roomName: item.roomName,
-                    type: item.type,
-                    beds: item.beds,
-                    guests: item.guests,
-                    space: item.space,
-                    facilities: item.facilities,
-                    image: item.image,
-                    price: item.price,
-                    description: item.description,
-                })));*/
                 setRoomReservations(response.data.roomReservations);
                 setTimeout(() => console.log(roomReservations.length),5000)
             } else{
@@ -130,49 +105,47 @@ function ConfirmRoomReservationPage(props) {
         })
     },[])
 
-    // const onSubmit = (e) => {
-    //     e.preventDefault();
-    //     if(!firstName ){
-    //         alert("Firstname is required");
-    //     }else if(!lastName){
-    //         alert("LastName is required");
-    //     }else if(!email){
-    //         alert("Email is required");
-    //     }else if(!mobile){
-    //         alert("Mobile is required");
-    //     } else{
-    //         alert("Reservation success");
-    //     }
-    // }
 
     const onSubmit = (e) => {
 
-        const room = {
-            customerName: firstName + " " + lastName,
-            email: email,
-            contactNumber: mobile,
-            arrivalDate: arrival,
-            departureDate: departure,
-            noOfBeds: beds,
-            noOfGuests: guests,
-            roomName: 'deluxe double'
+        e.preventDefault();
+        if(!firstName ){
+            alert("Firstname is required");
+        }else if(!lastName){
+            alert("LastName is required");
+        }else if(!email){
+            alert("Email is required");
+        }else if(!mobile){
+            alert("Mobile is required");
+        } else {
+
+            const room = {
+                customerName: firstName + " " + lastName,
+                email: email,
+                contactNumber: mobile,
+                arrivalDate: arrival,
+                departureDate: departure,
+                noOfBeds: beds,
+                noOfGuests: guests,
+                roomName: 'deluxe double'
+            }
+
+            console.log(room);
+
+            axios.post('http://localhost:8080/roomReservations', room)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('Room Reserved  Successfully')
+
+                    } else {
+                        alert('Failed to Reserve the Room')
+                    }
+
+                }).catch(error => {
+                alert(error);
+            })
+
         }
-
-        console.log(room);
-
-        axios.post('http://localhost:8080/roomReservations',room)
-            .then(response => {
-                if (response.data.success) {
-                    alert('Room Reserved  Successfully')
-
-                } else {
-                    alert('Failed to Reserve the Room')
-                }
-
-            }).catch(error => {
-            alert(error);
-        })
-
     }
 
     return (
@@ -222,7 +195,7 @@ function ConfirmRoomReservationPage(props) {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Room Type: {name}</p>
+                                                        }}>Room Name: {name}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -346,47 +319,16 @@ function ConfirmRoomReservationPage(props) {
                                                         block
                                                         className="btn-round"
                                                         color="info"
-                                                        href="#pablo"
                                                         onClick={(e) => onSubmit(e)}
                                                         size="lg"
                                                     >
                                                         Confirm Room
                                                     </Button>
                                                     <br></br>
-                                                    {/*<Row>*/}
-                                                    {/*    <Col className="ml-auto mr-auto text-left" md="4">*/}
-                                                    {/*        <div className="team-player">*/}
-                                                    {/*            <p className="category" style={{*/}
-                                                    {/*                color: "black",*/}
-                                                    {/*            }}>Service Charge and Tax</p>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </Col>*/}
-                                                    {/*    <Col className="ml-auto mr-auto text-left" md="4">*/}
-                                                    {/*        <div className="team-player">*/}
-                                                    {/*            <p className="category" style={{*/}
-                                                    {/*                color: "#404A45",*/}
-                                                    {/*            }}>LKR 6350.75</p>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </Col>*/}
-                                                    {/*</Row>*/}
+
                                                     <hr></hr>
                                                     <br></br>
-                                                    {/*<Row>*/}
-                                                    {/*    <Col className="ml-auto mr-auto text-left" md="4">*/}
-                                                    {/*        <div className="team-player">*/}
-                                                    {/*            <p className="category" style={{*/}
-                                                    {/*                color: "black",*/}
-                                                    {/*            }}>Total Charge</p>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </Col>*/}
-                                                    {/*    <Col className="ml-auto mr-auto text-left" md="4">*/}
-                                                    {/*        <div className="team-player">*/}
-                                                    {/*            <p className="category" style={{*/}
-                                                    {/*                color: "#404A45",*/}
-                                                    {/*            }}>LKR 68,273.95</p>*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </Col>*/}
-                                                    {/*</Row>*/}
+
                                                     <p className="category" style={{
                                                         color: "black",
                                                     }}>Cancellation Terms</p>

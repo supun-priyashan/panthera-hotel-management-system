@@ -4,22 +4,15 @@ import React, {Fragment, useEffect, useState} from "react";
 import {
     Button,
     Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     Container,
     Row,
     Col, FormGroup, Form,
 } from "reactstrap";
 
 // core components
-import LandingPageHeader from "components/Headers/LandingPageHeader.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import IndexHeader from "../../components/Headers/IndexHeader";
-import RoomsHeader from "../../components/Headers/HallReservationsHeader";
 import axios from "axios";
-import Datetime from "react-datetime";
 import HallReservationsHeader from "../../components/Headers/HallReservationsHeader";
 import {useHistory} from "react-router";
 
@@ -30,12 +23,6 @@ function HallReservationPage() {
 
     const [hallReservations,setHallReservations] = useState([]);
 
-    const [option,setOption] = useState()
-
-    const [bookedGuests, setBookedGuests] = useState('');
-
-
-    const [roomReservations,setRoomReservations] = useState([]);
 
     const [name,setName] = useState('');
     const [type,setType] = useState('');
@@ -76,7 +63,6 @@ function HallReservationPage() {
                 setName(data.hallName);
                 setType(data.type);
                 setSpace(data.space);
-                setGuests(data.guests);
                 setPrice(data.price);
                 setDescription(data.description);
                 setFacilities(data.facilities);
@@ -100,18 +86,6 @@ function HallReservationPage() {
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.hallReservations);
-                /*setRooms(response.data.rooms.map((item) => ({
-                    id: item._id,
-                    roomName: item.roomName,
-                    type: item.type,
-                    beds: item.beds,
-                    guests: item.guests,
-                    space: item.space,
-                    facilities: item.facilities,
-                    image: item.image,
-                    price: item.price,
-                    description: item.description,
-                })));*/
                 setHallReservations(response.data.hallReservations);
                 setTimeout(() => console.log(hallReservations.length),5000)
             } else{
@@ -127,6 +101,8 @@ function HallReservationPage() {
         history.push({
             pathname: '/confirm/halls',
             state: {
+                id:id,
+                name:name,
                 arrival:arrival,
                 departure:departureDate,
                 guests:guests,
@@ -218,80 +194,6 @@ function HallReservationPage() {
                                                     <h5 className="title">BOOK NOW FOR LKR {price}</h5>
                                                     <br></br>
 
-                                                    {/*<Form>*/}
-                                                    {/*    <div className="form-row">*/}
-                                                    {/*        <div className="col-md-6">*/}
-                                                    {/*            <label htmlFor="inputEmail4">Guest Count</label>*/}
-                                                    {/*            <Input*/}
-                                                    {/*                id="guests"*/}
-                                                    {/*                name="guests"*/}
-                                                    {/*                label="Guest Count"*/}
-                                                    {/*                type="number"*/}
-                                                    {/*                value={guests}*/}
-                                                    {/*                onChange={(e) => {setGuests(e.target.value)}}*/}
-                                                    {/*                inputProps={{ placeholder: "Guest Count" }}*/}
-                                                    {/*            ></Input>*/}
-                                                    {/*            /!*<Input id="inputEmail4" placeholder="Email" type="email"></Input>*!/*/}
-                                                    {/*        </div>*/}
-                                                    {/*        <div className="col-md-6">*/}
-                                                    {/*            <label htmlFor="inputPassword4">Event Type</label>*/}
-                                                    {/*            <Input*/}
-                                                    {/*                id="eventType"*/}
-                                                    {/*                name="eventType"*/}
-                                                    {/*                label="Event Type"*/}
-                                                    {/*                defaultValue=""*/}
-                                                    {/*                type="select"*/}
-                                                    {/*                value={eventType}*/}
-                                                    {/*                onChange={(e) => {setEventType(e.target.value)}}*/}
-                                                    {/*                inputProps={{ placeholder: "Event Type" }}*/}
-                                                    {/*            >*/}
-                                                    {/*                <option value={"Wedding"}>Wedding</option>*/}
-                                                    {/*                <option value={"Party"}>Party</option>*/}
-                                                    {/*            </Input>*/}
-                                                    {/*            /!*<Input*!/*/}
-                                                    {/*            /!*    id="inputPassword4"*!/*/}
-                                                    {/*            /!*    placeholder="Password"*!/*/}
-                                                    {/*            /!*    type="password"*!/*/}
-                                                    {/*            /!*></Input>*!/*/}
-                                                    {/*        </div>*/}
-                                                    {/*        <div className="col-md-6">*/}
-                                                    {/*            <col>*/}
-                                                    {/*            <label htmlFor="inputPassword4">Pick dates to reveal packages</label>*/}
-                                                    {/*            <Input*/}
-                                                    {/*                id="arrivalDate"*/}
-                                                    {/*                name="arrivalDate"*/}
-                                                    {/*                label="Arrival Date"*/}
-                                                    {/*                type="date"*/}
-                                                    {/*                value={arrivalDate}*/}
-                                                    {/*                onChange={(e)=>setArrivalDate(e.target.value)}*/}
-                                                    {/*                inputProps={{ placeholder: "ArrivalDate Picker" }}*/}
-                                                    {/*            />*/}
-
-                                                    {/*        </div>*/}
-                                                    {/*        <div className="col-md-6">*/}
-                                                    {/*            <Input*/}
-                                                    {/*                id="departureDate"*/}
-                                                    {/*                name="departureDate"*/}
-                                                    {/*                label="Departure Date"*/}
-                                                    {/*                type="date"*/}
-                                                    {/*                value={departureDate}*/}
-                                                    {/*                onChange={(e)=>setDepartureDate(e.target.value)}*/}
-                                                    {/*                inputProps={{ placeholder: "DepatureDate Picker" }}*/}
-                                                    {/*            />*/}
-                                                    {/*        </div>*/}
-                                                    {/*    </div>*/}
-                                                    {/*    <Button*/}
-                                                    {/*        type="submit"*/}
-                                                    {/*        block*/}
-                                                    {/*        className="btn-round"*/}
-                                                    {/*        color="info"*/}
-                                                    {/*        href="#pablo"*/}
-                                                    {/*        onClick={onSubmit}*/}
-                                                    {/*        size="lg">*/}
-                                                    {/*        BOOK NOW*/}
-                                                    {/*    </Button>*/}
-                                                    {/*</Form>*/}
-
                                                     <Form>
                                                     <Row>
                                                         <Col lg="6" sm="6">
@@ -368,7 +270,6 @@ function HallReservationPage() {
                                                         block
                                                         className="btn-round"
                                                         color="info"
-                                                        href="#pablo"
                                                         onClick={onSubmit}
                                                         size="lg">
                                                         BOOK NOW

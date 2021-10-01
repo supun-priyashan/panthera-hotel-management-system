@@ -273,7 +273,7 @@ export const EditRoomReservations = (props) => {
                             helperText={formik.touched.roomName && formik.errors.roomName}
                             style={{'marginTop': '10px'}}
                         >
-                            <MenuItem value={'Deluxe double room'}>Deluxe double room</MenuItem>
+                            <MenuItem value={'deluxe double'}>deluxe double</MenuItem>
                             <MenuItem value={'Luxury triple room'}>Luxury triple room</MenuItem>
                         </TextField>
                         <TextField

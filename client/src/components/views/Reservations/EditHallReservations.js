@@ -269,8 +269,8 @@ export const EditHallReservations = (props) => {
                             helperText={formik.touched.hallName && formik.errors.hallName}
                             style={{'marginTop': '10px'}}
                         >
-                            <MenuItem value={'Ballroom'}>Ballroom</MenuItem>
-                            <MenuItem value={'Luxuryhall'}>Luxuryhall</MenuItem>
+                            <MenuItem value={'Grand Ballroom'}>Grand Ballroom</MenuItem>
+                            <MenuItem value={'Imperial Ballroom'}>Imperial Ballroom</MenuItem>
                         </TextField>
                         <InputLabel id="type">Event Type</InputLabel>
                         <TextField
