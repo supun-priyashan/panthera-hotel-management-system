@@ -1,27 +1,18 @@
 import React, {Fragment, useEffect, useState} from "react";
-import Datetime from "react-datetime";
 // reactstrap components
 import {
     Button,
     Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
     Container,
     Row,
-    Label,
-    Col, FormGroup, Form, Card, CardHeader, CardTitle, CardBody, CardFooter,
+    Col, Form,
 } from "reactstrap";
 
 // core components
-import LandingPageHeader from "components/Headers/LandingPageHeader.js";
-import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import IndexHeader from "../../components/Headers/IndexHeader";
 import axios from "axios";
-import ConfirmRoomReservationHeader from "../../components/Headers/ConfirmRoomReservationHeader";
-import {Link} from "react-router-dom";
-import {useHistory} from "react-router";
+import {useHistory, useLocation} from "react-router";
+import ColoredNavbar from "../../components/Navbars/ColoredNavbar";
 
 
 function ConfirmRoomReservationPage(props) {
@@ -30,8 +21,22 @@ function ConfirmRoomReservationPage(props) {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState('');
+    const [arrival,setArrival] = useState('');
+    const [departure,setDeparture] = useState('');
+    const [beds,setBeds] = useState('');
+    const [guests,setGuests] = useState('');
 
-    const dates = history.location.state;
+
+
+
+    const [name,setName] = useState('');
+
+    const [price, setPrice] = useState('');
+    const [id, setId] = useState('');
+
+    const [isLoading,setIsLoading] = useState(true);
+
+    let dates = history.location.state;
 
     const [roomReservations,setRoomReservations] = useState([]);
 
@@ -47,23 +52,50 @@ function ConfirmRoomReservationPage(props) {
         };
     }, []);
 
+
+    let data = useLocation();
+
     useEffect(() => {
+        console.log(data.state.id)
+        axios.get('http://localhost:8080/rooms/'+data.state.id).
+        then((response) => {
+            if(response.data.success) {
+
+                console.log(response.data.room);
+                const data = response.data.room;
+
+                setName(data.name);
+                setBeds(data.beds);
+                setPrice(data.price);
+                setId(data._id);
+
+                setIsLoading(false);
+
+                console.log("responseeee ",response);
+
+            } else{
+                alert('An error occurred while retrieving data');
+                console.log(response.data.error);
+            }
+        })
+    },[])
+
+    useEffect(() => {
+        console.log("History data" , dates);
+
+        console.log("data ", data);
+
+        //setTimeout(()=>{
+        setArrival(dates.arrival);
+        setDeparture(dates.departure);
+        setBeds(dates.beds);
+        setGuests(dates.guests);
+        //},5000)
+
         axios.get('http://localhost:8080/roomReservations').
         then((response) => {
             if(response.data.success) {
                 console.log(response.data.roomReservations);
-                /*setRooms(response.data.rooms.map((item) => ({
-                    id: item._id,
-                    roomName: item.roomName,
-                    type: item.type,
-                    beds: item.beds,
-                    guests: item.guests,
-                    space: item.space,
-                    facilities: item.facilities,
-                    image: item.image,
-                    price: item.price,
-                    description: item.description,
-                })));*/
                 setRoomReservations(response.data.roomReservations);
                 setTimeout(() => console.log(roomReservations.length),5000)
             } else{
@@ -73,7 +105,9 @@ function ConfirmRoomReservationPage(props) {
         })
     },[])
 
+
     const onSubmit = (e) => {
+
         e.preventDefault();
         if(!firstName ){
             alert("Firstname is required");
@@ -83,14 +117,40 @@ function ConfirmRoomReservationPage(props) {
             alert("Email is required");
         }else if(!mobile){
             alert("Mobile is required");
-        } else{
-            alert("Reservation success");
+        } else {
+
+            const room = {
+                customerName: firstName + " " + lastName,
+                email: email,
+                contactNumber: mobile,
+                arrivalDate: arrival,
+                departureDate: departure,
+                noOfBeds: beds,
+                noOfGuests: guests,
+                roomName: name,
+            }
+
+            console.log(room);
+
+            axios.post('http://localhost:8080/roomReservations', room)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('Room Reserved  Successfully')
+
+                    } else {
+                        alert('Failed to Reserve the Room')
+                    }
+
+                }).catch(error => {
+                alert(error);
+            })
+
         }
     }
 
     return (
         <>
-            <IndexNavbar />
+            <ColoredNavbar />
             <div className="wrapper">
                 <div className="section section-team">
                     <Container>
@@ -125,17 +185,17 @@ function ConfirmRoomReservationPage(props) {
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>16-08-2021 / 18-08-2021</p>
+                                                        }}>{arrival} / {departure}</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Beds & Guests: 1 bed, 2 Adults, 0 Children</p>
+                                                        }}>Beds & Guests: {beds} bed(s), {guests} guest(s)</p>
                                                     </div>
                                                     <div className="team-player">
                                                         <p className="category" style={{
                                                             color: "#404A45",
-                                                        }}>Room Type: DELUXE DOUBLE ROOM</p>
+                                                        }}>Room Name: {name}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -159,55 +219,63 @@ function ConfirmRoomReservationPage(props) {
                                             <Form>
                                                 <br></br>
                                                 <div className="form-row">
-                                                    <FormGroup className="col-md-6">
+                                                    <div className="col-md-6">
                                                         <label htmlFor="inputEmail4">First Name</label>
                                                         <Input
                                                             id="firstName"
                                                             placeholder="First Name"
                                                             name="firstName"
                                                             label="First Name"
-                                                            defaultValue=""
                                                             type="text"
+                                                            value={firstName}
+                                                            onChange={(e)=>setFirstName(e.target.value)}
+                                                            inputProps={{ placeholder: "First Name" }}
                                                         ></Input>
-                                                    </FormGroup>
+                                                    </div>
                                                     <br></br>
-                                                    <FormGroup className="col-md-6">
+                                                    <div className="col-md-6">
                                                         <label htmlFor="inputPassword4">Last Name</label>
                                                         <Input
                                                             id="lastName"
                                                             placeholder="Last Name"
                                                             name="lastName"
                                                             label="Last Name"
-                                                            defaultValue=""
                                                             type="text"
+                                                            value={lastName}
+                                                            onChange={(e)=>setLastName(e.target.value)}
+                                                            inputProps={{ placeholder: "Last Name" }}
                                                         ></Input>
-                                                    </FormGroup>
+                                                    </div>
                                                 </div>
                                                 <br></br>
                                                 <br></br>
-                                                <FormGroup>
+                                                <div>
                                                     <label htmlFor="inputAddress">Email</label>
                                                     <Input
                                                         id="email"
                                                         placeholder="Email"
                                                         name="email"
-                                                        label="e-mail"
-                                                        defaultValue=""
+                                                        label="E-mail"
                                                         type="text"
+                                                        value={email}
+                                                        onChange={(e)=>setEmail(e.target.value)}
+                                                        inputProps={{ placeholder: "Email" }}
                                                     ></Input>
-                                                </FormGroup>
+                                                </div>
                                                 <br></br>
                                                 <br></br>
-                                                <FormGroup>
+                                                <div>
                                                     <label htmlFor="inputAddress2">Mobile</label>
                                                     <Input
                                                         id="mobile"
                                                         name="mobile"
                                                         placeholder="Mobile"
-                                                        defaultValue=""
                                                         type="number"
+                                                        value={mobile}
+                                                        onChange={(e)=>setMobile(e.target.value)}
+                                                        inputProps={{ placeholder: "Mobile" }}
                                                     ></Input>
-                                                </FormGroup>
+                                                </div>
                                             </Form>
 
                                         </Container>
@@ -221,7 +289,7 @@ function ConfirmRoomReservationPage(props) {
                                         <Fragment>
                                             <div className="card" style={{
                                                 width: "38rem",
-                                                height: "27rem",
+                                                height: "30rem",
                                                 margin: "10px",
 
                                             }} >
@@ -235,65 +303,45 @@ function ConfirmRoomReservationPage(props) {
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "black",
-                                                                }}>Room Charges</p>
+                                                                }}>Total Charges</p>
                                                             </div>
                                                         </Col>
                                                         <Col className="ml-auto mr-auto text-left" md="4">
                                                             <div className="team-player">
                                                                 <p className="category" style={{
                                                                     color: "#404A45",
-                                                                }}>LKR 61,923.20</p>
+                                                                }}>LKR {price}</p>
                                                             </div>
                                                         </Col>
                                                     </Row>
                                                     <br></br>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "black",
-                                                                }}>Service Charge and Tax</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "#404A45",
-                                                                }}>LKR 6350.75</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                    <hr></hr>
-                                                    <br></br>
-                                                    <Row>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "black",
-                                                                }}>Total Charge</p>
-                                                            </div>
-                                                        </Col>
-                                                        <Col className="ml-auto mr-auto text-left" md="4">
-                                                            <div className="team-player">
-                                                                <p className="category" style={{
-                                                                    color: "#404A45",
-                                                                }}>LKR 68,273.95</p>
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-
-                                                    <br></br>
-
                                                     <Button
                                                         block
                                                         className="btn-round"
                                                         color="info"
-                                                        href="#pablo"
                                                         onClick={(e) => onSubmit(e)}
                                                         size="lg"
                                                     >
                                                         Confirm Room
                                                     </Button>
+                                                    <br></br>
+
+                                                    <hr></hr>
+                                                    <br></br>
+
+                                                    <p className="category" style={{
+                                                        color: "black",
+                                                    }}>Cancellation Terms</p>
+
+                                                    <p className="description">
+                                                        Zero-refund: no refund after booking
+                                                    </p>
+                                                    <p className="description">
+                                                        This policy means that you will be reimbursed any payment that you have made if you cancel the reservation made
+                                                    </p>
+                                                    <p className="card-text"></p>
+
+
 
 
                                                 </div>

@@ -22,7 +22,7 @@ export const Employees = () => {
                     gender: item.gender,
                     dateOfBirth: item.dateOfBirth,
                     permanentAddress: item.permanentAddress,
-                    nationalId: item.nationalId,
+                    nationalID: item.nationalID,
                     phoneNumber: item.phoneNumber,
                     email: item.email,
 
@@ -34,6 +34,50 @@ export const Employees = () => {
             }
         })
     },[])
+
+    const deleteEmployee = async (props) => {
+
+        console.log(props.data.id);
+
+        const id = props.data.id;
+
+        await axios.delete('http://localhost:8080/employees/' + id).
+        then((response) => {
+            if(response.data.success){
+                alert("Employee Successfully deleted.");
+
+                axios.get('http://localhost:8080/employees').
+                then((response) => {
+                    if(response.data.success) {
+                        console.log(response.data.employees);
+                        setEmployees(response.data.employees.map((item) => ({
+                            id:item._id,
+                            employeeName: item.employeeName,
+                            type: item.type,
+                            gender: item.gender,
+                            dateOfBirth: item.dateOfBirth,
+                            permanentAddress: item.permanentAddress,
+                            nationalID: item.nationalID,
+                            phoneNumber: item.phoneNumber,
+                            email: item.email,
+
+                        })));
+                    } else{
+                        alert('An error occurred while retrieving data');
+                        console.log(response.data.error);
+                    }
+                })
+
+            }else {
+                alert('An error happened');
+                console.log(response.data.error);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+
+
+    }
 
     return (
         <div className={'content'}>
@@ -51,7 +95,7 @@ export const Employees = () => {
                             { title: 'Gender', field: 'gender' },
                             { title: 'DateOfBirth', field: 'dateOfBirth' },
                             { title: 'PermanentAddress', field: 'permanentAddress' },
-                            { title: 'NationalID', field: 'nationalId' },
+                            { title: 'NationalID', field: 'nationalID' },
                             { title: 'PhoneNumber', field: 'phoneNumber' },
                             { title: 'Email', field: 'email' },
 
@@ -84,15 +128,22 @@ export const Employees = () => {
                             Container: props => <Paper {...props} elevation={0}/>,
                             Action:
                                 props => {
-                                    if(props.action.icon === 'edit'){
-                                        return(
+                                    if (props.action.icon === 'edit') {
+                                        return (
                                             <button
                                                 class="MuiButtonBase-root
                                                 MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
                                                 title="Edit User"
-                                                onClick={(event, rowData) => alert("You edited " + props.data.name)}
+                                                onClick={(event, rowData) => {
+                                                    history.push({
+                                                        pathname: '/employees/edit-employee/' + props.data.id,
+                                                        state: props.data
+                                                    });
+                                                    console.log(props.data);
+                                                }
+                                                }
                                             >
                                                 <span class="MuiIconButton-label">
                                                     <span class="material-icons MuiIcon-root"
@@ -104,14 +155,16 @@ export const Employees = () => {
                                             </button>
                                         )
                                     }
-                                    if(props.action.icon === 'delete'){
-                                        return(
+                                    if (props.action.icon === 'delete') {
+                                        return (
+
                                             <button
                                                 class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
                                                 tabindex="0"
                                                 type="button"
                                                 title="Delete User"
-                                                onClick={(event, rowData) => alert("You deleted " + props.data.name)}
+                                                onClick={(event, rowData) => deleteEmployee(props)
+                                                }
                                             >
                                                 <span
                                                     class="MuiIconButton-label">
@@ -124,8 +177,8 @@ export const Employees = () => {
                                             </button>
                                         )
                                     }
-                                    if(props.action.icon === 'add_box'){
-                                        return(
+                                    if (props.action.icon === 'add_box') {
+                                        return (
                                             <Button
                                                 onClick={(event) => history.push('/employees/add-employee/')}
                                                 variant="contained"
@@ -137,17 +190,19 @@ export const Employees = () => {
                                                     borderRadius: 35,
                                                     backgroundColor: '#5a2360',
                                                     fontFamily: 'Roboto',
-                                                    color:'white',
-                                                }}
+                                                    color: 'white',                         
+                                                          }}
                                                 size="medium"
                                             >
                                                 Add an Employee
                                             </Button>
                                         )
                                     }
-                                }
 
-                        }}
+
+                                }
+                        }
+                        }
 
                         options={{
                             actionsColumnIndex: -1,
@@ -165,4 +220,6 @@ export const Employees = () => {
         </div>
     );
 };
+
+
 

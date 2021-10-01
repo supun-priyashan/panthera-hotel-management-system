@@ -5,15 +5,18 @@ import { Button, Container } from "reactstrap";
 
 // core components
 
-function RoomReservationsHeader() {
+function RoomReservationsHeader(props) {
     let pageHeader = React.createRef();
 
     React.useEffect(() => {
         if (window.innerWidth > 991) {
             const updateScroll = () => {
                 let windowScrollTop = window.pageYOffset / 3;
-                pageHeader.current.style.transform =
-                    "translate3d(0," + windowScrollTop + "px,0)";
+                if(pageHeader.current)
+                {
+                    pageHeader.current.style.transform =
+                        "translate3d(0," + windowScrollTop + "px,0)";
+                }
             };
             window.addEventListener("scroll", updateScroll);
             return function cleanup() {
@@ -35,7 +38,7 @@ function RoomReservationsHeader() {
 
                 <div className="content-center">
                     <Container>
-                        <h1 className="title">DELUXE DOUBLE ROOM</h1>
+                        <h1 className="title">{props.roomName}</h1>
                     </Container>
                 </div>
                 {/*<Container>

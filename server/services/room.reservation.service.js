@@ -24,8 +24,11 @@ const addRoomReservation = async (request, response) => {
 
     const roomReservation = new RoomReservation(request.body);
 
+    console.log(roomReservation);
+
     await roomReservation.save((error, data) => {
         if(error){
+            console.log(error.message);
             response.status(500).json({ error: error.message });
         }
         else{
