@@ -118,7 +118,7 @@ function ColoredNavbar() {
               </NavItem>
               <NavItem>
                 <NavLink
-                    to="/#" tag={Link}
+                    to="/aboutUs" tag={Link}
                 >
                   <p>About</p>
                 </NavLink>
