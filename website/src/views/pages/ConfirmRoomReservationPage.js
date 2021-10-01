@@ -127,7 +127,7 @@ function ConfirmRoomReservationPage(props) {
                 departureDate: departure,
                 noOfBeds: beds,
                 noOfGuests: guests,
-                roomName: 'deluxe double'
+                roomName: name,
             }
 
             console.log(room);

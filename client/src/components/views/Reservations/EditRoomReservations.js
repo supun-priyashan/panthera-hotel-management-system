@@ -274,7 +274,7 @@ export const EditRoomReservations = (props) => {
                             style={{'marginTop': '10px'}}
                         >
                             <MenuItem value={'deluxe double'}>deluxe double</MenuItem>
-                            <MenuItem value={'Luxury triple room'}>Luxury triple room</MenuItem>
+                            <MenuItem value={'Florence'}>Florence</MenuItem>
                         </TextField>
                         <TextField
                             fullWidth
