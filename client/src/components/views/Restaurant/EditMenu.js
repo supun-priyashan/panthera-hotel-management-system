@@ -44,8 +44,8 @@ export const EditMenu = (props) => {
     const [price,setPrice] = useState('');
     const [restaurantType,setRestaurantType] = useState('');
     const [description,setDescription] = useState('');
-    /*const [roomType,setRoomType] = useState('');
-    const [noOfBeds, setBeds] = useState('');
+    const [image,setImage] = useState('');
+    /*const [noOfBeds, setBeds] = useState('');
     const [noOfGuests, setGuests] = useState('');
     const [arrivalDate, setArrivalDate] = useState('');
     const [departureDate, setDepartureDate] = useState('');*/
@@ -67,8 +67,8 @@ export const EditMenu = (props) => {
                 setPrice(data.price);
                 setRestaurantType(data.restaurantType);
                 setDescription(data.description);
-                /*setRoomType(data.roomType);
-                setBeds(data.noOfBeds);
+                setImage(data.image);
+                /*setBeds(data.noOfBeds);
                 setGuests(data.noOfGuests);
                 setArrivalDate(data.arrivalDate);
                 setDepartureDate(data.departureDate);*/
@@ -105,7 +105,7 @@ export const EditMenu = (props) => {
             price: price,
             restaurantType: restaurantType,
             description:description,
-            //image: null,
+            imageFile:image,
         },
         enableReinitialize: true,
         validationSchema: validationSchema,
@@ -125,7 +125,7 @@ export const EditMenu = (props) => {
                 price: values.price,
                 restaurantType: values.restaurantType,
                 description: values.description,
-                //image: imageFile.name,
+                image: image,
             }
 
             axios.put('http://localhost:8080/foods', food)
@@ -261,20 +261,20 @@ export const EditMenu = (props) => {
                             helperText={formik.touched.description && formik.errors.description}
                         />
                         <br/><br/><br/>
-                        {/*<InputLabel id="image" style={{*/}
-                        {/*    marginTop: '10px',*/}
-                        {/*}}>Image</InputLabel>*/}
-                        {/*<br/>*/}
-                        {/*<Input*/}
-                        {/*    id="image"*/}
-                        {/*    name="image"*/}
-                        {/*    type="file"*/}
-                        {/*    value={formik.values.image}*/}
-                        {/*    onChange={(e) => {setImageFile((e.target.files[0]))}}*/}
-                        {/*    error={formik.touched.image && Boolean(formik.errors.image)}*/}
-                        {/*    helperText={formik.touched.image && formik.errors.image}*/}
-                        {/*/>*/}
-                        {/*<br/><br/><br/>*/}
+                        <InputLabel id="image" style={{
+                            marginTop: '10px',
+                        }}>Image</InputLabel>
+                        <br/>
+                        <Input
+                            id="image"
+                            name="image"
+                            type="file"
+                            value={formik.values.image}
+                            onChange={(e) => {setImage((e.target.files[0]))}}
+                            error={formik.touched.image && Boolean(formik.errors.image)}
+                            helperText={formik.touched.image && formik.errors.image}
+                        />
+                        <br/><br/><br/>
                         <SubmitButton
                             style={{
                                 float: 'right',

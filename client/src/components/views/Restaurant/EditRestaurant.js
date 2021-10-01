@@ -43,8 +43,9 @@ export const EditRestaurant = (props) => {
     const [restaurantName,setRestaurantName] = useState('');
     const [caption,setCaption] = useState('');
     const [description,setDescription] = useState('');
-    /*const [roomType,setRoomType] = useState('');
-    const [noOfBeds, setBeds] = useState('');
+    const [image,setImage] = useState('');
+    //const [imageFile,setImageFile] = useState([]);
+    /*const [noOfBeds, setBeds] = useState('');
     const [noOfGuests, setGuests] = useState('');
     const [arrivalDate, setArrivalDate] = useState('');
     const [departureDate, setDepartureDate] = useState('');*/
@@ -65,8 +66,8 @@ export const EditRestaurant = (props) => {
                 setRestaurantName(data.restaurantName);
                 setCaption(data.caption);
                 setDescription(data.description);
-                /*setRoomType(data.roomType);
-                setBeds(data.noOfBeds);
+                setImage(data.image);
+                /*setBeds(data.noOfBeds);
                 setGuests(data.noOfGuests);
                 setArrivalDate(data.arrivalDate);
                 setDepartureDate(data.departureDate);*/
@@ -99,6 +100,7 @@ export const EditRestaurant = (props) => {
             restaurantName: restaurantName,
             caption: caption,
             description:description,
+            imageFile:image,
         },
         enableReinitialize: true,
         validationSchema: validationSchema,
@@ -117,7 +119,7 @@ export const EditRestaurant = (props) => {
                 restaurantName: values.restaurantName,
                 caption: values.caption,
                 description: values.description,
-                //image: imageFile.name,
+                image: image,
             }
 
             axios.put('http://localhost:8080/restaurants', restaurants)
@@ -224,18 +226,18 @@ export const EditRestaurant = (props) => {
                                 helperText={formik.touched.description && formik.errors.description}
                             />
                             <br/><br/>
-                            {/*<InputLabel id="image" style={{*/}
-                            {/*    marginTop: '10px',*/}
-                            {/*}}>Image</InputLabel>*/}
-                            {/*<Input*/}
-                            {/*    id="image"*/}
-                            {/*    name="image"*/}
-                            {/*    type="file"*/}
-                            {/*    value={formik.values.image}*/}
-                            {/*    onChange={(e) => {setImageFile((e.target.files[0]))}}*/}
-                            {/*    error={formik.touched.image && Boolean(formik.errors.image)}*/}
-                            {/*    helperText={formik.touched.image && formik.errors.image}*/}
-                            {/*/>*/}
+                            <InputLabel id="image" style={{
+                                marginTop: '10px',
+                            }}>Image</InputLabel>
+                            <Input
+                                id="image"
+                                name="image"
+                                type="file"
+                                value={formik.values.image}
+                                onChange={(e) => {setImage((e.target.files[0]))}}
+                                error={formik.touched.image && Boolean(formik.errors.image)}
+                                helperText={formik.touched.image && formik.errors.image}
+                            />
                             <br/><br/><br/>
                             <SubmitButton
                                 style={{
