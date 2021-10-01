@@ -119,6 +119,7 @@ export const AddRestaurant = () => {
                             error={formik.touched.restaurantName && Boolean(formik.errors.restaurantName)}
                             helperText={formik.touched.restaurantName && formik.errors.restaurantName}
                         />
+                        <br/><br/>
                         <TextField
                             fullWidth
                             id="caption"
@@ -129,6 +130,7 @@ export const AddRestaurant = () => {
                             error={formik.touched.caption && Boolean(formik.errors.caption)}
                             helperText={formik.touched.caption && formik.errors.caption}
                         />
+                        <br/><br/>
                         <TextField
                             fullWidth
                             id="description"
@@ -139,6 +141,7 @@ export const AddRestaurant = () => {
                             error={formik.touched.description && Boolean(formik.errors.description)}
                             helperText={formik.touched.description && formik.errors.description}
                         />
+                        <br/><br/>
                         <InputLabel id="image" style={{
                             marginTop: '10px',
                         }}>Image</InputLabel>
@@ -151,6 +154,7 @@ export const AddRestaurant = () => {
                             error={formik.touched.image && Boolean(formik.errors.image)}
                             helperText={formik.touched.image && formik.errors.image}
                         />
+                        <br/><br/><br/>
                         <SubmitButton
                             style={{
                                 float: 'right',

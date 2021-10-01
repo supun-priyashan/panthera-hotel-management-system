@@ -16,6 +16,8 @@ import {AddRestaurant} from "./components/views/Restaurant/AddRestaurant";
 import {AddMenu} from "./components/views/Restaurant/AddMenu";
 import {EditRoomReservations} from "./components/views/Reservations/EditRoomReservations";
 import {EditHallReservations} from "./components/views/Reservations/EditHallReservations";
+import {EditMenu} from "./components/views/Restaurant/EditMenu";
+import {EditRestaurant} from "./components/views/Restaurant/EditRestaurant";
 import {EditHall} from "./components/views/Halls/EditHall";
 
 function App() {
@@ -36,8 +38,10 @@ function App() {
                     <Route path='/reservations/halls' exact component={HallReservation} />
                     <Route path='/restaurant/menus' exact component={Menus} />
                     <Route path='/restaurant/menus/add-menus' exact component={AddMenu} />
+                    <Route path='/restaurants/edit-menu/:id' exact component={EditMenu} />
                     <Route path='/restaurant/restaurants' exact component={Restaurants} />
                     <Route path='/restaurants/add-restaurant' exact component={AddRestaurant} />
+                    <Route path='/restaurants/edit-restaurant/:id' exact component={EditRestaurant} />
                     <Route path='/employees' exact component={Employees} />
                 </Switch>
             </div>
