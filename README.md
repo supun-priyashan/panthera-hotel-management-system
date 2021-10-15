@@ -1,14 +1,13 @@
+# Group-ID: 2021S1_REG_WE_30
+## Project name: panthera-hotel-management-system
+## Group Details
 
-#Group-ID: 2021S1_REG_WE_30
-##Project name: panthera-hotel-management-system
-##Group Details
+* DilithaR-IT19156484 
+* supun-priyashan-IT19187242 
+* sanduni1-IT19392172 
+* Srinidee789-IT18161298 
 
-*DilithaR-IT19156484 
-*supun-priyashan-IT19187242 
-*sanduni1-IT19392172 
-*Srinidee789-IT18161298 
-
-##Project Description
+## Project Description
 
 This is the project of the group WE_64 for the module Software Project Management(SE3080), Sri Lanka Institute of Information Technology(SLIIT).
 
@@ -36,20 +35,20 @@ management is done by the system administrator. Finally, in Employee management 
 as well as admin can edit and delete those employee details. Using the search bar admin can find employees with their details. Apart from those,
 through the admin dashboard, the administrator has the ability to generate a report on any of those sections.
 
-##Technologies
+## Technologies
 
-*ReactJS
-*NodeJS
-*ExpressJS
-*MongoDB
+* ReactJS
+* NodeJS
+* ExpressJS
+* MongoDB
 
-##How to get started
-###Prerequisites
+## How to get started
+### Prerequisites
 
 1.NodeJS latest LTS version installed
 2.MongoDB database
 
-###Procedure of running the project
+### Procedure of running the project
 
 1.Clone the repository
 2.Create a file named .env
