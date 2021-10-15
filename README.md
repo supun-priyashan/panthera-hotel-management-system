@@ -49,19 +49,20 @@ through the admin dashboard, the administrator has the ability to generate a rep
 ## How to get started
 ### Prerequisites
 
-1.NodeJS latest LTS version installed
+1. NodeJS latest LTS version installed
 
-2.MongoDB database
+2. MongoDB database
 
 ### Procedure of running the project
 
-1.Clone the repository
+1. Clone the repository
 
-2.Create a file named .env
-3.Declare a key named 'MONGODB_URI' and add your MongoDB database link as the value
+2. Create a file named .env
 
-4.Open the root directory in command prompt and run the command 'npm start'
+3. Declare a key named 'MONGODB_URI' and add your MongoDB database link as the value
 
-5.Open the client directory in separate command prompt/powershell window and run the command 'npm start'
+4. Open the root directory in command prompt and run the command 'npm start'
 
-6.Go to the directory named website and run the command 'npm start'
+5. Open the client directory in separate command prompt/powershell window and run the command 'npm start'
+
+6. Go to the directory named website and run the command 'npm start'
