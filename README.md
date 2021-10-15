@@ -14,10 +14,12 @@ This is the project of the group WE_64 for the module Software Project Managemen
 Goal of this project is to develop an online web application of a hotel management system which can do all the activities like making reservations, ordering
 food, and managing employees and rooms/reception halls. It contains user-friendly interfaces for easy handling. And the system is mainly based on
 Customer requirements. There are two main user roles as Customer and Admin. The main functions which are identified in here are,
+
 * Restaurant Management
 * Room and Reception Hall Management
 * Reservation Management
 * Employee Management
+
 The system consists of four main interconnected components. They are the Website, Admin front-end, system back-end and the database server. So, this
 web application is going to be implemented using React, Axios for the front-end and NodeJS, ExpressJS for the backend with MongoDB as the
 database.
