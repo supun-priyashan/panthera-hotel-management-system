@@ -11,6 +11,7 @@
 
 This is the project of the group WE_64 for the module Software Project Management(SE3080), Sri Lanka Institute of Information Technology(SLIIT).
 
+
 Goal of this project is to develop an online web application of a hotel management system which can do all the activities like making reservations, ordering
 food, and managing employees and rooms/reception halls. It contains user-friendly interfaces for easy handling. And the system is mainly based on
 Customer requirements. There are two main user roles as Customer and Admin. The main functions which are identified in here are,
@@ -23,6 +24,7 @@ Customer requirements. There are two main user roles as Customer and Admin. The 
 The system consists of four main interconnected components. They are the Website, Admin front-end, system back-end and the database server. So, this
 web application is going to be implemented using React, Axios for the front-end and NodeJS, ExpressJS for the backend with MongoDB as the
 database.
+
 The system's main four functions are divided among the group members. In Restaurant Management, it includes an attractive and a detailed page of
 the food menus in the restaurant. System administrator is responsible for managing this page. Administrator is able to add new food items to the
 menu. Admin can update the food menu and also can delete. According to the customers preference, they can go through the food menu and can get
@@ -48,13 +50,18 @@ through the admin dashboard, the administrator has the ability to generate a rep
 ### Prerequisites
 
 1.NodeJS latest LTS version installed
+
 2.MongoDB database
 
 ### Procedure of running the project
 
 1.Clone the repository
+
 2.Create a file named .env
 3.Declare a key named 'MONGODB_URI' and add your MongoDB database link as the value
+
 4.Open the root directory in command prompt and run the command 'npm start'
+
 5.Open the client directory in separate command prompt/powershell window and run the command 'npm start'
+
 6.Go to the directory named website and run the command 'npm start'
